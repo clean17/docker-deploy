@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';  // react v17 버전용
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Todo from './Todo';
 
 // react v 18 버전 용
 // const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

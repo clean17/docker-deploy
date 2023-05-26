@@ -1,7 +1,8 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import React from 'react';
 import Todo from './Todo';
-import { Paper, List } from '@material-ui/core';
+import AddTodo from './AddTodo';
+import { Paper, List, Container } from '@material-ui/core';
 import './App.css';
 
 class App extends React.Component {
@@ -17,7 +18,7 @@ class App extends React.Component {
 
   render() {
     let todoItems = this.state.items.length > 0 && (
-      <Paper style={{ margin: 16 }}>
+      <Paper style={{ margin: 16 }} elevation={ 2 }>
         <List>
           {this.state.items.map((item, idx) => (
             <Todo item={item} key={item.id} />
@@ -25,8 +26,17 @@ class App extends React.Component {
         </List>
       </Paper>
     );
-
-    return <div className="App"> {todoItems} </div>;
+    // AddTodo 다음 Material Ui로 만든 Paper를 추가
+    // Material 디자인을 가져왔으므로 md 는 기본값 ( xs, sm, md, lg, xl )
+    // Container 는 리액트 컴포넌트
+    return (
+      <div className="App">
+        <Container maxWidth='md'>
+          <AddTodo />
+          <div className='TodoList'>{todoItems}</div>
+        </Container>
+      </div>
+    );
   }
 }
 
