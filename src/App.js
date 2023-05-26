@@ -16,6 +16,15 @@ class App extends React.Component {
     };
   }
 
+  // 리스트 추가
+  add = (item) => {
+    const thisItems = this.state.items;
+    item.id = "ID-" + thisItems.length; // key를 위한 id 추가
+    item.done = false;
+    thisItems.push(item);
+    this.setState({ items: thisItems });
+  }
+
   render() {
     let todoItems = this.state.items.length > 0 && (
       <Paper style={{ margin: 16 }} elevation={ 2 }>
@@ -32,7 +41,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container maxWidth='md'>
-          <AddTodo />
+          <AddTodo add={this.add}/>
           <div className='TodoList'>{todoItems}</div>
         </Container>
       </div>
