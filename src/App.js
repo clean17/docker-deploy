@@ -9,10 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        { id: 0, title: "아침에 일어나서 운동하기", done: true },
-        { id: 1, title: "점심먹고 운동하기", done: false }
-      ]
+      items: []
     };
   }
 
@@ -20,7 +17,7 @@ class App extends React.Component {
   add = (item) => {
     const thisItems = this.state.items;
     item.id = "ID-" + thisItems.length; // key를 위한 id 추가
-    item.done = false;
+    item.done = false; // done 속성을 추가했기 때문에 Todo 에서 사용가능
     thisItems.push(item);
     this.setState({ items: thisItems });
   }
