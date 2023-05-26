@@ -25,12 +25,18 @@ class App extends React.Component {
     this.setState({ items: thisItems });
   }
 
+  delete = (item) => {
+    const thisItems = this.state.items;
+    const newItems = thisItems.filter(e => e.id !== item.id);
+    this.setState({ items: newItems })
+  }
+
   render() {
     let todoItems = this.state.items.length > 0 && (
       <Paper style={{ margin: 16 }} elevation={ 2 }>
         <List>
           {this.state.items.map((item, idx) => (
-            <Todo item={item} key={item.id} />
+            <Todo item={item} key={item.id} delete={this.delete} />
           ))}
         </List>
       </Paper>
