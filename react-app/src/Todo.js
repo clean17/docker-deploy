@@ -57,7 +57,7 @@ class Todo extends React.Component {
                 <Checkbox checked={item.done} 
                 disableRipple
                 onChange={ this.checkboxEventHandler }
-                />
+                />  
                 <ListItemText>
                     <InputBase
                         inputProps={{

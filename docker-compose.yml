@@ -1,0 +1,25 @@
+version: '4'
+services:
+  database:
+    # Dockerfile이 있는 위치
+    build: ./database
+    # 내부에서 개방할 포트 : 외부에서 접근할 포트
+    ports:
+      - "3306:3306"
+  springboot-server:
+    build: ./springboot-server
+    # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
+    volumes:
+      - ./springboot-server:/usr/src/app
+    ports:
+      - "8080:8080"
+    # 환경변수 설정
+    environment: 
+      - DBHOST=database
+  react-app:
+    build: ./react-app
+    # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
+    volumes:
+      - ./react-app:/home/node/app
+    ports:
+      - "3000:3000"
