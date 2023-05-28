@@ -11,10 +11,10 @@ spring:
     username: sa
     password:
 
-  security:
-    user:
-      name: ssar
-      password: 1234
+  # security:
+  #   user:
+  #     name: ssar
+  #     password: 1234
 
   sql:
     init:
@@ -42,5 +42,6 @@ logging:
   level:
     '[org.springframework.boot.web]': DEBUG
 
-
+meta:
+  name: ${HS512_SECRET}
 

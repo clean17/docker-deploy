@@ -1,17 +1,11 @@
-package com.example.springbootserver.Todo.dto;
+package com.example.springbootserver.todo.dto;
 
-import com.example.springbootserver.Todo.model.Todo;
+import com.example.springbootserver.todo.model.Todo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 public class TodoRes {
     
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Getter
     public static class TodoDto {
         private Long id;

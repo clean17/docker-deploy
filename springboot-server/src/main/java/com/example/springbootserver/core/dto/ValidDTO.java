@@ -1,13 +1,16 @@
 package com.example.springbootserver.core.dto;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
-@Setter
 public class ValidDTO {
     private String key;
     private String value;
+
+    @Builder
+    public ValidDTO(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 }

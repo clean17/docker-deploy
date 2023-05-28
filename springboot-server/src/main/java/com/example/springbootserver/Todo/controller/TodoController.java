@@ -1,4 +1,4 @@
-package com.example.springbootserver.Todo.controller;
+package com.example.springbootserver.todo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springbootserver.Todo.dto.TodoReq;
-import com.example.springbootserver.Todo.dto.TodoRes;
-import com.example.springbootserver.Todo.model.Todo;
-import com.example.springbootserver.Todo.service.TodoService;
+import com.example.springbootserver.todo.dto.TodoReq;
+import com.example.springbootserver.todo.dto.TodoRes;
+import com.example.springbootserver.todo.model.Todo;
+import com.example.springbootserver.todo.service.TodoService;
 import com.example.springbootserver.core.dto.ResponseDTO;
 
 

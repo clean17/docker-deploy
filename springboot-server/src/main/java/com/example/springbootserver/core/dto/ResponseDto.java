@@ -1,19 +1,20 @@
 package com.example.springbootserver.core.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-@Builder 
-@AllArgsConstructor
 @Getter
-@Setter
 public class ResponseDTO<T> {
     private Integer status;
     private String error;
     private T data;
-
+    
+    @Builder
+    public ResponseDTO(Integer status, String error, T data) {
+        this.status = status;
+        this.error = error;
+        this.data = data;
+    }
 
     public ResponseDTO() {
         this.status = 200;
