@@ -1,1 +1,0 @@
-INSERT INTO todo (title, checked) VALUES ('아침먹고 운동하기', false);
