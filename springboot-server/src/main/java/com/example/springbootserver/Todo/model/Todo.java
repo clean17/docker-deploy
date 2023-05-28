@@ -6,14 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name="todo")
@@ -24,14 +24,7 @@ public class Todo {
     // @GeneratedValue(generator = "system-uuid")
     // @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private Long id;
-    private String userId;
+    private Long userId;
     private String title;
     private boolean done;
-
-    public Todo(Long id, String userId, String title, boolean done) {
-        this.id = id;
-        this.userId = userId;
-        this.title = title;
-        this.done = done;
-    }
 }

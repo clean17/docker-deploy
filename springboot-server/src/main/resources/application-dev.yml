@@ -11,6 +11,11 @@ spring:
     username: sa
     password:
 
+  security:
+    user:
+      name: ssar
+      password: 1234
+
   sql:
     init:
       mode: always

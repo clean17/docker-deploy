@@ -1,6 +1,8 @@
 package com.example.springbootserver.Todo.dto;
 
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,15 +15,11 @@ public class TodoReq {
     @AllArgsConstructor
     @Getter
     public static class TodoSave {
-        private String id;
+        private Long userId;
+        @NotBlank(message = "타이틀을 입력하세요.")
         private String title;
+        @NotBlank(message = "done값을 입력하세요.")
         private boolean done;
-
-        // public TodoSave(String id, String title, boolean done) {
-        //     this.id = id;
-        //     this.title = title;
-        //     this.done = done;
-        // }
     }
 
     @Builder
@@ -29,14 +27,11 @@ public class TodoReq {
     @AllArgsConstructor
     @Getter
     public static class TodoUpdate {
-        private String id;
+        private Long id;
+        private Long userId;
+        @NotBlank(message = "타이틀을 입력하세요.")
         private String title;
+        @NotBlank(message = "done값을 입력하세요.")
         private boolean done;
-
-        // public TodoUpdate(String id, String title, boolean done) {
-        //     this.id = id;
-        //     this.title = title;
-        //     this.done = done;
-        // }
     }
 }
