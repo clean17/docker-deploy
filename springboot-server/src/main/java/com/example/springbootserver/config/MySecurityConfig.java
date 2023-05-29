@@ -28,22 +28,24 @@ public class MySecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // JWT 필터 생성자에 필요 - 먼저 빈 등록
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
+    
+    // HttpSecurity 구성에 사용되는 필터를 정의
     // JWT 필터 등록이 필요함
     public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
             builder.addFilter(new MyJwtAuthorizationFilter(authenticationManager));
-            // 시큐리티 관련 필터
             super.configure(builder);
         }
     }
 
+    // HttpSecurity 사용해서 시큐리티 보안설정 정의
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 1. CSRF 해제
@@ -82,8 +84,7 @@ public class MySecurityConfig {
         // 11. 인증, 권한 필터 설정
         http.authorizeRequests(
                 authorize -> authorize.antMatchers("/s/**").authenticated()
-                        .antMatchers("/manager/**")
-                        .access("hasRole('ADMIN') or hasRole('MANAGER')")
+                        .antMatchers("/manager/**").access("hasRole('ADMIN') or hasRole('MANAGER')")
                         .antMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
         );

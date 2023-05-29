@@ -6,19 +6,19 @@ import lombok.Getter;
 @Getter
 public class ResponseDTO<T> {
     private Integer status;
-    private String error;
+    private String msg;
     private T data;
     
     @Builder
-    public ResponseDTO(Integer status, String error, T data) {
+    public ResponseDTO(Integer status, String msg, T data) {
         this.status = status;
-        this.error = error;
+        this.msg = msg;
         this.data = data;
     }
 
     public ResponseDTO() {
         this.status = 200;
-        this.error = "요청 성공";
+        this.msg = "요청 성공";
     }
 
     public ResponseDTO<?> data(T data){
@@ -26,9 +26,9 @@ public class ResponseDTO<T> {
         return this;
     }
 
-    public ResponseDTO<?> fail(Integer status, String error, T data){
+    public ResponseDTO<?> fail(Integer status, String msg, T data){
         this.status = status;
-        this.error = error;
+        this.msg = msg;
         this.data = data;
         return this;
     }
