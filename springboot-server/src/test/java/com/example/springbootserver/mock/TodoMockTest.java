@@ -6,16 +6,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.springbootserver.MyRestDocs;
 import com.example.springbootserver.config.MySecurityConfig;
 import com.example.springbootserver.core.advice.MyValidAdvice;
 import com.example.springbootserver.todo.controller.TodoController;
@@ -23,15 +24,19 @@ import com.example.springbootserver.todo.model.Todo;
 import com.example.springbootserver.todo.service.TodoService;
 
 // @AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
-// @SpringBootTest
+//@SpringBootTest
 
 @WebMvcTest(TodoController.class)
 @EnableAspectJAutoProxy
 @Import({MySecurityConfig.class, MyValidAdvice.class})
-public class TodoControllerTest extends MyRestDocs {
+public class TodoMockTest {
 
     @MockBean
     private TodoService todoService;
+
+    @Autowired
+    private MockMvc mockMvc;
+
 
     List<Todo> todos;
 
@@ -59,7 +64,8 @@ public class TodoControllerTest extends MyRestDocs {
          .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].id").value(1L))
          .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].title").value("아침먹고 운동하기"))
          .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].done").value(false))
-         .andDo(MockMvcResultHandlers.print())
-         .andDo(document);
+//         .andDo(MockMvcResultHandlers.print())
+//         .andDo(document)
+         ;
     }
 }

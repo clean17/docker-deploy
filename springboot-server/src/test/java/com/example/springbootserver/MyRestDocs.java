@@ -18,20 +18,20 @@ import java.nio.charset.StandardCharsets;
 @ExtendWith({ SpringExtension.class, RestDocumentationExtension.class })
 public class MyRestDocs {
     protected MockMvc mockMvc;
-    protected RestDocumentationResultHandler document;
+//    protected RestDocumentationResultHandler document;
 
     @BeforeEach
     private void setup(WebApplicationContext webApplicationContext,
                        RestDocumentationContextProvider restDocumentation) {
-        this.document = MockMvcRestDocumentation.document("{class-name}/{method-name}",
-                Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
-                Preprocessors.preprocessResponse(Preprocessors.prettyPrint()));
+//        this.document = MockMvcRestDocumentation.document("{class-name}/{method-name}",
+//                Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
+//                Preprocessors.preprocessResponse(Preprocessors.prettyPrint()));
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(new CharacterEncodingFilter(StandardCharsets.UTF_8.name(), true))
                 .apply(MockMvcRestDocumentation.documentationConfiguration(restDocumentation))
                 // .apply(SecurityMockMvcConfigurers.springSecurity())
-                .alwaysDo(document)
+//                .alwaysDo(document)
                 .build();
     }
 }
