@@ -45,38 +45,31 @@ test {
     outputs.dir snippetsDir // outputs 변경이 감지되면 작업을 다시 실행
     // clean build 하면 build 디렉토리 사라지므로 다시 테스트 됨
     useJUnitPlatform()
+    doLast { // doLast 는 해당 블록이 종료된 후 실행된다.
+        println '테스트 완료'
+    }
 }
 
 asciidoctor {
-    sources {
-        include ('**/api-docs.adoc')
-    }
-    baseDirFollowsSourceFile()
-    configurations 'asciidoctorExt'
     inputs.dir snippetsDir // inputs 마찬가지로 변경 여부 검사
     dependsOn test
+    doLast {
+        copy {
+            from "${asciidoctor.outputDir}"
+//            into 'src/main/resources/static'
+            into 'build/resources/main/static'
+        }
+        println '문서화 완료'
+    }
 }
-
-//task copyDocument(type: Copy) {
-//    dependsOn asciidoctor
-//    // src/docs/asciidoc == from 경로
-//    doLast {
-//        from "${asciidoctor.outputDir}" // 이 시점에서는 변경되지 않음
-//        into 'src/main/resources/static'
-//    }
-//}
-
-task copyDocument(type: Copy) {
-    dependsOn asciidoctor
-    from "${asciidoctor.outputDir}"
-    into 'src/main/resources/static'
-    // doLast 는 해당 블록이 종료된 후 실행 ?
-}
-
 
 bootJar {
-    dependsOn copyDocument
+    dependsOn asciidoctor // dependsOn 는 작업 순서를 결정한다. 먼저 선언하고 의존
+    doLast {
+        println '문서 복사 완료'
+    }
 }
+
 
 build {
     compileJava.options.encoding = 'UTF-8'

@@ -50,7 +50,7 @@ public class MyRestDocs {
                 fieldWithPath("msg").description("응답 메시지"),
                 fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("아이디"),
                 fieldWithPath("data[].title").type(JsonFieldType.STRING).description("할 일"),
-                fieldWithPath("data[].done").type(JsonFieldType.BOOLEAN).description("완료 여부4")
+                fieldWithPath("data[].done").type(JsonFieldType.BOOLEAN).description("완료 여부")
         };
     }
 }
