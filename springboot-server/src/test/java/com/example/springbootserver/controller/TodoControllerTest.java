@@ -20,9 +20,9 @@ import java.util.List;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 
@@ -45,14 +45,10 @@ public class TodoControllerTest extends MyRestDocs {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
                 .andDo(document("{class-name}/{method-name}",
-                        responseFields(
-                                fieldWithPath("status").description("응답 상태"),
-                                fieldWithPath("msg").description("응답 메시지"),
-                                fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("아이디"),
-                                fieldWithPath("data[].title").type(JsonFieldType.STRING).description("할 일"),
-                                fieldWithPath("data[].done").type(JsonFieldType.BOOLEAN).description("완료 여부")
-                        )));
-
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(todosResponseFileds())
+                ));
         ;
     }
 }

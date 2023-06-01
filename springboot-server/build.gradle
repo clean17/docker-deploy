@@ -1,7 +1,7 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.12'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.12'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
@@ -10,62 +10,79 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	asciidoctorExt
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    asciidoctorExt
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
 }
 
-
-tasks.named('test') {
-    outputs.dir snippetsDir
+test {
+    outputs.dir snippetsDir // outputs 변경이 감지되면 작업을 다시 실행
+    // clean build 하면 build 디렉토리 사라지므로 다시 테스트 됨
     useJUnitPlatform()
 }
 
-tasks.named('asciidoctor') {
-    inputs.dir snippetsDir
+asciidoctor {
+    sources {
+        include ('**/api-docs.adoc')
+    }
+    baseDirFollowsSourceFile()
+    configurations 'asciidoctorExt'
+    inputs.dir snippetsDir // inputs 마찬가지로 변경 여부 검사
     dependsOn test
 }
 
-bootJar {
+//task copyDocument(type: Copy) {
+//    dependsOn asciidoctor
+//    // src/docs/asciidoc == from 경로
+//    doLast {
+//        from "${asciidoctor.outputDir}" // 이 시점에서는 변경되지 않음
+//        into 'src/main/resources/static'
+//    }
+//}
+
+task copyDocument(type: Copy) {
     dependsOn asciidoctor
-    copy {
-        // src/docs/asciidoc == from 경로
-        from "${asciidoctor.outputDir}"
-        into 'src/main/resources/static/docs'    // /static/docs로 복사!
-    }
+    from "${asciidoctor.outputDir}"
+    into 'src/main/resources/static'
+    // doLast 는 해당 블록이 종료된 후 실행 ?
 }
 
-build{
-	compileJava.options.encoding = 'UTF-8'
-	compileTestJava.options.encoding = 'UTF-8'
+
+bootJar {
+    dependsOn copyDocument
+}
+
+build {
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
 }
 
 jar {
-	enabled = false
+    enabled = false
 }

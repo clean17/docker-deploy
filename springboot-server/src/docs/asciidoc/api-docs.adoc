@@ -1,21 +1,26 @@
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
-
-
-:todo: todo-controller-test
-
+:doctype: book
 = Spring REST Docs
+
 :toc: left
-:toclevels: 2
+:toclevels: 3
 :source-highlighter: highlightjs
+:todo: todo-controller-test
+:test: find_전체_테스트
 
 == Todo
-===== HTTP request
-include::{snippets}/{todo}/find_전체_테스트/http-request.adoc[]
+=== Curl
+include::{snippets}/{todo}/{test}/curl-request.adoc[]
 
-===== HTTP response
-include::{snippets}/{todo}/find_전체_테스트/http-response.adoc[]
+=== HTTP request
+include::{snippets}/{todo}/{test}/http-request.adoc[]
 
-===== Curl
-include::{snippets}/{todo}/find_전체_테스트/curl-request.adoc[]
+=== HTTP response
+include::{snippets}/{todo}/{test}/http-response.adoc[]
+
+=== response Fields
+include::{snippets}/{todo}/{test}/response-fields.adoc[]
+
+

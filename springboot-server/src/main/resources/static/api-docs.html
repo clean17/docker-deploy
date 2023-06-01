@@ -436,60 +436,104 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article toc2 toc-left">
+<body class="book">
 <div id="header">
 <h1>Spring REST Docs</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
-</div>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_todo">Todo</a>
-<ul class="sectlevel4">
-<li><a href="#_http_request">HTTP request</a></li>
-<li><a href="#_http_response">HTTP response</a></li>
-<li><a href="#_curl">Curl</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
 <h2 id="_todo">Todo</h2>
 <div class="sectionbody">
-<div class="sect4">
-<h5 id="_http_request">HTTP request</h5>
+<div class="sect2">
+<h3 id="_curl">Curl</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /todos HTTP/1.1
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/todos' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_http_request">HTTP request</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /todos HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_http_response">HTTP response</h5>
+<div class="sect2">
+<h3 id="_http_response">HTTP response</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json;charset=UTF-8
-Content-Length: 161
+Content-Length: 240
 
-{"status":200,"msg":"조회 성공","data":[{"id":1,"title":"아침먹고 운동하기","done":false},{"id":2,"title":"점심먹고 운동하기","done":false}]}</code></pre>
+{
+  "status" : 200,
+  "msg" : "조회 성공",
+  "data" : [ {
+    "id" : 1,
+    "title" : "아침먹고 운동하기",
+    "done" : false
+  }, {
+    "id" : 2,
+    "title" : "점심먹고 운동하기",
+    "done" : false
+  } ]
+}</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_curl">Curl</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/todos' -i -X GET</code></pre>
-</div>
-</div>
+<div class="sect2">
+<h3 id="_response_fields">response Fields</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>status</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>msg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">응답 메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">할 일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].done</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">완료 여부4</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -497,11 +541,8 @@ Content-Length: 161
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-01 01:07:07 +0900
+Last updated 2023-06-01 23:34:01 +0900
 </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
 </body>
 </html>
