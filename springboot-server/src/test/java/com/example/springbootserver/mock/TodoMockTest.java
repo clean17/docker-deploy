@@ -193,6 +193,26 @@ public class TodoMockTest {
 
     @Test
     public void delete_MockTest() throws Exception {
+        // given
+        Long id = 2L;
 
+        // when
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .delete("/todos/{id}", id))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    @Test
+    public void deleteFail_MockTest() throws Exception {
+        // given
+        Long id = null;
+
+        // when
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .delete("/todos/{id}", id))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is5xxServerError());
     }
 }

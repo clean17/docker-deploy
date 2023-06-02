@@ -1,11 +1,16 @@
 package com.example.springbootserver.controller;
 
 import com.example.springbootserver.MyRestDocs;
+import com.example.springbootserver.todo.dto.TodoReq;
 import com.example.springbootserver.todo.model.Todo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +18,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 
@@ -20,6 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class TodoControllerTest extends MyRestDocs {
 
     List<Todo> todos;
+
+    @Autowired
+    private ObjectMapper om;
 
     @BeforeEach
     public void setup() {
@@ -29,8 +39,8 @@ public class TodoControllerTest extends MyRestDocs {
     }
 
     @Test
-    public void find_전체_테스트() throws Exception {
-
+    @Transactional
+    public void findAll_테스트() throws Exception {
         this.mockMvc.perform(get("/todos"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
@@ -39,6 +49,74 @@ public class TodoControllerTest extends MyRestDocs {
                         preprocessResponse(prettyPrint()),
                         responseFields(todosResponseFileds())
                 ));
-        ;
     }
+
+    @Test
+    @Transactional
+    public void findOne_테스트() throws Exception {
+        Long id = 2L;
+        this.mockMvc.perform(get("/todos/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(parameterWithName("id").description("Todo 아이디")),
+                        responseFields(todoResponseFileds())
+                ));
+    }
+
+    @Test
+    @Transactional
+    public void save_테스트() throws Exception {
+        TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
+                .userId(1L).title("이마트 가기").done(false)
+                .build();
+
+        this.mockMvc.perform(post("/todos")
+                        .content(om.writeValueAsString(todoSave))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(print())
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(todoResponseFileds())
+                ));
+    }
+
+
+    @Test
+    @Transactional
+    public void update_테스트() throws Exception {
+        TodoReq.TodoUpdate todoUpdate = TodoReq.TodoUpdate.builder()
+                .id(1L).userId(1L).title("아침먹고 공부하기").done(true)
+                .build();
+
+        this.mockMvc.perform(put("/todos")
+                        .content(om.writeValueAsString(todoUpdate))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(todoResponseFileds())
+                ));
+    }
+
+
+    @Test
+    @Transactional
+    public void delete_테스트() throws Exception {
+        Long id = 2L;
+        this.mockMvc.perform(get("/todos/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
+                .andDo(document("{class-name}/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())
+                ));
+    }
+
 }

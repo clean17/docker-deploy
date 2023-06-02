@@ -1,0 +1,72 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+:doctype: book
+:toc: left
+:toclevels: 3
+:source-highlighter: highlightjs
+= Spring REST Docs
+
+:todo: todo-controller-test
+:test1: find-all_테스트
+:test2: find-one_테스트
+:test3: save_테스트
+:test4: update_테스트
+:test5: delete_테스트
+
+== Todo Api
+
+=== FindAll
+
+==== Curl
+include::{snippets}/{todo}/{test1}/curl-request.adoc[]
+==== HTTP request
+include::{snippets}/{todo}/{test1}/http-request.adoc[]
+==== HTTP response
+include::{snippets}/{todo}/{test1}/http-response.adoc[]
+==== response Fields
+include::{snippets}/{todo}/{test1}/response-fields.adoc[]
+
+=== FindOne
+
+==== Curl
+include::{snippets}/{todo}/{test2}/curl-request.adoc[]
+==== HTTP request
+include::{snippets}/{todo}/{test2}/http-request.adoc[]
+==== HTTP response
+include::{snippets}/{todo}/{test2}/http-response.adoc[]
+==== pathParameters
+include::{snippets}/{todo}/{test2}/path-parameters.adoc[]
+==== response Fields
+include::{snippets}/{todo}/{test2}/response-fields.adoc[]
+
+=== Save
+
+==== Curl
+include::{snippets}/{todo}/{test3}/curl-request.adoc[]
+==== HTTP request
+include::{snippets}/{todo}/{test3}/http-request.adoc[]
+==== HTTP response
+include::{snippets}/{todo}/{test3}/http-response.adoc[]
+==== response Fields
+include::{snippets}/{todo}/{test3}/response-fields.adoc[]
+
+=== Update
+
+==== Curl
+include::{snippets}/{todo}/{test4}/curl-request.adoc[]
+==== HTTP request
+include::{snippets}/{todo}/{test4}/http-request.adoc[]
+==== HTTP response
+include::{snippets}/{todo}/{test4}/http-response.adoc[]
+==== response Fields
+include::{snippets}/{todo}/{test4}/response-fields.adoc[]
+
+=== Delete
+
+==== Curl
+include::{snippets}/{todo}/{test5}/curl-request.adoc[]
+==== HTTP request
+include::{snippets}/{todo}/{test5}/http-request.adoc[]
+==== HTTP response
+include::{snippets}/{todo}/{test5}/http-response.adoc[]

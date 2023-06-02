@@ -68,6 +68,10 @@ public class TodoController {
         return new ResponseEntity<>(new ResponseDTO<>(200, "Todo 수정 완료", todoDTO), HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        todoService.delete(id);
+        return new ResponseEntity<>(new ResponseDTO<>(200, "Todo 삭제 완료", null), HttpStatus.OK);
+    }
 
 }

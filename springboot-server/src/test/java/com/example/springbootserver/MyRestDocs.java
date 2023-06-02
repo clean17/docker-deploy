@@ -53,4 +53,14 @@ public class MyRestDocs {
                 fieldWithPath("data[].done").type(JsonFieldType.BOOLEAN).description("완료 여부")
         };
     }
+
+    protected FieldDescriptor[] todoResponseFileds() {
+        return new FieldDescriptor[]{
+                fieldWithPath("status").description("응답 상태"),
+                fieldWithPath("msg").description("응답 메시지"),
+                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("아이디"),
+                fieldWithPath("data.title").type(JsonFieldType.STRING).description("할 일"),
+                fieldWithPath("data.done").type(JsonFieldType.BOOLEAN).description("완료 여부")
+        };
+    }
 }
