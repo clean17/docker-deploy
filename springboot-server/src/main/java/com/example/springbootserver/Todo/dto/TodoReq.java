@@ -5,34 +5,42 @@ import javax.validation.constraints.NotNull;
 
 import com.example.springbootserver.todo.model.Todo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Objects;
 
 public class TodoReq {
 
     @Setter
     @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @EqualsAndHashCode
     public static class TodoSave {
         private Long userId;
         @NotBlank(message = "타이틀을 입력하세요.")
         private String title;
-        // boolean 은 NotBlank 불가 NotBlank 는 String 받을때
-        @NotNull(message = "done값을 입력하세요.")
+//        @NotNull(message = "done값을 입력하세요.") // boolean 은 NotBlank 불가 NotBlank 는 String 받을때
         private boolean done;
 
-        public static Todo toEntity(final TodoSave todoSave) {
-            final Todo todo = Todo.builder()
+        public static Todo toEntity(final TodoReq.TodoSave todoSave) {
+            return Todo.builder()
                     .userId(todoSave.getUserId())
                     .title(todoSave.getTitle())
-                    .done(todoSave.isDone())
+                    .done(false)
                     .build();
-            return todo;
         }
     }
 
     @Setter
     @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @EqualsAndHashCode
     public static class TodoUpdate {
+        @NotNull(message = "id값이 필요합니다.") // Long 타입도 NotBlack 불가
         private Long id;
         private Long userId;
         @NotBlank(message = "타이틀을 입력하세요.")
@@ -40,13 +48,13 @@ public class TodoReq {
         @NotNull(message = "done값을 입력하세요.")
         private boolean done;
 
-        public static Todo toEntity(final TodoUpdate todoSave) {
-            final Todo todo = Todo.builder()
-                    .userId(todoSave.getUserId())
-                    .title(todoSave.getTitle())
-                    .done(todoSave.isDone())
+        public static Todo toEntity(final TodoUpdate todoUpdate) {
+            return Todo.builder()
+                    .id(todoUpdate.getId())
+                    .userId(todoUpdate.getUserId())
+                    .title(todoUpdate.getTitle())
+                    .done(todoUpdate.isDone())
                     .build();
-            return todo;
         }
     }
 }

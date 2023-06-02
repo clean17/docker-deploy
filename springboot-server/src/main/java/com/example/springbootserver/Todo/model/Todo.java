@@ -6,14 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="todo")
+@Builder
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Long 으로 만들경우 
@@ -25,11 +25,4 @@ public class Todo {
     private String title;
     private boolean done;
 
-    @Builder
-    public Todo(Long id, Long userId, String title, boolean done) {
-        this.id = id;
-        this.userId = userId;
-        this.title = title;
-        this.done = done;
-    }
 }
