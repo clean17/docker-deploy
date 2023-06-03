@@ -13,8 +13,7 @@ public class MyFilterRegisterConfig {
         // 필터 추가하는 방법
         FilterRegistrationBean<MyTempFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new MyTempFilter()); // 서블릿 필터 객체 담기
-        // registration.addUrlPatterns("/*");
-        registration.addUrlPatterns("http://localhost:3000");
+        registration.addUrlPatterns("/*");
         registration.setOrder(1); // 순서
         return registration;
     }

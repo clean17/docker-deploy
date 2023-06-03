@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
  
-    @Value("${secret.key}")
+    @Value("${meta.name}")
     private String key;
 
     @GetMapping("/test")
