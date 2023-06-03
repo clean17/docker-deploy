@@ -25,12 +25,12 @@ public class User {
 
     @Column(nullable = false, length = 20)
     private String email;
-    @Column(nullable = false, length = 20)
-    private String fullName;
+    // @Column(nullable = false, length = 20)
+    // private String fullName;
 
     private String role;
 
-    private Boolean status; // true, false
+    // private Boolean status; // true, false
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

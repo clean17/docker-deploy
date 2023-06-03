@@ -2,6 +2,7 @@ package com.example.springbootserver.todo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,17 +28,27 @@ public class TodoService {
     }
 
     @Transactional
-    public List<Todo> findAll() {
+    public List<Todo> findbyUserId(Long id) {
         try {
-            List<Todo> result = todoRepository.findAll();
-            if (ObjectUtils.isEmpty(result)) {
-                result = new ArrayList<>();
-            }
-            return result;
+            return todoRepository.findByUserId(id)
+                .orElseThrow(() -> new Exception500("조회 데이터가 없습니다."));
         } catch (Exception500 e) {
             throw new Exception500("조회에 실패했습니다.");
         }
     }
+
+//    @Transactional
+//    public List<Todo> findAll() {
+//        try {
+//            List<Todo> result = todoRepository.findAll();
+//            if (ObjectUtils.isEmpty(result)) {
+//                result = new ArrayList<>();
+//            }
+//            return result;
+//        } catch (Exception500 e) {
+//            throw new Exception500("조회에 실패했습니다.");
+//        }
+//    }
 
     @Transactional
     public Todo findbyId(final Long id) {
@@ -54,7 +65,7 @@ public class TodoService {
         try {
             Todo todo = TodoSave.toEntity(todoSave);
             todoRepository.save(todo);
-            log.info("Todo save 완료, Id : " + todo.getId());
+            log.info("Todo 저장 완료, Id : " + todo.getId());
             return todo;
         } catch (Exception500 e) {
             throw new Exception500("저장에 실패했습니다.");
@@ -66,7 +77,7 @@ public class TodoService {
         try {
             Todo todo = TodoReq.TodoUpdate.toEntity(todoUpdate);
             todoRepository.save(todo);
-            log.info("Todo update 완료, Id : " + todo.getId());
+            log.info("Todo 수정 완료, Id : " + todo.getId());
             return todo;
         } catch (Exception500 e) {
             throw new Exception500("수정에 실패했습니다.");
@@ -82,6 +93,7 @@ public class TodoService {
             todoRepository.delete(todo);
             log.info("Todo delete 완료");
         } catch (Exception500 e) {
+            log.error("Todo 삭제 실패, id "+ id);
             throw new Exception500("삭제에 실패했습니다.");
         }
     }

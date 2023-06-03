@@ -4,12 +4,18 @@ server:
     encoding:
       charset: utf-8
       
+# spring:
+#   datasource:
+#     driver-class-name: org.h2.Driver
+#     url: jdbc:h2:mem:test;MODE=MySQL
+#     username: sa
+#     password:
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;MODE=MySQL
-    username: sa
-    password:
+    url: jdbc:mysql://${DBHOST:localhost}:3306/visitlog
+    username: mysql_user
+    password: mysql_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   # security:
   #   user:
@@ -25,7 +31,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
@@ -44,4 +50,5 @@ logging:
 
 meta:
   name: ${HS512_SECRET}
-
+secret:
+  key: ${secrets.HS512_SECRET}

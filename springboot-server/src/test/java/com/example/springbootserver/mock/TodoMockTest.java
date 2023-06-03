@@ -61,7 +61,8 @@ public class TodoMockTest {
     @Test
     public void findAll_MockTest() throws Exception {
         // given
-        given(todoService.findAll()).willReturn(todos);
+        Long id = 1L;
+        given(todoService.findbyUserId(id)).willReturn(todos);
 
         // when
         this.mockMvc.perform(
@@ -79,7 +80,8 @@ public class TodoMockTest {
     @Test
     public void findAllFail_MockTest() throws Exception {
         // given
-        given(todoService.findAll()).willReturn(new ArrayList<>());
+        Long id = 2L;
+        given(todoService.findbyUserId(id)).willReturn(new ArrayList<>());
 
         // when
         this.mockMvc.perform(

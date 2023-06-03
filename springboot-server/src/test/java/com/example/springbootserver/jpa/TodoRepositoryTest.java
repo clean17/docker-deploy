@@ -27,6 +27,17 @@ public class TodoRepositoryTest {
 
     @Test
     @Transactional
+    public void findUserId_test() {
+        Long id = 1L;
+        Optional<List<Todo>> todoList = todoRepository.findByUserId(id);
+        todoList.ifPresent(e -> {
+            Assertions.assertEquals(e.get(0).getId(), 1);
+            Assertions.assertEquals(e.get(1).getTitle(), "점심먹고 운동하기");
+        });
+    }
+
+    @Test
+    @Transactional
     public void findById_test(){
         Optional<Todo> todo = todoRepository.findById(1L);
         Assertions.assertEquals(todo.get().getTitle(), "아침먹고 운동하기");

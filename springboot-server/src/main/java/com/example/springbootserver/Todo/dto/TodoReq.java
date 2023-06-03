@@ -21,14 +21,14 @@ public class TodoReq {
         private Long userId;
         @NotBlank(message = "타이틀을 입력하세요.")
         private String title;
-//        @NotNull(message = "done값을 입력하세요.") // boolean 은 NotBlank 불가 NotBlank 는 String 받을때
+        // boolean 값을 주지 않으면 디폴트 false
         private boolean done;
 
         public static Todo toEntity(final TodoReq.TodoSave todoSave) {
             return Todo.builder()
                     .userId(todoSave.getUserId())
                     .title(todoSave.getTitle())
-                    .done(false)
+                    .done(todoSave.isDone())
                     .build();
         }
     }
@@ -43,17 +43,17 @@ public class TodoReq {
         @NotNull(message = "id값이 필요합니다.") // Long 타입도 NotBlack 불가
         private Long id;
         private Long userId;
-        @NotBlank(message = "타이틀을 입력하세요.")
+        @NotBlank(message = "타이틀을 입력하세요.") // String 만 NotBlank
         private String title;
-        @NotNull(message = "done값을 입력하세요.")
-        private boolean done;
+        @NotNull(message = "done값을 입력하세요.") // boolean -> @Valid가 검사하지 못한다. Boolean 로 만들어야함
+        private Boolean done;
 
         public static Todo toEntity(final TodoUpdate todoUpdate) {
             return Todo.builder()
                     .id(todoUpdate.getId())
                     .userId(todoUpdate.getUserId())
                     .title(todoUpdate.getTitle())
-                    .done(todoUpdate.isDone())
+                    .done(todoUpdate.getDone())
                     .build();
         }
     }

@@ -1,5 +1,27 @@
+# Gradle 이미지를 기반으로 Gradle 이미지를 빌드한다.
+FROM gradle:6.8.3-jdk11 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+# daemon 은 메모리를 점유함 ( 빌드 빠르게 ), CI/CD 환경에서는 꺼주는게 좋음 - 각 빌드는 격리된 환경에서 실행되어야 함
+RUN gradle clean build --no-daemon 
+
+
+# Java 11 JDK가 설치된 Docker 이미지를 기반으로 새 이미지를 만들겠다
 FROM openjdk:11-jdk
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+
+# 빌드 시에 설정될 수 있는 변수를 선언
+# Maven
+# ARG JAR_FILE=target/*.jar 
+
+# Gradle
+# ARG JAR_FILE=build/libs/*.jar 
+# COPY ${JAR_FILE} app.jar
+
+# 절대 경로로 지정함
+COPY --from=build /home/gradle/src/build/libs/*.jar /app.jar
+
+# 컨테이너가 8080 포트에서 수신 대기
 EXPOSE 8080
+
+#  java -jar /app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
