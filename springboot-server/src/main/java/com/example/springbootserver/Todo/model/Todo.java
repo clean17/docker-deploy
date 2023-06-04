@@ -1,5 +1,6 @@
 package com.example.springbootserver.todo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="todo")
+@Table(name="todos")
 @Builder
 public class Todo {
     @Id
@@ -23,6 +24,7 @@ public class Todo {
     private Long id;
     private Long userId;
     private String title;
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean done;
 
 }

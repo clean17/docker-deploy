@@ -62,7 +62,8 @@ public class TodoMockTest {
     public void findAll_MockTest() throws Exception {
         // given
         Long id = 1L;
-        given(todoService.findbyUserId(id)).willReturn(todos);
+        given(todoService.findAll()).willReturn(todos);
+//        given(todoService.findbyUserId(id)).willReturn(todos);
 
         // when
         this.mockMvc.perform(
@@ -72,7 +73,7 @@ public class TodoMockTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print())
                 // jsonPath 는 응답된 json을 검증할때 사용 ( $.name / $[0].name )
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].title").value("아침먹고 운동하기"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].done").value(false));
     }

@@ -24,18 +24,27 @@ COPY --from=builder /build/build/libs/*.jar /app.jar
 EXPOSE 8080
 
 #  java -jar /app.jar , root 권한 x nobody 권한으로 실행함
-USER nobody 
-ENTRYPOINT [                                                \
-   "java",                                                 \
-   "-jar",                                                 \
-   "-Djava.security.egd=file:/dev/./urandom",              \
-   "-Dsun.net.inetaddr.ttl=0",                             \
-   "/app.jar"             \
-]
+USER nobody
+# "-Dspring.profiles.active=dev -Dfile.encoding=UTF-8" 를 넣으니까 docker composer 환경변수를 못찾음
+# ENTRYPOINT [                                               \
+#    "java",                                                 \
+#    "-Dspring.profiles.active=dev -Dfile.encoding=UTF-8",   \
+#    "-Djava.security.egd=file:/dev/./urandom",              \
+#    "-Dsun.net.inetaddr.ttl=0",                             \
+#    "-DHS512_SECRET=${HS512_SECRET}",                        \
+#    "-jar",                                                 \
+#    "/app.jar"             \
+# ]
 
 # ENTRYPOINT ["java","-jar","/app.jar"]
 
-# 루트 디렉토리에서 이미지 빌드 ( 덮어씀 )->  docker build -t back-test . 		#-t : --tag 이미지 이름, 태그 설정
+# Shell 스크립트 복사 - 이 방법으로 환경변수 찾아서 해결함
+COPY --chmod=755 start.sh /start.sh
+
+# Shell 스크립트를 실행 ( 첫번째 인수 - db 서비스 이름 )
+ENTRYPOINT ["my-app-database-1", "/start.sh"]
+
+# 루트 디렉토리에서 이미지 빌드 ( 덮어씀 ) ->  docker build -t back-test . 		#-t : --tag 이미지 이름, 태그 설정
 # docker run -p 8080:8080 back-test
 # 동적으로 환경변수 넣어서 테스트 하는 방법  docker run -p 8080:8080 -e HS512_SECRET=metacoding back-test
 # 컨테이너 실행 ->   docker run -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:mysql://[ec2주소] -e SPRING_DATASOURCE_PASSWORD=[mysql비밀번호] -d back-test

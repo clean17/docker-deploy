@@ -5,37 +5,42 @@ server:
       charset: utf-8
       
 spring:
+  # datasource:
+  #   driver-class-name: org.h2.Driver
+  #   url: jdbc:h2:mem:test;MODE=MySQL
+  #   username: sa
+  #   password:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;MODE=MySQL
-    username: sa
-    password:
-# spring:
-#   datasource:
-#     url: jdbc:mysql://${DBHOST:localhost}:3306/visitlog
-#     username: mysql_user
-#     password: mysql_password
-#     driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/metacoding?characterEncoding=utf-8&serverTimezone=Asia/Seoul
+#     # ${DBHOST:localhost} - DBHOST 가 설정되어 있지 않으면 localhost 사용 # &useSSL=true&enabledTLSProtocols=TLSv1.2
+    username: metacoding
+    password: metacoding
+
 
   # security:
   #   user:
   #     name: ssar
   #     password: 1234
 
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:static/db/insert_data.sql
-      encoding: utf-8
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:db/create_table.sql
+#      data-locations: classpath:db/insert_data.sql
+#      encoding: utf-8
 
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     show-sql: true
     properties:
+#      dialect: org.hibernate.dialect.MySQL5Dialect
+      dialect: org.hibernate.dialect.MySQL8Dialect
       '[hibernate.format_sql]': true
       '[default_batch_fetch_size]': 100
     defer-datasource-initialization: true
@@ -49,5 +54,8 @@ logging:
     '[org.springframework.boot.web]': DEBUG
 
 meta:
-  name: ${HS512_SECRET}
+  port: ${MYSQL_PORT}
+  db: ${MYSQL_DATABASE}
+  user: ${MYSQL_USER}
+  pass: ${MYSQL_PASSWORD}
 

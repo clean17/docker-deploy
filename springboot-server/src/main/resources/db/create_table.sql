@@ -15,7 +15,7 @@ CREATE TABLE users (
   updated_at DATETIME
 );
 
-CREATE TABLE tstables (
+CREATE TABLE tstables ( 
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(20) NOT NULL UNIQUE
 );

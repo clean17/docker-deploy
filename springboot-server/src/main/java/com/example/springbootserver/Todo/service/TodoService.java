@@ -2,7 +2,6 @@ package com.example.springbootserver.todo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,18 +36,19 @@ public class TodoService {
         }
     }
 
-//    @Transactional
-//    public List<Todo> findAll() {
-//        try {
-//            List<Todo> result = todoRepository.findAll();
-//            if (ObjectUtils.isEmpty(result)) {
-//                result = new ArrayList<>();
-//            }
-//            return result;
-//        } catch (Exception500 e) {
-//            throw new Exception500("조회에 실패했습니다.");
-//        }
-//    }
+   @Transactional
+   public List<Todo> findAll() {
+       try {
+           List<Todo> result = todoRepository.findAll();
+
+           if (ObjectUtils.isEmpty(result)) {
+               result = new ArrayList<>();
+           }
+           return result;
+       } catch (Exception500 e) {
+           throw new Exception500("조회에 실패했습니다.");
+       }
+   }
 
     @Transactional
     public Todo findbyId(final Long id) {
