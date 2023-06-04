@@ -42,7 +42,7 @@ USER nobody
 COPY --chmod=755 start.sh /start.sh
 
 # Shell 스크립트를 실행 ( 첫번째 인수 - db 서비스 이름 )
-ENTRYPOINT ["my-app-database-1", "/start.sh"]
+ENTRYPOINT ["/start.sh"]
 
 # 루트 디렉토리에서 이미지 빌드 ( 덮어씀 ) ->  docker build -t back-test . 		#-t : --tag 이미지 이름, 태그 설정
 # docker run -p 8080:8080 back-test

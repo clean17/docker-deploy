@@ -1,8 +1,6 @@
 
 L
 .github/workflows/deploy.yml,f\1\f130ad0d1d16d0d70ec30d355f736ae3784b05cf
-Q
-!springboot-server/settings.gradle,5\4\549cc8125610eecfea28e478b5830970e4138cbc
 í
 bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerApplicationTests.java,a\1\a1fadad3a7099cac99f4503617f50c098e082525
 ç
