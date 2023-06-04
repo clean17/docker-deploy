@@ -25,20 +25,20 @@ public class TestController {
     }
  
     // @Value("${secret.key}") // prod
-    @Value("${meta.port}")
-    private String port;
-    @Value("${meta.db}")
-    private String db;
-    @Value("${meta.user}")
-    private String user;
-    @Value("${meta.pass}")
-    private String pass;
-
-    @GetMapping("/test")
-    public String tt(){
-
-        return "port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
-    }
+//    @Value("${meta.port}")
+//    private String port;
+//    @Value("${meta.db}")
+//    private String db;
+//    @Value("${meta.user}")
+//    private String user;
+//    @Value("${meta.pass}")
+//    private String pass;
+//
+//    @GetMapping("/test")
+//    public String tt(){
+//
+//        return "port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
+//    }
 
     @GetMapping("/ts")
     public ResponseEntity<?> findAll() {

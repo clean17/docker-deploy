@@ -12,7 +12,8 @@ spring:
   #   password:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=true&enabledTLSProtocols=TLSv1.2
+#    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
     # 도커 서비스명이 도커 컨테이너에서 통신하는 이름이 된다. -> database:
 #     # ${DBHOST:localhost} - DBHOST 가 설정되어 있지 않으면 localhost 사용 # &useSSL=true&enabledTLSProtocols=TLSv1.2
     username: ${MYSQL_USER}

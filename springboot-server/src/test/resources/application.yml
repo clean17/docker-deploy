@@ -3,15 +3,20 @@ server:
   servlet:
     encoding:
       charset: utf-8
-
+      
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=true&enabledTLSProtocols=TLSv1.2
-    # 도커 서비스명이 도커 컨테이너에서 통신하는 이름이 된다. -> database:
-    #     # ${DBHOST:localhost} - DBHOST 가 설정되어 있지 않으면 localhost 사용 # &useSSL=true&enabledTLSProtocols=TLSv1.2
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
+     driver-class-name: org.h2.Driver
+     url: jdbc:h2:mem:test;MODE=MySQL
+     username: sa
+     password:
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/create_table.sql
+      data-locations: classpath:db/insert_data.sql
+      encoding: utf-8
 
   jpa:
     open-in-view: false
@@ -21,9 +26,10 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     show-sql: true
+#    database:
+#      platform: org.hibernate.dialect.MySQL5Dialect
     properties:
-      #      dialect: org.hibernate.dialect.MySQL5Dialect
-      dialect: org.hibernate.dialect.MySQL8Dialect
+      dialect: org.hibernate.dialect.MySQL5Dialect
       '[hibernate.format_sql]': true
       '[default_batch_fetch_size]': 100
     defer-datasource-initialization: true
@@ -43,5 +49,3 @@ meta:
   user: ${MYSQL_USER}
   pass: ${MYSQL_PASSWORD}
 
-secret:
-  key: ${secrets.HS512_SECRET}

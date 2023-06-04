@@ -21,15 +21,7 @@ Rspringboot-server/src/main/java/com/example/springbootserver/todo/dto/TodoRes.j
 ,springboot-server/src/docs/asciidoc/api.adoc,1\2\128edc892732c18f89dca730d430c2e80f77465a
 Ç
 Rspringboot-server/src/main/java/com/example/springbootserver/todo/dto/TodoReq.java,9\3\93baa828f9eded01eef6095f42a61ac74cf9c1e6
-à
-Xspringboot-server/src/test/java/com/example/springbootserver/jpa/TodoRepositoryTest.java,e\f\ef0580ad37025c7fe9b76440057f43338d6220a9
-è
-_springboot-server/src/test/java/com/example/springbootserver/controller/TodoControllerTest.java,f\a\fa61f979d8d2e418b82129071a948f52df76872f
-ã
-[springboot-server/src/main/java/com/example/springbootserver/todo/model/TodoRepository.java,8\5\85e4309334fc31f33cec04007e9d1d0f38e99de8
 ä
 Zspringboot-server/src/main/java/com/example/springbootserver/todo/service/TodoService.java,2\c\2c54273ac893937b8cc76b9d57a5efebc6d8e0d6
 ê
 `springboot-server/src/main/java/com/example/springbootserver/todo/controller/TodoController.java,2\9\294e1d69d4de3b9f97612314a0de1749c83b4c17
-É
-Sspringboot-server/src/test/java/com/example/springbootserver/mock/TodoMockTest.java,a\e\ae7c3f7bcda0c299b9026503309f8149fd213929
