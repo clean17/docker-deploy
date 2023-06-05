@@ -26,7 +26,7 @@ public class UserRepositoryTest {
         Optional<User> user = userRepository.findByEmail(email);
         user.ifPresent(e -> {
             Assertions.assertEquals(e.getId(), 1L);
-            Assertions.assertEquals(e.getRole(), "ROLE_USER");
+            Assertions.assertEquals(e.getRole(), "USER");
         });
     }
 
@@ -48,7 +48,7 @@ public class UserRepositoryTest {
         Optional<User> user = userRepository.findByEmailAndPassword(email,password);
         user.ifPresent(e -> {
             Assertions.assertEquals(e.getId(), 1L);
-            Assertions.assertEquals(e.getRole(), "ROLE_USER");
+            Assertions.assertEquals(e.getRole(), "USER");
         });
     }
 }

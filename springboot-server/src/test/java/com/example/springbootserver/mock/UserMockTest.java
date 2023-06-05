@@ -48,8 +48,8 @@ public class UserMockTest {
     @BeforeEach
     public void setup() {
         users = List.of(
-                User.builder().id(1L).email("son@gmail.com").role("ROLE_USER").password("1234").createdAt(LocalDateTime.now()).username("son").build(),
-                User.builder().id(2L).email("jun@gmail.com").role("ROLE_USER").password("1234").createdAt(LocalDateTime.now()).username("jun").build());
+                User.builder().id(1L).email("son@gmail.com").role("USER").password("1234").createdAt(LocalDateTime.now()).username("son").build(),
+                User.builder().id(2L).email("jun@gmail.com").role("USER").password("1234").createdAt(LocalDateTime.now()).username("jun").build());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class UserMockTest {
                 .email("kane@gmail.com").password("1234").username("kane")
                 .build();
         User user = User.builder()
-                .id(1L).email("kane@gmail.com").role("ROLE_USER").password("1234").createdAt(LocalDateTime.now()).username("kane")
+                .id(1L).email("kane@gmail.com").role("USER").password("1234").createdAt(LocalDateTime.now()).username("kane")
                 .build();
         given(userService.save(userSave)).willReturn(user);
 
@@ -104,7 +104,7 @@ public class UserMockTest {
                 .id(1L).password("4567").username("sonson").email("son@gmail.com")
                 .build();
         User user = User.builder()
-                .id(1L).email("son@gmail.com").role("ROLE_USER").password("4567").createdAt(LocalDateTime.now()).username("sonson")
+                .id(1L).email("son@gmail.com").role("USER").password("4567").createdAt(LocalDateTime.now()).username("sonson")
                 .build();
         given(userService.update(userUpdate)).willReturn(user);
 

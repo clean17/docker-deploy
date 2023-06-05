@@ -31,7 +31,7 @@ public class UserReq {
                     .email(userSave.getEmail())
                     .password(userSave.getPassword())
                     .username(userSave.getUsername())
-                    .role("ROLE_USER")
+                    .role("USER")
                     .build();
         }
     }
@@ -62,7 +62,7 @@ public class UserReq {
                     .email(userUpdate.getEmail())
                     .password(userUpdate.getPassword())
                     .username(userUpdate.getUsername())
-                    .role("ROLE_USER")
+                    .role("USER")
                     .build();
         }
     }

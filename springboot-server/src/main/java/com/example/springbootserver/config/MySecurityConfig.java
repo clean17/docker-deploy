@@ -1,6 +1,7 @@
 package com.example.springbootserver.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,20 +29,30 @@ public class MySecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // JWT 필터 생성자에 필요 - 먼저 빈 등록
+    // JWT 필터 생성자에 필요 - 먼저 빈 등록 // - BasicAuthenticationFilter 사용안함
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    
+
     // HttpSecurity 구성에 사용되는 필터를 정의
-    // JWT 필터 등록이 필요함
+    // JWT 필터 등록이 필요함 -> MyJwtAuthorizationFilter
     public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+
+        private final MyJwtAuthorizationFilter jwtAuthorizationFilter;
+        public CustomSecurityFilterManager(MyJwtAuthorizationFilter jwtAuthorizationFilter) {
+            this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+        }
         @Override
-        public void configure(HttpSecurity builder) throws Exception {
-            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-            builder.addFilter(new MyJwtAuthorizationFilter(authenticationManager));
-            super.configure(builder);
+        public void configure(HttpSecurity http) throws Exception {
+            // 인증 처리 인터페이스 - BasicAuthenticationFilter 사용안함 / HttpSecurity 에서 가져온다.
+//            AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+            // Cors 필터 다음 Jwt 필터
+            http.addFilterAfter(
+//                    new MyJwtAuthorizationFilter(authenticationManager), // BasicAuthenticationFilter 사용 안함
+                    jwtAuthorizationFilter,
+                    CorsFilter.class);
+            super.configure(http);
         }
     }
 
@@ -55,6 +66,7 @@ public class MySecurityConfig {
         http.headers().frameOptions().disable();
 
         // 3. cors 재설정
+        // http.cors() 는 WebMvcConfig Cors 설정 그대로 적용
         http.cors().configurationSource(configurationSource());
 
         // 4. jSessionId 사용 거부
@@ -83,10 +95,10 @@ public class MySecurityConfig {
 
         // 11. 인증, 권한 필터 설정
         http.authorizeRequests(
-                authorize -> authorize.antMatchers("/s/**").authenticated()
+                authorize -> authorize.antMatchers("/todos").authenticated()
                         .antMatchers("/manager/**").access("hasRole('ADMIN') or hasRole('MANAGER')")
                         .antMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().permitAll()
+                        .anyRequest().permitAll() // 나머지 주소 허용
         );
 
         return http.build();

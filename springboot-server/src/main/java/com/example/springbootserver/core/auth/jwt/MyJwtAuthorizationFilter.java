@@ -12,19 +12,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @Slf4j
-public class MyJwtAuthorizationFilter extends BasicAuthenticationFilter {
+// BasicAuthenticationFilter 를 상속해도 됨 - 인증처리 함
+// OncePerRequestFilter 는 인증처리를 하지 않음
+// 토큰 검사만 하면 되므로 OncePerRequestFilter 사용해도 무방
+public class MyJwtAuthorizationFilter extends OncePerRequestFilter {
 
-    public MyJwtAuthorizationFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
+//    public MyJwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+//        super(authenticationManager);
+//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -41,6 +46,7 @@ public class MyJwtAuthorizationFilter extends BasicAuthenticationFilter {
             DecodedJWT decodedJWT = MyJwtProvider.verify(jwt);
             Long id = decodedJWT.getClaim("id").asLong();
             String role = decodedJWT.getClaim("role").asString();
+            Date tokenDate = decodedJWT.getExpiresAt();
             // 토큰 id, role 추출 -> SecurityContext에 인증객체 주입
             User user = User.builder().id(id).role(role).build();
             MyUserDetails myUserDetails = new MyUserDetails(user);
@@ -50,6 +56,10 @@ public class MyJwtAuthorizationFilter extends BasicAuthenticationFilter {
                             myUserDetails.getPassword(),
                             myUserDetails.getAuthorities()
                     );
+
+            // getContext() 는 SecurityContext를 반환하는 정적 메소드
+            // SecurityContextHolder.getContext().getAuthentication() 로 Authentication 객체 가져올 수 있음
+            // SecurityContextHolder 는 ThreadLocal 에 저장 됨
             SecurityContextHolder.getContext().setAuthentication(authentication);
             System.out.println("디버그 : 인증 객체 만들어짐");
         } catch (SignatureVerificationException sve) {

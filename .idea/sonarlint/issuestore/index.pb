@@ -17,8 +17,6 @@ Q
 !springboot-server/settings.gradle,5\4\549cc8125610eecfea28e478b5830970e4138cbc
 ?
 database/my.cnf,1\d\1dde0920ced93f3f69c6e57d75bb72bd8b447774
-C
-database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
 J
 springboot-server/start.sh,4\9\498aa2c36f368d279b71ef8494aaf3dd9dbaa95e
 ê
@@ -29,5 +27,3 @@ Lspringboot-server/src/test/java/com/example/springbootserver/MyRestDocs.java,8
 Ospringboot-server/src/test/java/com/example/springbootserver/util/JDBCTest.java,f\2\f2194493d74cf77d0723b6054bd730df2409476a
 z
 Jspringboot-server/src/test/java/com/example/springbootserver/util/Env.java,2\0\20922639af68791fd45d4eb48ce672d5c951fc41
-N
-springboot-server/build.gradle,c\8\c856674778b908767b2e951b28a8d58b7930942e

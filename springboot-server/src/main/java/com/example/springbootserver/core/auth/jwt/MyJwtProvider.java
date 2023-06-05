@@ -22,6 +22,8 @@ public class MyJwtProvider {
     public static String create(User user) {
         String jwt = JWT.create()
                 .withSubject(SUBJECT)
+                .withIssuer("my app")
+                .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
                 .withClaim("id", user.getId())
                 .withClaim("role", user.getRole())
