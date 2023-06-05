@@ -12,9 +12,9 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        .allowedOriginPatterns("http://localhost:3000","*") // Post Man으로 테스트
-        // .allowedOriginPatterns("http://localhost:3000") // 프론트에서만 허용 / 빈스톡 주소로 변경
-        .allowedMethods("*")
+        // .allowedOriginPatterns("http://localhost:3000","*") // Post Man으로 테스트
+        .allowedOriginPatterns("http://localhost:3000") // 프론트에서만 허용 / 빈스톡 주소로 변경
+        .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
         .allowedHeaders("*")
         // true 로 설정하면 allowedOrigins을 "*"로 설정할 수 없다 -> OriginPatterns을 사용한다.
         .allowCredentials(true)

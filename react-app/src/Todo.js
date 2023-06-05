@@ -12,12 +12,15 @@ import DeleteOutlined from '@material-ui/icons/DeleteOutlined';
 class Todo extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { item: props.item, readOnly: true, isChecked: true };
+        this.state = { item: props.item, readOnly: true };
         this.delete = props.delete;
+        this.update = props.update;
     }
 
     deleteEventHandler = () => {
-        this.delete(this.state.item)
+        // 구조 분해 할당 - 추출해줌
+        const { id } = this.state.item;
+        this.delete(id);
     }
 
     offReadOnlyMode = () => {
@@ -27,6 +30,7 @@ class Todo extends React.Component {
     enterKeyHandler = (e) => {
         if (e.key ==='Enter'){
             this.setState({ readOnly: true });
+            this.update(this.state.item);
         }
     }
 
@@ -39,12 +43,11 @@ class Todo extends React.Component {
     checkboxEventHandler = (e) => {
         const thisItem = this.state.item;
         thisItem.done = !thisItem.done;
-        thisItem.isChecked = !thisItem.isChecked;
         this.setState({ item: thisItem }, () => {
             // 변경된 상태를 출력하려면 item까지 들어가서 속성을 꺼내야함
-            console.log("isChecked? ", this.state.item.isChecked)
             console.log("done? ", this.state.item.done)
         });
+        this.update(this.state.item);
     }
 
     // disableRipple 리플효과 - 잔상효과 제거
@@ -62,7 +65,7 @@ class Todo extends React.Component {
                     <InputBase
                         inputProps={{
                             "aria-label": "naked",
-                            style: { textDecoration: item.isChecked ? 'line-through' : 'none' },
+                            style: { textDecoration: item.done ? 'line-through' : 'none' },
                             readOnly: this.state.readOnly,
                         }}
                         onClick={ this.offReadOnlyMode }

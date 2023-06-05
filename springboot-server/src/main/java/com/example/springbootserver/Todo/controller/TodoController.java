@@ -28,30 +28,30 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    // @GetMapping
-    // public ResponseEntity<?> findbyUserId() {
-    //     Long id = 1L;
-    //     List<Todo> entityList = todoService.findbyUserId(id);
-    //     List<TodoRes.TodoDto> todoList = new ArrayList<>();
-    //     for (Todo todo : entityList) {
-    //         TodoRes.TodoDto todoDTO = new TodoRes.TodoDto(todo);
-    //         todoList.add(todoDTO);
-    //     }
-    //     return new ResponseEntity<>(new ResponseDTO<>(200, "조회 성공", todoList), HttpStatus.OK);
-    //     // return ResponseEntity.ok().body(response);
-    // }
+    @GetMapping
+    public ResponseEntity<?> findbyUserId() {
+        Long id = 1L;
+        List<Todo> entityList = todoService.findbyUserId(id);
+        List<TodoRes.TodoDto> todoList = new ArrayList<>();
+        for (Todo todo : entityList) {
+            TodoRes.TodoDto todoDTO = new TodoRes.TodoDto(todo);
+            todoList.add(todoDTO);
+        }
+        return new ResponseEntity<>(new ResponseDTO<>(200, "조회 성공", todoList), HttpStatus.OK);
+        // return ResponseEntity.ok().body(response);
+    }
 
-   @GetMapping
-   public ResponseEntity<?> findAll() {
-       List<Todo> entityList = todoService.findAll();
-       List<TodoRes.TodoDto> todoList = new ArrayList<>();
-       for (Todo todo : entityList) {
-           TodoRes.TodoDto todoDTO = new TodoRes.TodoDto(todo);
-           todoList.add(todoDTO);
-       }
-       return new ResponseEntity<>(new ResponseDTO<>(200, "조회 성공", todoList), HttpStatus.OK);
-       // return ResponseEntity.ok().body(response);
-   }
+//    @GetMapping
+//    public ResponseEntity<?> findAll() {
+//        List<Todo> entityList = todoService.findAll();
+//        List<TodoRes.TodoDto> todoList = new ArrayList<>();
+//        for (Todo todo : entityList) {
+//            TodoRes.TodoDto todoDTO = new TodoRes.TodoDto(todo);
+//            todoList.add(todoDTO);
+//        }
+//        return new ResponseEntity<>(new ResponseDTO<>(200, "조회 성공", todoList), HttpStatus.OK);
+//        // return ResponseEntity.ok().body(response);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {

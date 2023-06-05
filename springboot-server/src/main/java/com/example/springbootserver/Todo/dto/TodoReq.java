@@ -17,7 +17,7 @@ public class TodoReq {
     @NoArgsConstructor
     @EqualsAndHashCode
     public static class TodoSave {
-        @NotNull(message = "로그인이 필요합니다.")
+        // @NotNull(message = "로그인이 필요합니다.")
         private Long userId;
         @NotBlank(message = "타이틀을 입력하세요.")
         private String title;

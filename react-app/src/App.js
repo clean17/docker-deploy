@@ -16,37 +16,40 @@ class App extends React.Component {
 
   // 컴포넌트가 렌더링되면 자동적으로 실행되는 함수
   async componentDidMount() {
-    await call("/todos", "GET", null).then((response) => 
-      this.setState({ items:  response.data }))
+    await call("/todos", "GET", null).then((response) =>
+      this.setState({ items: response.data }))
   }
   // 리스트 추가
-   add = async (item) => { 
-    // const thisItems = this.state.items;
-    // item.id = "ID-" + thisItems.length; // key를 위한 id 추가
-    // item.done = false; // done 속성을 추가했기 때문에 Todo 에서 사용가능
-    // thisItems.push(item);
-    // this.setState({ items: thisItems });
-    await call("/todos", "POST", item).then((response) => 
+  add = async (item) => {
+    await call("/todos", "POST", item).then((response) =>
       this.setState({ items: [...this.state.items, response.data] })
     );
 
   }
 
-  delete = async (item) => {
-    // const thisItems = this.state.items;
-    // const newItems = thisItems.filter(e => e.id !== item.id);
-    // this.setState({ items: newItems })
-    const id = this.item.id;
-    await call("/todos/"+id, "DELETE", item).then((response) =>
-      this.setState({ items: this.state.items.filter(item => item.id !== id) }))
+  delete = async (itemId) => {
+    await call("/todos/" + itemId, "DELETE", null).then((response) =>
+      this.setState({ items: this.state.items.filter(item => item.id !== itemId) }))
+  }
+
+  update = async (item) => {
+    await call("/todos", "PUT", item).then((response) => {
+      this.setState({ items: [...this.state.items].map((e) => e.id !== item.id ? e : response.data) });
+    }
+    );
   }
 
   render() {
     let todoItems = this.state.items.length > 0 && (
-      <Paper style={{ margin: 16 }} elevation={ 2 }>
+      <Paper style={{ margin: 16 }} elevation={2}>
         <List>
           {this.state.items.map((item, idx) => (
-            <Todo item={item} key={item.id} delete={this.delete} />
+            <Todo
+              item={item}
+              key={item.id}
+              delete={this.delete}
+              update={this.update}
+            />
           ))}
         </List>
       </Paper>
@@ -57,7 +60,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container maxWidth='md'>
-          <AddTodo add={this.add}/>
+          <AddTodo add={this.add} />
           <div className='TodoList'>{todoItems}</div>
         </Container>
       </div>
