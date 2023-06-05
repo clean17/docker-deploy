@@ -2,17 +2,16 @@ package com.example.springbootserver.mock;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.springbootserver.core.MyWithMockUser;
 import com.example.springbootserver.todo.dto.TodoReq;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -129,10 +128,11 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void save_MockTest() throws Exception {
         // given
         TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
-                .userId(1L).title("이마트 가기").done(false)
+                .title("이마트 가기").done(false)
                 .build();
         Todo todo = Todo.builder()
                 .id(3L).userId(1L).title("이마트 가기").done(false)

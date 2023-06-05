@@ -1,6 +1,6 @@
 package com.example.springbootserver.controller;
 
-import com.example.springbootserver.MyRestDocs;
+import com.example.springbootserver.core.MyRestDocs;
 import com.example.springbootserver.todo.dto.TodoReq;
 import com.example.springbootserver.todo.model.Todo;
 import com.fasterxml.jackson.databind.ObjectMapper;

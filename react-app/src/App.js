@@ -20,7 +20,7 @@ class App extends React.Component {
       this.setState({ items: response.data }))
   }
   // 리스트 추가
-  add = async (item) => {
+  save = async (item) => {
     await call("/todos", "POST", item).then((response) =>
       this.setState({ items: [...this.state.items, response.data] })
     );
@@ -60,7 +60,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container maxWidth='md'>
-          <AddTodo add={this.add} />
+          <AddTodo save={this.save} />
           <div className='TodoList'>{todoItems}</div>
         </Container>
       </div>

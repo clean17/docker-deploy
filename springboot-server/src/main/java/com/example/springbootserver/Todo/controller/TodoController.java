@@ -21,7 +21,6 @@ import com.example.springbootserver.core.dto.ResponseDTO;
 @RestController
 @RequestMapping("todos")
 public class TodoController {
-
     private final TodoService todoService;
 
     public TodoController(TodoService todoService) {

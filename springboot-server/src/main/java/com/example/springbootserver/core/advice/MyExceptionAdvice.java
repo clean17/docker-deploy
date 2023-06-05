@@ -41,7 +41,7 @@ public class MyExceptionAdvice {
 
     @ExceptionHandler(Exception500.class)
     public ResponseEntity<?> serverError(Exception500 e) {
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(500, "일시적인 서버 오류입니다.", null);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(500, e.getMessage(), null);
         return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

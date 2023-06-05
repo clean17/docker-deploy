@@ -17,10 +17,13 @@ public class TodoReq {
     @NoArgsConstructor
     @EqualsAndHashCode
     public static class TodoSave {
+
         // @NotNull(message = "로그인이 필요합니다.")
         private Long userId;
+
         @NotBlank(message = "타이틀을 입력하세요.")
         private String title;
+
         // boolean 값을 주지 않으면 디폴트 false
         private boolean done;
 
@@ -41,12 +44,16 @@ public class TodoReq {
     @NoArgsConstructor
     @EqualsAndHashCode
     public static class TodoUpdate {
+
         @NotNull(message = "id값이 필요합니다.") // Long 타입도 NotBlack 불가
         private Long id;
+
         // @NotNull(message = "로그인이 필요합니다.")
         private Long userId;
+
         @NotBlank(message = "타이틀을 입력하세요.") // String 만 NotBlank
         private String title;
+
         @NotNull(message = "done값을 입력하세요.") // boolean -> @Valid가 검사하지 못한다. Boolean 로 만들어야함
         private Boolean done;
 

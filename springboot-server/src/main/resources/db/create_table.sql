@@ -1,6 +1,6 @@
 CREATE TABLE todos (
     id BIGINT auto_increment primary key,
-    userId BIGINT not null,
+    user_id BIGINT not null,
     title varchar(100) not null,
     done boolean not null
 );
@@ -15,7 +15,7 @@ CREATE TABLE users (
   updated_at DATETIME
 );
 
-CREATE TABLE tstables ( 
+CREATE TABLE tstables (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(20) NOT NULL UNIQUE
 );

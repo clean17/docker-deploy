@@ -9,6 +9,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.example.springbootserver.todo.model.Todo;
 import com.example.springbootserver.todo.model.TodoRepository;
+import com.example.springbootserver.core.exception.Exception400;
 import com.example.springbootserver.core.exception.Exception500;
 import com.example.springbootserver.todo.dto.TodoReq;
 import com.example.springbootserver.todo.dto.TodoReq.TodoSave;
@@ -30,7 +31,7 @@ public class TodoService {
     public List<Todo> findbyUserId(Long id) {
         try {
             return todoRepository.findByUserId(id)
-                .orElseThrow(() -> new Exception500("조회 데이터가 없습니다."));
+                .orElseThrow(() -> new Exception400(null,"조회 데이터가 없습니다."));
         } catch (Exception500 e) {
             throw new Exception500("조회에 실패했습니다.");
         }
@@ -54,7 +55,7 @@ public class TodoService {
     public Todo findbyId(final Long id) {
         try {
             return todoRepository.findById(id)
-                    .orElseThrow(() -> new Exception500("조회 데이터가 없습니다."));
+                    .orElseThrow(() -> new Exception400(null,"조회 데이터가 없습니다."));
         } catch (Exception500 e) {
             throw new Exception500("조회에 실패했습니다.");
         }
@@ -89,7 +90,7 @@ public class TodoService {
     public void delete(Long id) {
         try {
             Todo todo = todoRepository.findById(id)
-                    .orElseThrow(() -> new Exception500("조회 데이터가 없습니다."));
+                    .orElseThrow(() -> new Exception400(null,"조회 데이터가 없습니다."));
             todoRepository.delete(todo);
             log.info("Todo delete 완료");
         } catch (Exception500 e) {

@@ -5,7 +5,7 @@ class AddTodo extends React.Component {
     constructor(props) {
         super(props);
         this.state = { item: { title: "" } };
-        this.add = props.add;
+        this.save = props.save;
     }
 
     // 함수안에서 프로퍼티에 접근하려면 정의부터
@@ -17,7 +17,7 @@ class AddTodo extends React.Component {
     }
 
     onButtonClick = () => {
-        this.add(this.state.item);
+        this.save(this.state.item); // save ( Post )
         this.setState({ item: { title: "" } }) // 다시 타이틀 초기화
     }
 

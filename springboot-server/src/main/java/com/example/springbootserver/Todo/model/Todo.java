@@ -22,6 +22,7 @@ public class Todo {
     // @GeneratedValue(generator = "system-uuid")
     // @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private Long id;
+    @Column(name = "user_id")
     private Long userId;
     private String title;
     @Column(columnDefinition = "TINYINT(1)")
