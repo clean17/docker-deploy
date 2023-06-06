@@ -21,7 +21,6 @@ spring:
     # username: metacoding
     # password: metacoding
 
-
   # security:
   #   user:
   #     name: ssar
@@ -43,8 +42,8 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     show-sql: true
     properties:
-#      dialect: org.hibernate.dialect.MySQL5Dialect
-      dialect: org.hibernate.dialect.MySQL8Dialect
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      # dialect: org.hibernate.dialect.MySQL8Dialect
       '[hibernate.format_sql]': true
       '[default_batch_fetch_size]': 100
     defer-datasource-initialization: true

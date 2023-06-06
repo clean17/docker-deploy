@@ -5,8 +5,6 @@ L
 bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerApplicationTests.java,a\1\a1fadad3a7099cac99f4503617f50c098e082525
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/SpringbootServerApplication.java,8\f\8fe97d4784c636a2452afe2939414b956464acf3
-á
-Wspringboot-server/src/main/java/com/example/springbootserver/config/MyWebMvcConfig.java,f\4\f4b532697886357923a003d2d677e115d5681b64
 ã
 [springboot-server/src/main/java/com/example/springbootserver/core/advice/MyValidAdvice.java,0\c\0c871613ad22821ca8698d868744b9cdeabdefe4
 \
@@ -37,8 +35,6 @@ B
 docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 à
 Xspringboot-server/src/test/java/com/example/springbootserver/jpa/TodoRepositoryTest.java,e\f\ef0580ad37025c7fe9b76440057f43338d6220a9
-è
-_springboot-server/src/main/java/com/example/springbootserver/config/MyFilterRegisterConfig.java,1\1\116459cef4e58c75d4e09a89e3ef367a6e2989a9
 E
 react-app/src/Todo.js,c\4\c4ab3f030446bbe2e0400a7ef3704d8c49bad517
 D
@@ -61,8 +57,6 @@ Q
 !database/scripts/create_table.sql,b\2\b2f7359e3154b0059dc5344fe64021bc6236dbab
 P
  database/scripts/insert_data.sql,a\9\a93aa156f233bcfda4075649656383e17f53639f
-É
-Sspringboot-server/src/test/java/com/example/springbootserver/mock/TodoMockTest.java,a\e\ae7c3f7bcda0c299b9026503309f8149fd213929
 ä
 Zspringboot-server/src/main/java/com/example/springbootserver/user/service/UserService.java,5\0\50a9c2b82a79475a4e675667fd1b5bf7162441a8
 ê
@@ -89,5 +83,3 @@ aspringboot-server/src/main/java/com/example/springbootserver/core/auth/session/
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/session/MyUserDetailsService.java,0\8\083ec3beef4d47618caa17494aa5374515b72c3c
 ò
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/jwt/MyJwtAuthorizationFilter.java,9\7\973bdabf3c171b0e0166693a034fe1d317b3cfd2
-â
-Yspringboot-server/src/main/java/com/example/springbootserver/config/MySecurityConfig.java,9\9\99cdb6ff89049066d2db3f35fc5413d16f72ebe0

@@ -1,6 +1,7 @@
 package com.example.springbootserver.controller;
 
 import com.example.springbootserver.core.MyRestDocs;
+import com.example.springbootserver.core.MyWithMockUser;
 import com.example.springbootserver.todo.dto.TodoReq;
 import com.example.springbootserver.todo.model.Todo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class TodoControllerTest extends MyRestDocs {
 
     List<Todo> todos;
@@ -41,6 +43,7 @@ public class TodoControllerTest extends MyRestDocs {
 
     @Test
     @Transactional
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findAll_테스트() throws Exception {
         this.mockMvc.perform(get("/todos"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -54,6 +57,7 @@ public class TodoControllerTest extends MyRestDocs {
 
     @Test
     @Transactional
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findOne_테스트() throws Exception {
         Long id = 2L;
         this.mockMvc.perform(get("/todos/{id}", id))
@@ -69,6 +73,7 @@ public class TodoControllerTest extends MyRestDocs {
 
     @Test
     @Transactional
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void save_테스트() throws Exception {
         TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
                 .userId(1L).title("이마트 가기").done(false)
@@ -89,6 +94,7 @@ public class TodoControllerTest extends MyRestDocs {
 
     @Test
     @Transactional
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void update_테스트() throws Exception {
         TodoReq.TodoUpdate todoUpdate = TodoReq.TodoUpdate.builder()
                 .id(1L).userId(1L).title("아침먹고 공부하기").done(true)
@@ -109,6 +115,7 @@ public class TodoControllerTest extends MyRestDocs {
 
     @Test
     @Transactional
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void delete_테스트() throws Exception {
         Long id = 2L;
         this.mockMvc.perform(get("/todos/{id}", id))

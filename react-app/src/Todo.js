@@ -55,6 +55,7 @@ class Todo extends React.Component {
     // InputBase 텍스트 입력을 위한 베이스 컴포넌트
     render() {
         const item = this.state.item;
+        const id = item.id.toString();
         return (
             <ListItem>
                 <Checkbox checked={item.done} 
@@ -72,8 +73,8 @@ class Todo extends React.Component {
                         onChange={ this.editEventHandler }
                         onKeyDown={ this.enterKeyHandler }
                         type="text"
-                        id={item.id}
-                        name={item.id}
+                        id={id}
+                        name={id}
                         value={item.title}
                         multiline={true}
                         fullWidth={true}

@@ -19,6 +19,15 @@ services:
 #      - ./database/scripts:/docker-entrypoint-initdb.d/
 #      - ./database/my.cnf:/etc/mysql/conf.d/my.cnf
 #    command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--default-time-zone=Asia/Seoul"]
+
+  react-app:
+    build: ./react-app
+    # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
+    volumes:
+      - ./react-app:/home/node/app
+    ports:
+      - "3000:3000"
+
   springboot-server:
     build: ./springboot-server
     # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
@@ -34,13 +43,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
       - MYSQL_PORT=3306
-  react-app:
-    build: ./react-app
-    # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
-    volumes:
-      - ./react-app:/home/node/app
-    ports:
-      - "3000:3000"
+      - HS512_SECRET=${HS512_SECRET}
 
 volumes:
   mysql-volume:

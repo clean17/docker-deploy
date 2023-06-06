@@ -1,10 +1,8 @@
 package com.example.springbootserver.mock;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.springbootserver.core.MyWithMockUser;
@@ -19,12 +17,15 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.example.springbootserver.config.WebSecurityConfig;
 import com.example.springbootserver.core.advice.MyValidAdvice;
+import com.example.springbootserver.core.auth.session.MyUserDetails;
+import com.example.springbootserver.core.exception.Exception403;
 import com.example.springbootserver.todo.controller.TodoController;
 import com.example.springbootserver.todo.model.Todo;
 import com.example.springbootserver.todo.service.TodoService;
@@ -61,9 +62,9 @@ public class TodoMockTest {
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findAll_MockTest() throws Exception {
         // given
-        Long id = 1L;
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // given(todoService.findAll()).willReturn(todos);
-       given(todoService.findByUserId(id)).willReturn(todos);
+       given(todoService.findByUserId(user)).willReturn(todos);
 
         // when
         this.mockMvc.perform(
@@ -80,28 +81,11 @@ public class TodoMockTest {
 
     @Test
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
-    public void findAllFail_MockTest() throws Exception {
-        // given
-        Long id = 2L;
-        given(todoService.findByUserId(id)).willReturn(new ArrayList<>());
-
-        // when
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders
-                                .get("/todos"))
-                // then
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data").value(new ArrayList<>()));
-
-    }
-
-    @Test
-    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findOne_MockTest() throws Exception {
         // given
         Long id = 1L;
-        given(todoService.findbyId(id)).willReturn(todos.get(0));
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        given(todoService.findbyId(id, user)).willReturn(todos.get(0));
 
         // when
         this.mockMvc.perform(
@@ -120,7 +104,8 @@ public class TodoMockTest {
     public void findOneFail_MockTest() throws Exception {
         // given
         Long id = 1L;
-        given(todoService.findbyId(id)).willReturn(null);
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        given(todoService.findbyId(id, user)).willReturn(null);
 
         // when
         this.mockMvc.perform(
@@ -133,15 +118,34 @@ public class TodoMockTest {
 
     @Test
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
+    public void findOneForbidden_MockTest() throws Exception {
+        // given
+        Long id = 2L;
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        given(todoService.findbyId(id, user)).willThrow(new Exception403("권한 필요"));
+
+        // when
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/todos/{id}", id))
+                // then
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("권한이 필요합니다."))
+                .andDo(print());
+    }
+
+    @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void save_MockTest() throws Exception {
         // given
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
-                .title("이마트 가기").done(false)
+                .userId(1L).title("이마트 가기").done(false)
                 .build();
         Todo todo = Todo.builder()
                 .id(3L).userId(1L).title("이마트 가기").done(false)
                 .build();
-        given(todoService.save(todoSave)).willReturn(todo);
+        given(todoService.save(todoSave, user)).willReturn(todo);
 
         // when
         this.mockMvc.perform(
@@ -159,13 +163,11 @@ public class TodoMockTest {
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void saveFail_MockTest() throws Exception {
         // given
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
                 .userId(1L).done(false)
                 .build();
-        Todo todo = Todo.builder()
-                .id(3L).userId(1L).title("이마트 가기").done(false)
-                .build();
-        given(todoService.save(todoSave)).willReturn(todo);
+        given(todoService.save(todoSave, user)).willReturn(null);
 
         // when
         this.mockMvc.perform(
@@ -180,13 +182,36 @@ public class TodoMockTest {
 
     @Test
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
+    public void saveForbidden_MockTest() throws Exception {
+        // given
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
+                .userId(2L).done(false).title("타이틀")
+                .build();
+        given(todoService.save(todoSave, user)).willThrow(new Exception403("권한 필요"));
+
+        // when
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/todos")
+                                .content(om.writeValueAsString(todoSave))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("권한이 필요합니다."));
+    }
+
+    @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void update_MockTest() throws Exception {
         // given
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TodoReq.TodoUpdate todoUpdate = TodoReq.TodoUpdate.builder()
                 .id(1L).userId(1L).title("아침먹고 공부하기").done(true)
                 .build();
         // any 를 넣으면 주어진 타입의 인스턴스라 판단함 - 무조건 반환됨
-        given(this.todoService.update(any(TodoReq.TodoUpdate.class))).willReturn(
+        // any(TodoReq.TodoUpdate.class)
+        given(this.todoService.update(todoUpdate, user)).willReturn(
                 new Todo(1L, 1L, "아침먹고 공부하기", true));
 
         // when
@@ -202,10 +227,56 @@ public class TodoMockTest {
 
     @Test
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
+    public void updateFail_MockTest() throws Exception {
+        // given
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TodoReq.TodoUpdate todoUpdate = TodoReq.TodoUpdate.builder()
+                .userId(1L).title("아침먹고 공부하기").done(true)
+                .build();
+        // any 를 넣으면 주어진 타입의 인스턴스라 판단함 - 무조건 반환됨
+        // any(TodoReq.TodoUpdate.class)
+        given(this.todoService.update(todoUpdate, user)).willThrow(new Exception403("권한 필요"));
+
+        // when
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .put("/todos")
+                                .content(om.writeValueAsString(todoUpdate))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("id값이 필요합니다."));
+    }
+
+    @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
+    public void updateForbidden_MockTest() throws Exception {
+        // given
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TodoReq.TodoUpdate todoUpdate = TodoReq.TodoUpdate.builder()
+                .id(1L).userId(2L).title("아침먹고 공부하기").done(true)
+                .build();
+        // any 를 넣으면 주어진 타입의 인스턴스라 판단함 - 무조건 반환됨
+        // any(TodoReq.TodoUpdate.class)
+        given(this.todoService.update(todoUpdate, user)).willThrow(new Exception403("권한 필요"));
+
+        // when
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .put("/todos")
+                                .content(om.writeValueAsString(todoUpdate))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("권한이 필요합니다."));
+    }
+
+    @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void delete_MockTest() throws Exception {
         // given
         Long id = 2L;
-
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         // when
         this.mockMvc.perform(
                         MockMvcRequestBuilders
@@ -213,11 +284,13 @@ public class TodoMockTest {
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
     @Test
     @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void deleteFail_MockTest() throws Exception {
         // given
         Long id = null;
+        MyUserDetails user = (MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // when
         this.mockMvc.perform(
@@ -226,4 +299,5 @@ public class TodoMockTest {
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().is5xxServerError());
     }
+
 }

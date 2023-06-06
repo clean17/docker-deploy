@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     // Cors 구성 추가 -> Cors Filter
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/*")
+        registry.addMapping("/**")
         // .allowedOriginPatterns("http://localhost:3000","*") // Post Man으로 테스트
         .allowedOriginPatterns("http://localhost:3000") // 프론트에서만 허용 / 빈스톡 주소로 변경
         .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")

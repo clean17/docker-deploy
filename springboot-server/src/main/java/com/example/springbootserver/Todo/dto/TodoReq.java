@@ -18,7 +18,7 @@ public class TodoReq {
     @EqualsAndHashCode
     public static class TodoSave {
 
-        // @NotNull(message = "로그인이 필요합니다.")
+        @NotNull(message = "로그인이 필요합니다.")
         private Long userId;
 
         @NotBlank(message = "타이틀을 입력하세요.")
@@ -48,7 +48,7 @@ public class TodoReq {
         @NotNull(message = "id값이 필요합니다.") // Long 타입도 NotBlack 불가
         private Long id;
 
-        // @NotNull(message = "로그인이 필요합니다.")
+        @NotNull(message = "로그인이 필요합니다.")
         private Long userId;
 
         @NotBlank(message = "타이틀을 입력하세요.") // String 만 NotBlank

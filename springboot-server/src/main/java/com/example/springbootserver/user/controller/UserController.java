@@ -8,6 +8,7 @@ import com.example.springbootserver.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +31,7 @@ public class UserController {
    }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserReq.UserSave userSave) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserReq.UserSave userSave, Errors error) {
         User user = userService.save(userSave);
         UserRes.UserDto userDTO = null;
         if (!ObjectUtils.isEmpty(user)) {
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@Valid @RequestBody UserReq.UserUpdate userUpdate) {
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserReq.UserUpdate userUpdate, Errors error) {
         User user = userService.update(userUpdate);
         UserRes.UserDto userDTO = null;
         if (!ObjectUtils.isEmpty(user)) {

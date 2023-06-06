@@ -20,6 +20,7 @@ EXPOSE 3306
 
 # 실행 명령어 (터미널에 로그 찍히는 것 보기)
 # docker run --name {컨테이너명(지정해주면 됨)} -p 3306:3306 {이미지명}
+# docker run -v <호스트 경로>:<컨테이너 경로> <이미지 이름> ( 볼륨 사용 시 )
 # 컨테이너 확인 docker ps -a
 # docker run --name my-app-database-2 -p 3306:3306 database-img
 

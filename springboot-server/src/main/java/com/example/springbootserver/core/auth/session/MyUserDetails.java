@@ -10,7 +10,6 @@ import com.example.springbootserver.user.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 @Setter
 @Getter

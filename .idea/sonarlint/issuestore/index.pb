@@ -5,8 +5,6 @@ L
 bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerApplicationTests.java,a\1\a1fadad3a7099cac99f4503617f50c098e082525
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/SpringbootServerApplication.java,8\f\8fe97d4784c636a2452afe2939414b956464acf3
-á
-Wspringboot-server/src/main/java/com/example/springbootserver/config/MyWebMvcConfig.java,f\4\f4b532697886357923a003d2d677e115d5681b64
 ã
 [springboot-server/src/main/java/com/example/springbootserver/core/advice/MyValidAdvice.java,0\c\0c871613ad22821ca8698d868744b9cdeabdefe4
 \
@@ -35,8 +33,6 @@ B
 Uspringboot-server/src/test/java/com/example/springbootserver/core/MyWithMockUser.java,3\0\30955037da0bd71395dbafe8e2138cceafc59c91
 L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
-è
-_springboot-server/src/main/java/com/example/springbootserver/config/MyFilterRegisterConfig.java,1\1\116459cef4e58c75d4e09a89e3ef367a6e2989a9
 à
 Xspringboot-server/src/test/java/com/example/springbootserver/jpa/TodoRepositoryTest.java,e\f\ef0580ad37025c7fe9b76440057f43338d6220a9
 E
@@ -61,8 +57,6 @@ P
 [springboot-server/src/main/java/com/example/springbootserver/user/model/UserRepository.java,a\3\a355773af4f760f73bdd4afd732010ae6e873825
 ä
 Zspringboot-server/src/main/java/com/example/springbootserver/todo/service/TodoService.java,2\c\2c54273ac893937b8cc76b9d57a5efebc6d8e0d6
-É
-Sspringboot-server/src/test/java/com/example/springbootserver/mock/TodoMockTest.java,a\e\ae7c3f7bcda0c299b9026503309f8149fd213929
 è
 _springboot-server/src/main/java/com/example/springbootserver/core/advice/MyExceptionAdvice.java,d\5\d5e219fcdebe7d7fd3ebbc82c710234dd2379515
 Ç
@@ -89,5 +83,3 @@ N
 springboot-server/build.gradle,c\8\c856674778b908767b2e951b28a8d58b7930942e
 C
 database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
-â
-Yspringboot-server/src/main/java/com/example/springbootserver/config/MySecurityConfig.java,9\9\99cdb6ff89049066d2db3f35fc5413d16f72ebe0

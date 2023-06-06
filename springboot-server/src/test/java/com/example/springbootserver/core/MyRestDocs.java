@@ -18,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 
 @ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
 public class MyRestDocs {

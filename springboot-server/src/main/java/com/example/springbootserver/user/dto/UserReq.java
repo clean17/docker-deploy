@@ -2,6 +2,7 @@ package com.example.springbootserver.user.dto;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.example.springbootserver.user.model.User;
 import lombok.*;
@@ -44,7 +45,7 @@ public class UserReq {
     @EqualsAndHashCode
     public static class UserUpdate {
 
-//        @NotNull(message = "로그인이 필요한 서비스입니다.")
+        @NotNull(message = "로그인이 필요한 서비스입니다.")
         private Long id;
 
         @NotBlank(message = "아이디를 입력하세요.")
