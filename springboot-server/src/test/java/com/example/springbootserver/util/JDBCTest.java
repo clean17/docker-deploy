@@ -28,7 +28,7 @@ public class JDBCTest {
             Class.forName("com.mysql.cj.jdbc.Driver"); // 해당 드라이버를 클래스로더에 넘겨준다.
             // 동적으로 자바 클래스를 로딩한다. 드라이버 인스턴스를 생성하여 DriverManager에 등록
 //            conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db+","+user+","+pass);
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+env+"?characterEncoding=utf-8&serverTimezone=Asia/Seoul",env,env);
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+env+"?characterEncoding=utf-8&serverTimezone=Asia/Seoul&useSSL=true&enabledTLSProtocols=TLSv1.2",env,env);
             System.out.println("DB 연결 완료");
             stmt = conn.createStatement();  // Statement 객체 생성  (SQL문을 사용하게 해준다)
 

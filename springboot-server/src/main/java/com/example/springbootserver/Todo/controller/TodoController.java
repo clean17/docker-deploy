@@ -28,9 +28,9 @@ public class TodoController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findbyUserId() {
+    public ResponseEntity<?> findByUserId() {
         Long id = 1L;
-        List<Todo> entityList = todoService.findbyUserId(id);
+        List<Todo> entityList = todoService.findByUserId(id);
         List<TodoRes.TodoDto> todoList = new ArrayList<>();
         for (Todo todo : entityList) {
             TodoRes.TodoDto todoDTO = new TodoRes.TodoDto(todo);

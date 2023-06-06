@@ -1,9 +1,8 @@
 package com.example.springbootserver.mock;
 
-import com.example.springbootserver.config.MySecurityConfig;
+import com.example.springbootserver.config.WebSecurityConfig;
 import com.example.springbootserver.core.advice.MyValidAdvice;
 import com.example.springbootserver.core.exception.Exception400;
-import com.example.springbootserver.core.exception.Exception500;
 import com.example.springbootserver.user.controller.UserController;
 import com.example.springbootserver.user.dto.UserReq;
 import com.example.springbootserver.user.model.User;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @WebMvcTest(UserController.class)
 @EnableAspectJAutoProxy
 @MockBean(JpaMetamodelMappingContext.class) // 실제 DB 연결없이 테스트
-@Import({MySecurityConfig.class, MyValidAdvice.class})
+@Import({WebSecurityConfig.class, MyValidAdvice.class})
 public class UserMockTest {
 
     @MockBean

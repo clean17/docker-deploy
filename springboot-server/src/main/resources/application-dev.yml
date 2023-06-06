@@ -12,12 +12,14 @@ spring:
   #   password:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useSSL=true&enabledTLSProtocols=TLSv1.2
-#    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?characterEncoding=utf-8&serverTimezone=Asia/Seoul&useSSL=true&enabledTLSProtocols=TLSv1.2
+    # url: jdbc:mysql://localhost:3306/metacoding?characterEncoding=utf-8&serverTimezone=Asia/Seoul&useSSL=true&enabledTLSProtocols=TLSv1.2
     # 도커 서비스명이 도커 컨테이너에서 통신하는 이름이 된다. -> database:
 #     # ${DBHOST:localhost} - DBHOST 가 설정되어 있지 않으면 localhost 사용 # &useSSL=true&enabledTLSProtocols=TLSv1.2
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
+    # username: metacoding
+    # password: metacoding
 
 
   # security:
@@ -25,12 +27,12 @@ spring:
   #     name: ssar
   #     password: 1234
 
-#  sql:
-#    init:
-#      mode: always
-#      schema-locations: classpath:db/create_table.sql
-#      data-locations: classpath:db/insert_data.sql
-#      encoding: utf-8
+  # sql:
+  #   init:
+  #     mode: always
+  #     schema-locations: classpath:db/create_table.sql
+  #     data-locations: classpath:db/insert_data.sql
+  #     encoding: utf-8
 
   jpa:
     open-in-view: false
@@ -54,6 +56,7 @@ spring:
 logging:
   level:
     '[org.springframework.boot.web]': DEBUG
+    '[com.example]': DEBUG
 
 meta:
   host: ${MYSQL_HOST}

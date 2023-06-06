@@ -13,10 +13,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Transactional
+    public User findUser(final Long id) {
+        try {
+            return userRepository.findById(id)
+                .orElseThrow();
+        } catch (Exception500 e) {
+            throw new Exception500("회원가입에 실패했습니다.");
+        }
     }
 
     @Transactional

@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.springbootserver.config.MySecurityConfig;
+import com.example.springbootserver.config.WebSecurityConfig;
 import com.example.springbootserver.core.advice.MyValidAdvice;
 import com.example.springbootserver.todo.controller.TodoController;
 import com.example.springbootserver.todo.model.Todo;
@@ -35,7 +35,7 @@ import com.example.springbootserver.todo.service.TodoService;
 @WebMvcTest(TodoController.class)
 @EnableAspectJAutoProxy
 @MockBean(JpaMetamodelMappingContext.class) // 실제 DB 연결없이 테스트
-@Import({MySecurityConfig.class, MyValidAdvice.class})
+@Import({WebSecurityConfig.class, MyValidAdvice.class})
 public class TodoMockTest {
 
     @MockBean
@@ -58,11 +58,12 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findAll_MockTest() throws Exception {
         // given
         Long id = 1L;
         // given(todoService.findAll()).willReturn(todos);
-       given(todoService.findbyUserId(id)).willReturn(todos);
+       given(todoService.findByUserId(id)).willReturn(todos);
 
         // when
         this.mockMvc.perform(
@@ -78,10 +79,11 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findAllFail_MockTest() throws Exception {
         // given
         Long id = 2L;
-        given(todoService.findbyUserId(id)).willReturn(new ArrayList<>());
+        given(todoService.findByUserId(id)).willReturn(new ArrayList<>());
 
         // when
         this.mockMvc.perform(
@@ -95,6 +97,7 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findOne_MockTest() throws Exception {
         // given
         Long id = 1L;
@@ -113,6 +116,7 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void findOneFail_MockTest() throws Exception {
         // given
         Long id = 1L;
@@ -152,6 +156,7 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void saveFail_MockTest() throws Exception {
         // given
         TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
@@ -174,6 +179,7 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void update_MockTest() throws Exception {
         // given
         TodoReq.TodoUpdate todoUpdate = TodoReq.TodoUpdate.builder()
@@ -195,6 +201,7 @@ public class TodoMockTest {
     }
 
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void delete_MockTest() throws Exception {
         // given
         Long id = 2L;
@@ -207,6 +214,7 @@ public class TodoMockTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     @Test
+    @MyWithMockUser(id = 1L, username = "son", role = "USER")
     public void deleteFail_MockTest() throws Exception {
         // given
         Long id = null;

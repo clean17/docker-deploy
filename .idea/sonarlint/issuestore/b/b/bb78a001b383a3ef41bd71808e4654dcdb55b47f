@@ -1,9 +1,0 @@
-
-<
-java:S1452,"&Remove usage of generic wildcard type.(òª’
-X	java:S125"<This block of commented-out lines of code should be removed.(ÆŒêß8á«’¾ˆ1
-Q	java:S1250"<This block of commented-out lines of code should be removed.(š°ýŠ
-N
-java:S1128"3Remove this unused import 'javax.validation.Valid'.(æ¤ñ÷úÿÿÿÿ
-l
-java:S1128"ORemove this unused import 'org.springframework.beans.factory.annotation.Value'.(ìø›8ã«’¾ˆ1

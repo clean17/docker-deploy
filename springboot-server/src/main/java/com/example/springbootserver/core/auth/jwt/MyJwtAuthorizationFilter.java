@@ -46,7 +46,6 @@ public class MyJwtAuthorizationFilter extends OncePerRequestFilter {
             DecodedJWT decodedJWT = MyJwtProvider.verify(jwt);
             Long id = decodedJWT.getClaim("id").asLong();
             String role = decodedJWT.getClaim("role").asString();
-            Date tokenDate = decodedJWT.getExpiresAt();
             // 토큰 id, role 추출 -> SecurityContext에 인증객체 주입
             User user = User.builder().id(id).role(role).build();
             MyUserDetails myUserDetails = new MyUserDetails(user);

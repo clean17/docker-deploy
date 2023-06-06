@@ -6,12 +6,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
+@ActiveProfiles("test")
 public class TodoRepositoryTest {
 
     @Autowired

@@ -28,7 +28,7 @@ public class TodoService {
     }
 
     @Transactional
-    public List<Todo> findbyUserId(Long id) {
+    public List<Todo> findByUserId(final Long id) {
         try {
             return todoRepository.findByUserId(id)
                 .orElseThrow(() -> new Exception400(null,"조회 데이터가 없습니다."));

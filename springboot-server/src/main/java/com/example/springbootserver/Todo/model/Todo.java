@@ -1,31 +1,26 @@
 package com.example.springbootserver.todo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name="todos")
+@Table(name = "todos")
 @Builder
 public class Todo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Long 으로 만들경우 
-    // 아래는 문자열 형태의 UUID를 사용하기 위한 커스텀 generator
-    // @GeneratedValue(generator = "system-uuid")
-    // @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private Long id;
-    @Column(name = "user_id")
+
+    @Column(name = "user_id")    
     private Long userId;
+
     private String title;
+    
     @Column(columnDefinition = "TINYINT(1)")
     private boolean done;
-
 }

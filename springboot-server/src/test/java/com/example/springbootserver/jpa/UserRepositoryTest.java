@@ -9,11 +9,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.example.springbootserver.user.model.User;
 import com.example.springbootserver.user.model.UserRepository;
 
 @DataJpaTest
+@ActiveProfiles("test")
 public class UserRepositoryTest {
     
     @Autowired
