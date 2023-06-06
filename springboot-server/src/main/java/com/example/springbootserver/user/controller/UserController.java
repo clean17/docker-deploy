@@ -6,10 +6,10 @@ import com.example.springbootserver.user.dto.UserReq;
 import com.example.springbootserver.user.dto.UserRes;
 import com.example.springbootserver.user.model.User;
 import com.example.springbootserver.user.service.UserService;
+import com.example.springbootserver.user.service.UserService.LoginJWT;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +21,9 @@ public class UserController {
 
     private final UserService userService;
 
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, BCryptPasswordEncoder passwordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
    @GetMapping("users")
@@ -37,23 +35,18 @@ public class UserController {
 
    @PostMapping("login")
    public ResponseEntity<?> loginUser(@Valid @RequestBody UserReq.UserLogin userLogin, Errors error){
-        User user = userService.login(userLogin);
+        LoginJWT loginJWT = userService.login(userLogin);
         UserRes.UserDto userDTO = null;
-        if (!ObjectUtils.isEmpty(user)) {
-            userDTO = new UserRes.UserDto(user);
-        }
-        String jwt = "";
-        // matches() 는 Salt를 고려해 비교해준다.
-        if (passwordEncoder.matches(userLogin.getPassword(), user.getPassword())) {
-            jwt = MyJwtProvider.create(user);
+        if (!ObjectUtils.isEmpty(loginJWT.getUser())) {
+            userDTO = new UserRes.UserDto(loginJWT.getUser());
         }
         ResponseDTO<?> responseDTO = new ResponseDTO<>(200, "로그인 성공", userDTO);
-        return ResponseEntity.ok().header(MyJwtProvider.HEADER, jwt).body(responseDTO);
+        return ResponseEntity.ok().header(MyJwtProvider.HEADER, loginJWT.getJwt()).body(responseDTO);
    }
 
     @PostMapping("join")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserReq.UserSave userSave, Errors error) {
-        User user = userService.save(userSave);
+        User user = userService.join(userSave);
         UserRes.UserDto userDTO = null;
         if (!ObjectUtils.isEmpty(user)) {
             userDTO = new UserRes.UserDto(user);

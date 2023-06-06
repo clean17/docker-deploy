@@ -34,16 +34,16 @@ public class TodoControllerTest extends MyRestDocs {
     @Autowired
     private ObjectMapper om;
 
-    @BeforeEach
-    public void setup() {
-        todos = List.of(
-                Todo.builder().id(1L).userId(1L).title("아침먹고 운동하기").done(false).build(),
-                Todo.builder().id(2L).userId(1L).title("점심먹고 운동하기").done(false).build());
-    }
+//    @BeforeEach
+//    public void setup() {
+//        todos = List.of(
+//                Todo.builder().id(1L).userId(1L).title("아침먹고 운동하기").done(false).build(),
+//                Todo.builder().id(2L).userId(1L).title("점심먹고 운동하기").done(false).build());
+//    }
 
     @Test
     @Transactional
-    @MyWithMockUser(id = 1L, username = "son", role = "USER")
+    @MyWithMockUser(id = 1L, username = "ssar", role = "USER")
     public void findAll_테스트() throws Exception {
         this.mockMvc.perform(get("/todos"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -72,11 +72,11 @@ public class TodoControllerTest extends MyRestDocs {
     }
 
     @Test
-    @Transactional
-    @MyWithMockUser(id = 1L, username = "son", role = "USER")
+//    @Transactional
+    @MyWithMockUser(id = 2, username = "ssar", role = "USER")
     public void save_테스트() throws Exception {
         TodoReq.TodoSave todoSave = TodoReq.TodoSave.builder()
-                .userId(1L).title("이마트 가기").done(false)
+                .userId(2L).title("이마트 가기").done(false)
                 .build();
 
         this.mockMvc.perform(post("/todos")

@@ -6,10 +6,10 @@ COPY ./scripts/ /docker-entrypoint-initdb.d/
 COPY ./my.cnf /etc/mysql/conf.d/my.cnf
 
 # MySQL Configuration
-#RUN echo "[mysqld]" >> /etc/mysql/my.cnf \
-#    && echo "character-set-server=utf8mb4" >> /etc/mysql/my.cnf \
-#    && echo "collation-server=utf8mb4_unicode_ci" >> /etc/mysql/my.cnf \
-#    && echo "default-time-zone=Asia/Seoul" >> /etc/mysql/my.cnf
+ENV MYSQL_USER=${HS512_SECRET} \
+    MYSQL_PASSWORD=${HS512_SECRET} \
+    MYSQL_ROOT_PASSWORD=${HS512_SECRET} \
+    MYSQL_DATABASE=${HS512_SECRET}
 
 RUN chmod 644 /etc/mysql/conf.d/my.cnf
 
@@ -20,7 +20,8 @@ EXPOSE 3306
 
 # 실행 명령어 (터미널에 로그 찍히는 것 보기)
 # docker run --name {컨테이너명(지정해주면 됨)} -p 3306:3306 {이미지명}
-# docker run -v <호스트 경로>:<컨테이너 경로> <이미지 이름> ( 볼륨 사용 시 )
+# docker run -v mysql-volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${HS512_SECRET} database-img   ( 볼륨 사용 시 )
+
 # 컨테이너 확인 docker ps -a
 # docker run --name my-app-database-2 -p 3306:3306 database-img
 

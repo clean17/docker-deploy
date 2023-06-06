@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TodoRepository extends JpaRepository<Todo, Long>{
 
-    Optional<List<Todo>> findByUserId(Long id);
+    Optional<List<Todo>> findByUserId(Long userId);
 
     Optional<Todo> findById(Long id);
 

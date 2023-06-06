@@ -39,9 +39,9 @@ public class MyJwtAuthorizationFilter extends OncePerRequestFilter {
 
         String jwt = prefixJwt.replace(MyJwtProvider.TOKEN_PREFIX, "");
         try {
-            System.out.println("디버그 : 토큰 있음");
             DecodedJWT decodedJWT = MyJwtProvider.verify(jwt);
             Long id = decodedJWT.getClaim("id").asLong();
+            log.info("토큰 유저 ID : "+ id.toString());
             String role = decodedJWT.getClaim("role").asString();
             // 토큰 id, role 추출 -> SecurityContext에 인증객체 주입
             User user = User.builder().id(id).role(role).build();
@@ -57,7 +57,7 @@ public class MyJwtAuthorizationFilter extends OncePerRequestFilter {
             // SecurityContextHolder.getContext().getAuthentication() 로 Authentication 객체 가져올 수 있음
             // SecurityContextHolder 는 ThreadLocal 에 저장 됨
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println("디버그 : 인증 객체 만들어짐");
+            log.info("Authentication 객체 만들어짐");
         } catch (SignatureVerificationException sve) {
             log.error("토큰 검증 실패");
         } catch (TokenExpiredException tee) {

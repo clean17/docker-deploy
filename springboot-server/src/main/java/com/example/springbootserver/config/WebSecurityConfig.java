@@ -85,7 +85,8 @@ public class WebSecurityConfig {
         // 11. 인증, 권한 필터 설정
         http.authorizeRequests(authorize -> authorize
                 // .antMatchers("/","/auth/**").permitAll()
-                .antMatchers("/2222").authenticated()
+                .antMatchers("/todos").authenticated()
+                .antMatchers("/users").authenticated()
                 .antMatchers("/manager/**").access("hasRole('ADMIN') or hasRole('MANAGER')")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll() // 나머지 주소 허용

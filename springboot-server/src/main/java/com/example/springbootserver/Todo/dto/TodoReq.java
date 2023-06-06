@@ -29,8 +29,7 @@ public class TodoReq {
 
         public static Todo toEntity(final TodoReq.TodoSave todoSave) {
             return Todo.builder()
-                    // .userId(todoSave.getUserId())
-                    .userId(1L)
+                    .userId(todoSave.getUserId())
                     .title(todoSave.getTitle())
                     .done(todoSave.isDone())
                     .build();
@@ -60,8 +59,7 @@ public class TodoReq {
         public static Todo toEntity(final TodoUpdate todoUpdate) {
             return Todo.builder()
                     .id(todoUpdate.getId())
-                    // .userId(todoSave.getUserId())
-                    .userId(1L)
+                    .userId(todoUpdate.getUserId())
                     .title(todoUpdate.getTitle())
                     .done(todoUpdate.getDone())
                     .build();
