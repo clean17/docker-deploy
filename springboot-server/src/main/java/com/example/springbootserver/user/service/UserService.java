@@ -5,6 +5,8 @@ import com.example.springbootserver.user.dto.UserReq;
 import com.example.springbootserver.user.model.User;
 import com.example.springbootserver.user.model.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +17,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -30,7 +35,27 @@ public class UserService {
     }
 
     @Transactional
+    public User login(UserReq.UserLogin userLogin) {
+        String rawPassword = userLogin.getPassword();
+        String encPassword = passwordEncoder.encode(rawPassword); // 60Byte
+        userLogin.setPassword(encPassword);
+
+        try {
+            User user = userRepository.findByEmailAndPassword(userLogin.getEmail(), userLogin.getPassword())
+                .orElseThrow(() -> new Exception400(null, "이메일 혹은 비밀번호가 틀렸습니다."));
+            return user;
+        } catch (Exception500 e) {
+            log.error("로그인 실패 : ", userLogin.getEmail());
+            throw new Exception500("로그인에 실패했습니다.");
+        }
+    }
+
+    @Transactional
     public User save(final UserReq.UserSave userSave) {
+        String rawPassword = userSave.getPassword();
+        String encPassword = passwordEncoder.encode(rawPassword); // 60Byte
+        userSave.setPassword(encPassword);
+
         try {
             if( userRepository.existsByEmail(userSave.getEmail()) ) {
                 log.warn("이미 가입된 이메일입니다. : ", userSave.getEmail());
@@ -47,6 +72,10 @@ public class UserService {
 
     @Transactional
     public User update(final UserReq.UserUpdate userUpdate) {
+        String rawPassword = userUpdate.getPassword();
+        String encPassword = passwordEncoder.encode(rawPassword); // 60Byte
+        userUpdate.setPassword(encPassword);
+
         try {
             if( userRepository.existsByEmail(userUpdate.getEmail()) ) {
                 log.warn("이미 가입된 이메일입니다. : ", userUpdate.getEmail());
@@ -63,11 +92,15 @@ public class UserService {
 
     @Transactional
     public User getByCredentials (final String email, final String password) {
+        String encPassword = passwordEncoder.encode(password); // 60Byte
+        
         try {
-            return userRepository.findByEmailAndPassword(email, password)
+            return userRepository.findByEmailAndPassword(email, encPassword)
             .orElseThrow(() -> new Exception400(null,"조회 데이터가 없습니다."));
         } catch (Exception e) {
             throw new Exception500("회원 조회에 실패했습니다.");
         }
     }
+
+
 }

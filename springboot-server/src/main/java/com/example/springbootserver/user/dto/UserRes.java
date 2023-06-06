@@ -1,6 +1,5 @@
 package com.example.springbootserver.user.dto;
 
-import com.example.springbootserver.todo.model.Todo;
 import com.example.springbootserver.user.model.User;
 import lombok.Getter;
 

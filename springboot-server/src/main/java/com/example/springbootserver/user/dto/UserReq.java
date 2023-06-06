@@ -67,4 +67,19 @@ public class UserReq {
                     .build();
         }
     }
+
+    @Setter
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @EqualsAndHashCode
+    public static class UserLogin {
+
+        @NotBlank(message = "패스워드를 입력하세요.")
+        private String password;
+
+        @NotBlank(message = "이메일을 입력하세요.")
+        private String email;
+    }
 }
