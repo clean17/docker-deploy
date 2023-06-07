@@ -19,12 +19,14 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
-          tags: my-app/clockbox:latest
+        run: docker-compose build
+        # with:
+        #   context: .
+        #   file: ./Dockerfile
+        #   push: true
+        #   # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+        #   tags: my-app/clockbox:latest
+
       # - name: Run tests
       #   run: |
       #     # 여기에 테스트 명령을 추가합니다.
