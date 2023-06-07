@@ -2,7 +2,7 @@ name: my-app
 on:
   push:
     branches:
-      - main
+      - dev
 # https://github.com/actions/setup-java
 # actions/setup-java@v2는 사용자 정의 배포를 지원하고 Zulu OpenJDK,
 # Eclipse Temurin 및 Adopt OpenJDK를 기본적으로 지원합니다. v1은 Zulu OpenJDK만 지원합니다.
@@ -18,7 +18,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build and run Docker Compose
-        run: docker-compose -f docker-compose.yml up --build -d
+        run: docker-compose up --build -d
 
       # - name: Run tests
       #   run: |
