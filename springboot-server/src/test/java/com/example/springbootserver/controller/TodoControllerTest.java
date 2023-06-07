@@ -5,7 +5,6 @@ import com.example.springbootserver.core.MyWithMockUser;
 import com.example.springbootserver.todo.dto.TodoReq;
 import com.example.springbootserver.todo.model.Todo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

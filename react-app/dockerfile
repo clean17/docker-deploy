@@ -1,5 +1,5 @@
 # 이미지를 Node.js 14 버전으로 설정
-FROM node:14
+FROM node:14.18.1-bullseye
 
 # 작업 디렉토리를 /app 으로 설정
 WORKDIR /home/node/app
