@@ -24,6 +24,7 @@ jobs:
           file: ./docker-compose.yml
           push: true
           # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: my-app/clockbox:latest
       # - name: Run tests
       #   run: |
       #     # 여기에 테스트 명령을 추가합니다.
