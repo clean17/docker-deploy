@@ -17,9 +17,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and run Docker Compose
-        run: docker-compose up --build -d
-
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./docker-compose.yml
+          push: true
+          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
       # - name: Run tests
       #   run: |
       #     # 여기에 테스트 명령을 추가합니다.
