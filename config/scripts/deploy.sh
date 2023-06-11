@@ -26,4 +26,7 @@ then
 fi
 
 echo "start docker-compose up: ubuntu"
-sudo DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
+
+# set DOCKER_BUILDKIT=1 in the environment // DOCKER_BUILDKIT을 사용할경우
+export DOCKER_BUILDKIT=1
+sudo -E docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
