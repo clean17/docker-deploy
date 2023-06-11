@@ -20,7 +20,11 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo "${{ secrets.HS512_SECRET }}" >> .env
+#          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+#          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+#          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+#          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
         shell: bash
 
       - name: Build and push

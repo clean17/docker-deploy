@@ -9,7 +9,7 @@ services:
       # - MYSQL_HOST=${HS512_SECRET} # 로컬에선 적용안됨
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
-      - MYSQL_ROOT_PASSWORD=1125
+      - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
     env_file:
       - .env
@@ -45,7 +45,6 @@ services:
       - MYSQL_HOST=database
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
-      - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
       - MYSQL_PORT=3306
       - HS512_SECRET=${HS512_SECRET}
