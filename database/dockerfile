@@ -3,7 +3,7 @@ FROM mysql:5.7
 # 도커환경에서 컨테이너 생성시 스크립트 참조
 COPY ./scripts/ /docker-entrypoint-initdb.d/
 
-COPY chmod=755 ./1_database.sh /docker-entrypoint-initdb.d/
+COPY --chmod=755 ./1_database.sh /docker-entrypoint-initdb.d/
 
 # 래퍼런스 - https://zionlee.tistory.com/54
 COPY ./my.cnf /etc/mysql/conf.d/my.cnf
