@@ -37,6 +37,8 @@ services:
       - 8080
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
       - MYSQL_HOST=database
       - MYSQL_USER=${HS512_SECRET}
@@ -45,8 +47,7 @@ services:
       - MYSQL_DATABASE=${HS512_SECRET}
       - MYSQL_PORT=3306
       - HS512_SECRET=${HS512_SECRET}
-    env_file:
-      - .env
+
 
 volumes:
   mysql-volume:
