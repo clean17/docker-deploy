@@ -47,8 +47,6 @@ Qspringboot-server/src/main/java/com/example/springbootserver/todo/model/Todo.ja
 Uspringboot-server/src/main/java/com/example/springbootserver/config/WebMvcConfig.java,f\7\f70ee9129eccaa982f34578e70d1e7066acd9b93
 ƒ
 Sspringboot-server/src/test/java/com/example/springbootserver/mock/TodoMockTest.java,a\e\ae7c3f7bcda0c299b9026503309f8149fd213929
-Q
-!database/scripts/create_table.sql,b\2\b2f7359e3154b0059dc5344fe64021bc6236dbab
 ’
 bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerApplicationTests.java,a\1\a1fadad3a7099cac99f4503617f50c098e082525
 ˆ

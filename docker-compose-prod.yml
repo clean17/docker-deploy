@@ -32,7 +32,7 @@ services:
     depends_on:
       - database
     build: ./springboot-server
-    restart: always
+#    restart: always
     volumes:
       - ./springboot-server:/build/app
     expose:
