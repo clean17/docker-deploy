@@ -16,7 +16,16 @@ then
   sudo apt install -y docker-ce
 fi
 
+docker --version
 
+# Installing git if not exists
+if ! type git > /dev/null
+then
+  echo "git does not exist"
+  echo "Start installing git"
+  sudo apt-get update
+  sudo apt-get install -y git
+fi
 
 # Installing Docker Buildx if not exists
 if ! type docker buildx > /dev/null
