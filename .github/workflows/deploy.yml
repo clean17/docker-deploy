@@ -17,6 +17,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: create env file
+        run: |
+          touch .env
+          echo "${{ secrets.HS512_SECRET }}" >> .env
+
       - name: Build and push
         # uses: docker/build-push-action@v4
         run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml up --build
