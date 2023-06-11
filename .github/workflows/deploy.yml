@@ -43,16 +43,6 @@ jobs:
 #      - name: Show Current Time
 #        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
 
-      - name: Set EC2 Instance Timezone
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: |
-            sudo timedatectl set-timezone Asia/Seoul
-            sudo systemctl restart systemd-timesyncd
-
       - name: create remote directory
         uses: appleboy/ssh-action@master
         with:
@@ -80,8 +70,6 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             sh /home/ubuntu/srv/ubuntu/config/scripts/deploy.sh
-
-
 
 
 
