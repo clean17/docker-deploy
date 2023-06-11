@@ -28,6 +28,8 @@ services:
     # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
     volumes:
       - ./react-app:/home/node/app
+    expose:
+      - 3000
     ports:
       - "3000:3000"
 
@@ -37,7 +39,9 @@ services:
     build: ./springboot-server
     # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
     volumes:
-      - ./springboot-server:/build/app
+      - ./springboot-server:/build/app 
+    expose:
+      - 8080
     ports:
       - "8080:8080"
     # 환경변수 설정

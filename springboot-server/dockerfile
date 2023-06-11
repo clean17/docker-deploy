@@ -9,7 +9,7 @@ RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
 # COPY --chown=gradle:gradle . /build
 
 # 빌더 이미지에서 애플리케이션 빌드
-COPY . /build
+COPY . .
 # RUN gradle clean build --no-daemon # daemon 은 메모리를 점유하지만 빌드가 빠르다 
 RUN gradle clean build --parallel
 
@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=builder /build/build/libs/*.jar /app.jar 
 
 # 컨테이너가 8080 포트에서 수신 대기
-EXPOSE 8080
+# EXPOSE 8080
 
 #  java -jar /app.jar , root 권한 x nobody 권한으로 실행함
 USER nobody
