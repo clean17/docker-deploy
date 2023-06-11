@@ -7,10 +7,10 @@ services:
       - mysql-volume:/var/lib/mysql
     environment:
       # - MYSQL_HOST=${{secrets.HS512_SECRET}}
-      - MYSQL_USER=${{ secrets.HS512_SECRET }}
-      - MYSQL_PASSWORD=${{ secrets.HS512_SECRET }}
-      - MYSQL_ROOT_PASSWORD=${{ secrets.HS512_SECRET }}
-      - MYSQL_DATABASE=${{ secrets.HS512_SECRET }}
+      - MYSQL_USER=${ secrets.HS512_SECRET }
+      - MYSQL_PASSWORD=${ secrets.HS512_SECRET }
+      - MYSQL_ROOT_PASSWORD=${ secrets.HS512_SECRET }
+      - MYSQL_DATABASE=${ secrets.HS512_SECRET }
     expose:
       - 3306
     ports:
@@ -37,12 +37,12 @@ services:
       - "80:8080"
     environment:
       - MYSQL_HOST=database
-      - MYSQL_USER=${{ secrets.HS512_SECRET }}
-      - MYSQL_PASSWORD=${{ secrets.HS512_SECRET }}
-      - MYSQL_ROOT_PASSWORD=${{ secrets.HS512_SECRET }}
-      - MYSQL_DATABASE=${{ secrets.HS512_SECRET }}
+      - MYSQL_USER=${ secrets.HS512_SECRET }
+      - MYSQL_PASSWORD=${ secrets.HS512_SECRET }
+      - MYSQL_ROOT_PASSWORD=${ secrets.HS512_SECRET }
+      - MYSQL_DATABASE=${ secrets.HS512_SECRET }
       - MYSQL_PORT=3306
-      - HS512_SECRET=${{ secrets.HS512_SECRET }}
+      - HS512_SECRET=${ secrets.HS512_SECRET }
 
 volumes:
   mysql-volume:
