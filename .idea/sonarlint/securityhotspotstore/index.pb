@@ -57,8 +57,6 @@ Q
 bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerApplicationTests.java,a\1\a1fadad3a7099cac99f4503617f50c098e082525
 à
 Xspringboot-server/src/test/java/com/example/springbootserver/jpa/UserRepositoryTest.java,1\4\14aaac585f15a7cda4b218ce3fe2b1c1e1381bde
-C
-database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
 Ç
 Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserRes.java,f\8\f8a5b1f2060a1053f6f3f8fe12456975b9143aa1
 è
@@ -81,5 +79,3 @@ Zspringboot-server/src/main/java/com/example/springbootserver/todo/service/TodoS
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/jwt/MyJwtAuthorizationFilter.java,9\7\973bdabf3c171b0e0166693a034fe1d317b3cfd2
 Ç
 Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserReq.java,a\6\a61329616fb69ef66e196d8085ff4a0f781ee21a
-B
-docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a

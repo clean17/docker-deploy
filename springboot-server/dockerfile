@@ -6,7 +6,6 @@ WORKDIR /build
 # 도커 캐시 사용 - 새로운 Gradle만 다운로드
 COPY build.gradle settings.gradle /build/
 RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
-# COPY --chown=gradle:gradle . /build
 
 # 빌더 이미지에서 애플리케이션 빌드
 COPY . /build
