@@ -1,2 +1,2 @@
 #!/bin/bash
-mysql $MYSQL_DATABASE < /docker-entrypoint-initdb.d/2_create_table.sql
+mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < /docker-entrypoint-initdb.d/2_create_table.sql

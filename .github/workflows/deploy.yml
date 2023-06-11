@@ -29,7 +29,7 @@ jobs:
 
       - name: Build and push
         # uses: docker/build-push-action@v4
-        run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml up --build
+        run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build
         # with:
         #   context: .
         #   file: ./Dockerfile
