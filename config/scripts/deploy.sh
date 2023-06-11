@@ -22,7 +22,7 @@ then
   echo "Docker Buildx does not exist"
   echo "Start installing Docker Buildx"
   export DOCKER_CLI_EXPERIMENTAL=enabled
-  docker buildx create --use
+  sudo docker buildx create --use
 fi
 
 # Installing docker-compose if not exists
