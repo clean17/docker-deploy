@@ -1,6 +1,4 @@
 
-L
-.github/workflows/deploy.yml,f\1\f130ad0d1d16d0d70ec30d355f736ae3784b05cf
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/SpringbootServerApplication.java,8\f\8fe97d4784c636a2452afe2939414b956464acf3
 ã
@@ -19,8 +17,6 @@ J
 Ospringboot-server/src/test/java/com/example/springbootserver/util/JDBCTest.java,f\2\f2194493d74cf77d0723b6054bd730df2409476a
 z
 Jspringboot-server/src/test/java/com/example/springbootserver/util/Env.java,2\0\20922639af68791fd45d4eb48ce672d5c951fc41
-L
-springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
 Å
 Qspringboot-server/src/test/java/com/example/springbootserver/core/MyRestDocs.java,a\1\a13f32505a2c9f49cdee3548cf40e6d8f78dbe99
 å
