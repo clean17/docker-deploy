@@ -16,15 +16,10 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-        # --00755 권한 변경시 필요
-        with:
-          buildx-version: latest
-          driver-opts: network=host
-          enable-buildkit: true
 
       - name: Build and push
         # uses: docker/build-push-action@v4
-        run: docker-compose up --build
+        run: DOCKER_BUILDKIT=1 docker-compose up --build
         # with:
         #   context: .
         #   file: ./Dockerfile
