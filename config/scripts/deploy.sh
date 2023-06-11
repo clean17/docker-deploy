@@ -22,6 +22,13 @@ then
   echo "Docker Buildx does not exist"
   echo "Start installing Docker Buildx"
   export DOCKER_CLI_EXPERIMENTAL=enabled
+  if [ -f ~/.docker/cli-plugins/docker-buildx ]
+  then
+    sudo chmod +x ~/.docker/cli-plugins/docker-buildx
+  else
+    echo "Docker Buildx binary does not exist"
+    exit 1
+  fi
   sudo docker buildx create --use
 fi
 

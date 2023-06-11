@@ -43,6 +43,19 @@ jobs:
 #      - name: Show Current Time
 #        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
 
+      - name: Check current time
+        run: |
+          current_time=$(TZ=Asia/Seoul date +'%Z')
+          echo "Current time: $current_time"
+          if [[ "$current_time" != "KST" ]]; then
+            echo "Timezone is not Asia/Seoul. SSH into EC2 instance to update timezone and run apt update."
+            ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+            ssh -i ${{ secrets.KEY }} ubuntu@${{ secrets.HOST }} "sudo timedatectl set-timezone Asia/Seoul && sudo apt update"
+          else
+            echo "Timezone is already set to Asia/Seoul. Skipping SSH and apt update."
+          fi
+
+
       - name: create remote directory
         uses: appleboy/ssh-action@master
         with:
