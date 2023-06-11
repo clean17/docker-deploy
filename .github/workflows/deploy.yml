@@ -52,9 +52,9 @@ jobs:
           script: mkdir -p /home/ubuntu/srv/ubuntu
 
       - name: copy source via ssh key
-        uses: burnett01/rsync-deployments@4.1
+        uses: burnett01/rsync-deployments@4.1 # rsync 로컬 전체 복사
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete -a # --delete 원격 서버에 로컬에 없는거 지우기, -a 숨김파일 복사 ( .env )
           remote_path: /home/ubuntu/srv/ubuntu/
           remote_host: ${{ secrets.HOST }}
           remote_user: ubuntu
