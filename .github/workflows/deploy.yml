@@ -19,7 +19,7 @@ jobs:
 
       - name: Build and push
         # uses: docker/build-push-action@v4
-        run: DOCKER_BUILDKIT=1 docker-compose-prod up --build
+        run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml up --build
         # with:
         #   context: .
         #   file: ./Dockerfile
@@ -51,13 +51,13 @@ jobs:
           cp Procfile deploy/Procfile
           cp -r .ebextensions deploy/.ebextensions           
           cd deploy && zip -r deploy.zip .
-       # - name: Deploy to EB
-       #   uses: einaregilsson/beanstalk-deploy@v21 # 엘라스틱 빈스톡 환경 사용
-       #   with:
-       #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # 중괄호 2개는 깃헙 환경변수 접근
-       #     aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-       #     application_name: aws-v5-beanstalk # 엘리스틱 빈스톡 애플리케이션 이름!
-       #     environment_name: Awsv5beanstalk-env # 엘리스틱 빈스톡 환경 이름!
-       #     version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
-       #     region: ap-northeast-2 # 서울 서버로 압축파일을 전달해줌
-       #     deployment_package: deploy/deploy.zip
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21 # 엘라스틱 빈스톡 환경 사용
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # 중괄호 2개는 깃헙 환경변수 접근
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: aws-v5-beanstalk # 엘리스틱 빈스톡 애플리케이션 이름!
+          environment_name: Awsv5beanstalk-env # 엘리스틱 빈스톡 환경 이름!
+          version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
+          region: ap-northeast-2 # 서울 서버로 압축파일을 전달해줌
+          deployment_package: deploy/deploy.zip
