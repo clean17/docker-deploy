@@ -12,9 +12,9 @@ public class Exception404 extends RuntimeException{
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<String> responseDto = new ResponseDTO<>();
-        responseDto.fail(404,"notFound", getMessage());
-        return responseDto;
+        ResponseDTO<String> responseDTO = new ResponseDTO<>();
+        responseDTO.fail(404,"notFound", getMessage());
+        return responseDTO;
     }
 
     public HttpStatus status(){

@@ -12,9 +12,9 @@ public class Exception401 extends RuntimeException{
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<String> responseDto = new ResponseDTO<>();
-        responseDto.fail(401, "unAuthorized", getMessage());
-        return responseDto;
+        ResponseDTO<String> responseDTO = new ResponseDTO<>();
+        responseDTO.fail(401, "unAuthorized", getMessage());
+        return responseDTO;
     }
 
     public HttpStatus status(){
