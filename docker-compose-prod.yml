@@ -5,9 +5,10 @@ services:
 #    container_name: my-app-database-1
     # Dockerfile이 있는 위치 - 참고해서 도커이미지를 빌드함
     build: ./database
-    restart: always
     volumes:
       - mysql-volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
     environment:
       # - MYSQL_HOST=${HS512_SECRET} # 로컬에선 적용안됨
       - MYSQL_USER=${HS512_SECRET}
@@ -16,8 +17,6 @@ services:
       - MYSQL_DATABASE=${HS512_SECRET}
     expose:
       - 3306
-    ports:
-      - "3306:3306"
 #    volumes:
 #      - ./database/scripts:/docker-entrypoint-initdb.d/
 #      - ./database/my.cnf:/etc/mysql/conf.d/my.cnf
@@ -29,17 +28,15 @@ services:
     volumes:
       - ./react-app:/home/node/app
     ports:
-      - "3000:3000"
+      - "80:3000"
 
   springboot-server:
-    depends_on:
-      - database
     build: ./springboot-server
     # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
     volumes:
       - ./springboot-server:/build/app
     ports:
-      - "8080:8080"
+      - "80:8080"
     # 환경변수 설정
     environment:
       - MYSQL_HOST=database

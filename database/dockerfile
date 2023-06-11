@@ -13,7 +13,7 @@ ENV MYSQL_USER=${HS512_SECRET} \
 
 RUN chmod 644 /etc/mysql/conf.d/my.cnf
 
-EXPOSE 3306
+# EXPOSE 3306
 
 # 이미지 빌드 명령어 (현 파일과 같은 디렉토리에서)
 # docker build -t database-img .

@@ -19,7 +19,7 @@ jobs:
 
       - name: Build and push
         # uses: docker/build-push-action@v4
-        run: docker-compose build
+        run: docker-compose up --build
         # with:
         #   context: .
         #   file: ./Dockerfile
