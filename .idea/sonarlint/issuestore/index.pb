@@ -9,8 +9,6 @@ I
 springboot-server/gradlew,9\1\91ed0fe3f812421b681e2515215ca648d41e04a6
 Q
 !springboot-server/settings.gradle,5\4\549cc8125610eecfea28e478b5830970e4138cbc
-?
-database/my.cnf,1\d\1dde0920ced93f3f69c6e57d75bb72bd8b447774
 
 Ospringboot-server/src/test/java/com/example/springbootserver/util/JDBCTest.java,f\2\f2194493d74cf77d0723b6054bd730df2409476a
 z
