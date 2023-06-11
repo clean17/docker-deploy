@@ -6,10 +6,10 @@ COPY ./scripts/ /docker-entrypoint-initdb.d/
 COPY ./my.cnf /etc/mysql/conf.d/my.cnf
 
 # MySQL Configuration
-ENV MYSQL_USER=${HS512_SECRET} \
-    MYSQL_PASSWORD=${HS512_SECRET} \
-    MYSQL_ROOT_PASSWORD=1125 \
-    MYSQL_DATABASE=${HS512_SECRET}
+#ENV MYSQL_USER=${HS512_SECRET} \
+#    MYSQL_PASSWORD=${HS512_SECRET} \
+#    MYSQL_ROOT_PASSWORD=1125 \
+#    MYSQL_DATABASE=${HS512_SECRET}
 
 RUN chmod 644 /etc/mysql/conf.d/my.cnf
 
