@@ -61,7 +61,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          script: mkdir -p /home/ubuntu/srv/ubuntu # -p 없으면 만듦
+          script: sudo mkdir -p /home/ubuntu/srv/ubuntu # -p 없으면 만듦
 
       - name: copy source via ssh key
         uses: burnett01/rsync-deployments@4.1 # rsync 로컬 전체 복사
