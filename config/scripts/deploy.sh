@@ -16,7 +16,8 @@ then
   sudo apt install -y docker-ce
 fi
 
-docker --version
+echo "docker version"
+sudo docker --version
 
 # Installing git if not exists
 if ! type git > /dev/null
@@ -28,21 +29,22 @@ then
 fi
 
 # Installing Docker Buildx if not exists
+# 설치 후에는 Docker Buildx 바이너리만 남는다.
 if ! type docker buildx > /dev/null
 then
   echo "Docker Buildx does not exist"
   echo "Start Clone Buildx repository"
   # Clone buildx repository
-  git clone https://github.com/docker/buildx.git
+  sudo git clone https://github.com/docker/buildx.git
   # Build buildx
   cd buildx
-  make
+  sudo make # Makefile 프로젝트 빌드
   cd ..
   # Create directory for CLI plugins
-  mkdir -p ~/.docker/cli-plugins
+  sudo mkdir -p ~/.docker/cli-plugins
   # Move buildx binary to CLI plugins directory
-  mv ./buildx/bin/build/buildx ~/.docker/cli-plugins/docker-buildx
-  chmod +x ~/.docker/cli-plugins/docker-buildx
+  sudo mv ./buildx/bin/build/buildx ~/.docker/cli-plugins/docker-buildx # move
+  sudo chmod +x ~/.docker/cli-plugins/docker-buildx
   sudo docker buildx create --use
 fi
 
