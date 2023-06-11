@@ -27,30 +27,57 @@ jobs:
           echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
         shell: bash
 
-      - name: Build and push
-        # uses: docker/build-push-action@v4
-        run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build
-        # with:
-        #   context: .
-        #   file: ./Dockerfile
-        #   push: true
-        #   # tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
-        #   tags: my-app/clockbox:latest
+# Actions 테스트용
+#      - name: Build and push
+#        run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build -d
 
-      # - name: Run tests
-      #   run: |
-      #     # 여기에 테스트 명령을 추가합니다.
 
       # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다.
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2 # 타임존 설정
-        id: current-time
-        with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00" # 시간 확인
+#      - name: Get current time
+#        uses: 1466587594/get-current-time@v2 # 타임존 설정
+#        id: current-time
+#        with:
+#          format: YYYY-MM-DDTHH-mm-ss
+#          utcOffset: "+09:00" # 시간 확인
+#
+#      - name: Show Current Time
+#        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
 
-      - name: Show Current Time
-        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
+      - name: create remote directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: mkdir -p /home/ubuntu/srv/ubuntu
+
+      - name: copy source via ssh key
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --delete
+          remote_path: /home/ubuntu/srv/ubuntu/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ubuntu
+          remote_key: ${{ secrets.KEY }}
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        env:
+          DEPLOY_USERNAME: nobody
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            sh /home/ubuntu/srv/ubuntu/config/scripts/deploy.sh
+
+
+
+
+
+
+
+
 
        # EB에 CD 하기 위해 추가 작성
        # -r 옵션은 디렉토리 내의 모든 하위 파일과 디렉토리를 복사하는 데 사용
