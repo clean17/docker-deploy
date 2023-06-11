@@ -16,19 +16,24 @@ then
   sudo apt install -y docker-ce
 fi
 
+
+
 # Installing Docker Buildx if not exists
 if ! type docker buildx > /dev/null
 then
   echo "Docker Buildx does not exist"
-  echo "Start installing Docker Buildx"
-  export DOCKER_CLI_EXPERIMENTAL=enabled
-  if [ -f ~/.docker/cli-plugins/docker-buildx ]
-  then
-    sudo chmod +x ~/.docker/cli-plugins/docker-buildx
-  else
-    echo "Docker Buildx binary does not exist"
-    exit 1
-  fi
+  echo "Start Clone Buildx repository"
+  # Clone buildx repository
+  git clone https://github.com/docker/buildx.git
+  # Build buildx
+  cd buildx
+  make
+  cd ..
+  # Create directory for CLI plugins
+  mkdir -p ~/.docker/cli-plugins
+  # Move buildx binary to CLI plugins directory
+  mv ./buildx/bin/build/buildx ~/.docker/cli-plugins/docker-buildx
+  chmod +x ~/.docker/cli-plugins/docker-buildx
   sudo docker buildx create --use
 fi
 
