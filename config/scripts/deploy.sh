@@ -16,6 +16,15 @@ then
   sudo apt install -y docker-ce
 fi
 
+# Installing Docker Buildx if not exists
+if ! type docker buildx > /dev/null
+then
+  echo "Docker Buildx does not exist"
+  echo "Start installing Docker Buildx"
+  export DOCKER_CLI_EXPERIMENTAL=enabled
+  docker buildx create --use
+fi
+
 # Installing docker-compose if not exists
 if ! type docker-compose > /dev/null
 then

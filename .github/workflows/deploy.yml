@@ -14,8 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3 # 버전 3에 맞는 프로그램 설치 가능
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v2
 
       #          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
       #          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
