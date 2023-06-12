@@ -36,6 +36,10 @@ then
   sudo chmod -x /usr/local/bin/docker-compose
 fi
 
+echo "============================= docker-compose --version ======================================"
+sudo docker-compose --version
+
+
 echo "============================== start docker-compose up: ubuntu ================================="
 sudo DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
 #sudo DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build # workflow test
