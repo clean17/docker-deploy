@@ -2,8 +2,8 @@ import React from 'react';
 // import ReactDOM from 'react-dom/client'; // react v18 버전용
 import ReactDOM from 'react-dom';  // react v17 버전용
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import AppRouter from './AppRouter';
 
 // react v 18 버전 용
 // const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -16,7 +16,7 @@ import reportWebVitals from './reportWebVitals';
 // react v 17 버전용
 ReactDOM.render(
   <React.StrictMode>
-        <App />
+        <AppRouter />
   </React.StrictMode>,
   document.getElementById('root')
 );

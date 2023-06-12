@@ -87,14 +87,10 @@ S
 #react-app/src/service/ApiService.js,2\b\2b111ab4a31553f59e36bcb2bacc7a9d598c5278
 K
 react-app/src/app-config.js,2\9\29ebcc76aea7a550756b63b83db1d9a655fc5926
-D
-react-app/dockerfile,3\b\3b8b000f137ababfd072cfc359744fcbc8ea03c0
 L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
 J
 springboot-server/start.sh,4\9\498aa2c36f368d279b71ef8494aaf3dd9dbaa95e
-B
-docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 S
 #database/scripts/2_create_table.sql,7\3\7322477bdb2c26d3dbfb531b078105a5fd249af6
 ?

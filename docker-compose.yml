@@ -23,15 +23,15 @@ services:
 #      - ./database/my.cnf:/etc/mysql/conf.d/my.cnf
 #    command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--default-time-zone=Asia/Seoul"]
 
-  react-app:
-    build: ./react-app
-    # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
-    volumes:
-      - ./react-app:/home/node/app
-    expose:
-      - 3000
-    ports:
-      - "3000:3000"
+#  react-app:
+#    build: ./react-app
+#    # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
+#    volumes:
+#      - ./react-app:/home/node/app
+#    expose:
+#      - 3000
+#    ports:
+#      - "3000:3000"
 
   springboot-server:
     depends_on:

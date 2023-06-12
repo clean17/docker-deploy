@@ -81,10 +81,12 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           DEPLOY_USERNAME: nobody
+          HS512_SECRET: ${{ secrets.HS512_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
+          envs: HS512_SECRET
           script: |
             sudo sh /home/ubuntu/srv/ubuntu/config/scripts/deploy.sh
 
