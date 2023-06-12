@@ -3,20 +3,40 @@
 # github의 workflow가 아래 스크립트를 실행
 
 # Installing docker engine if not exists
+#if ! type docker > /dev/null
+#then
+#  echo "docker does not exist"
+#  echo "Start installing docker"
+#  sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
+#  sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnupg2
+#  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o docker.gpg
+#  gpg --no-default-keyring --keyring ./docker.gpg --import < docker.gpg
+#  sudo mv docker.gpg /etc/apt/trusted.gpg.d/
+#  sudo chmod 644 /etc/apt/trusted.gpg.d/docker.gpg
+#  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#  sudo apt update
+#  apt-cache policy docker-ce
+#  sudo apt install -y docker-ce docker-ce-cli containerd.io
+#fi
+
 if ! type docker > /dev/null
 then
   echo "docker does not exist"
   echo "Start installing docker"
-  sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
-  sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnupg2
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o docker.gpg
-  gpg --no-default-keyring --keyring ./docker.gpg --import < docker.gpg
-  sudo mv docker.gpg /etc/apt/trusted.gpg.d/
-  sudo chmod 644 /etc/apt/trusted.gpg.d/docker.gpg
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  sudo apt update
-  apt-cache policy docker-ce
-  sudo apt install -y docker-ce
+  sudo apt-get update
+  sudo apt-get install -y \
+      apt-transport-https \
+      ca-certificates \
+      curl \
+      gnupg-agent \
+      software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository \
+     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+     $(lsb_release -cs) \
+     stable"
+  sudo apt-get update
+  sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 fi
 
 # Installing git if not exists
@@ -66,13 +86,13 @@ fi
 
 # Docker Buildx - docker-compse 사용 가능
 # Installing docker-compose if not exists
-#if ! type docker-compose > /dev/null
-#then
-#  echo "docker-compose does not exist"
-#  echo "Start installing docker-compose"
-#  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#  sudo chmod +x /usr/local/bin/docker-compose
-#fi
+if ! type docker-compose > /dev/null
+then
+  echo "docker-compose does not exist"
+  echo "Start installing docker-compose"
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+fi
 
 echo "start docker-compose up: ubuntu"
 sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
