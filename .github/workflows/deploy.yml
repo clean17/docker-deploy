@@ -64,7 +64,8 @@ jobs:
           script: |
             sudo rm -rf /home/ubuntu/srv/ubuntu
             sudo mkdir -p /home/ubuntu/srv/ubuntu
-            sudo chmod -R ugo+w /home/ubuntu/srv/ubuntu/
+            sudo chmod -R 755 /home/ubuntu/srv/ubuntu/
+
 
 
 

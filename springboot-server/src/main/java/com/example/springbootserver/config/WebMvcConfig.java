@@ -17,6 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .allowedOriginPatterns("http://localhost:3000") // 프론트에서만 허용 / 빈스톡 주소로 변경
         .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
         .allowedHeaders("*")
+        .exposedHeaders("Authorization")
         // true 로 설정하면 allowedOrigins을 "*"로 설정할 수 없다 -> OriginPatterns을 사용한다.
         .allowCredentials(true)
         .maxAge(MAX_AGE_SECS);

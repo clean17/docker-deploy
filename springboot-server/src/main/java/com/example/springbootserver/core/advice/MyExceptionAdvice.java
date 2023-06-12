@@ -23,7 +23,7 @@ public class MyExceptionAdvice {
 
     @ExceptionHandler(Exception401.class)
     public ResponseEntity<?> unAuthorized(Exception401 e) {
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(401, "인증이 필요합니다.", null);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(401, e.getMessage(), null);
         return new ResponseEntity<>(responseDTO, HttpStatus.UNAUTHORIZED);
     }
 
