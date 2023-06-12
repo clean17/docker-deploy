@@ -1,12 +1,19 @@
 import { API_BASE_URL } from '../app-config';
 
+const ACCESS_TOKEN = "ACCESS_TOKEN";
 let errorMsg;
 
 function createOptions(api, method, request) {
+    let headers = new Headers({
+        "content-type": "application/json; charset=utf-8",
+    })
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    if(accessToken && accessToken !== null && accessToken !== "null") {
+        headers.append("Authorization", accessToken);
+    }
+
     let options = {
-        headers: new Headers({
-            "content-type": "application/json; charset=utf-8",
-        }),
+        headers: headers,
         url: API_BASE_URL + api,
         method: method,
     };
@@ -59,6 +66,7 @@ export async function login(userDTO) {
                     } else {
                         // console.log("headers: ", [...response.headers]);
                         // alert("로그인 완료 : " + head);
+                        localStorage.setItem(ACCESS_TOKEN, head); // 브라우저를 재시작해도 로그인 유지
                         window.location.href = "/";
                     }
                 })
@@ -68,3 +76,9 @@ export async function login(userDTO) {
         alert(errorMsg);
     }
 }
+
+export function logout(userDTO) {
+    localStorage.setItem(ACCESS_TOKEN, null); // null 로 설정하니까 "null" 을 넣네 ??
+    window.location.href = "/login";
+}
+

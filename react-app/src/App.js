@@ -2,9 +2,9 @@
 import React from 'react';
 import Todo from './Todo';
 import AddTodo from './AddTodo';
-import { Paper, List, Container } from '@material-ui/core';
+import { Paper, List, Container, Toolbar, Typography, AppBar, Grid, Button } from '@material-ui/core';
 import './App.css';
-import { call } from './service/ApiService';
+import { call, logout } from './service/ApiService';
 
 class App extends React.Component {
   constructor(props) {
@@ -54,11 +54,31 @@ class App extends React.Component {
         </List>
       </Paper>
     );
+
+    // 그리드컴포넌트를 container로 지정
+    let navigationBar = (
+      <AppBar position = "static">
+        <Toolbar>
+          <Grid justifyContent="space-between" container> 
+            <Grid item>
+              <Typography variant='h6'> 오늘의 할일 </Typography>
+            </Grid>
+            <Grid>
+              <Button color ="inherit" onClick={logout}>
+                로그아웃
+              </Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    )
+
     // AddTodo 다음 Material Ui로 만든 Paper를 추가
     // Material 디자인을 가져왔으므로 md 는 기본값 ( xs, sm, md, lg, xl )
     // Container 는 리액트 컴포넌트
     return (
       <div className="App">
+        {navigationBar}
         <Container maxWidth='md'>
           <AddTodo save={this.save} />
           <div className='TodoList'>{todoItems}</div>
