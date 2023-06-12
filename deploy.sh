@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# github의 workflow가 아래 스크립트를 실행
-
-# Installing docker engine if not exists
 #if ! type docker > /dev/null
 #then
 #  echo "docker does not exist"
@@ -31,37 +28,7 @@ then
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 fi
 
-# Installing git if not exists
-#if ! type git > /dev/null
-#then
-#  echo "git does not exist"
-#  echo "Start installing git"
-#  sudo apt-get update
-#  sudo apt-get install -y git
-#fi
 
-# Installing Docker Buildx if not exists
-# 설치 후에는 Docker Buildx 바이너리만 남는다.
-#if ! type docker buildx > /dev/null
-#then
-#  echo "Docker Buildx does not exist"
-#  echo "Start Clone Buildx repository"
-#  # Clone buildx repository
-#  sudo rm -rf buildx
-#  sudo git clone https://github.com/docker/buildx.git
-#  # Build buildx
-#  cd buildx
-#  sudo apt install -y make # Makefile 프로젝트 빌드
-#  cd ..
-#  # Create directory for CLI plugins
-#  sudo mkdir -p ~/.docker/cli-plugins
-#  # Move buildx binary to CLI plugins directory
-#  sudo mv ./buildx/bin/build/buildx ~/.docker/cli-plugins/docker-buildx # move
-#  sudo chmod +x ~/.docker/cli-plugins/docker-buildx
-#  sudo docker buildx create --use
-#fi
-
-# Docker Buildx 설치 확인
 #if ! docker buildx version > /dev/null
 #then
 #  echo "=============================== Docker Buildx does not exist ====================================="
@@ -76,8 +43,6 @@ fi
 #  mv docker-buildx ~/.docker/cli-plugins/docker-buildx
 #fi
 
-# Docker Buildx - docker-compse 사용 가능
-# Installing docker-compose if not exists
 if ! type docker-compose > /dev/null
 then
   echo "============================ docker-compose does not exist ======================================"
@@ -87,5 +52,5 @@ then
 fi
 
 echo "============================== start docker-compose up: ubuntu ================================="
-sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
+sudo DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
 # .env 파일로 환경변수를 ec2에 전달하려면 실행하는 스크립트가 docker-compose와 같은 디렉토리에 있어야 한다.

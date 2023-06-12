@@ -18,7 +18,6 @@ services:
     ports:
       - "3306:3306"
 
-
 #  react-app:
 #    build: ./react-app
 #    restart: always
