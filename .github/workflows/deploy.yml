@@ -29,7 +29,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-#            sudo rm -rf /home/ubuntu/srv/ubuntu
             sudo mkdir -p /home/ubuntu/srv/ubuntu
             sudo chown -R ubuntu:ubuntu /home/ubuntu/srv/ubuntu
           # sudo로 권한을 변경하면 소유자가 root가 되어버린다. ubuntu로 변경해줘야함
