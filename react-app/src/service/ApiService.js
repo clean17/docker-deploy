@@ -51,6 +51,26 @@ export async function call(api, method, request) {
     }
 }
 
+export async function join(userDTO) {
+    let options = createOptions("/join", "POST", userDTO);
+
+    try {
+        return await fetch(options.url, options)
+            .then((response) => { response.json()
+                .then((json) => {
+                    if (!response.ok || !response.status === 201) {
+                        errorMsg = json.msg
+                        return Promise.reject(json);
+                    } else {
+                        window.location.href = "/login";
+                    }
+                })
+            });
+    } catch (error) {
+        alert(errorMsg);
+    }
+}
+
 export async function login(userDTO) {
     let options = createOptions("/login", "POST", userDTO);
 

@@ -8,13 +8,17 @@ then
   echo "docker does not exist"
   echo "Start installing docker"
   sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
-  sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnupg2
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o docker.gpg
+  gpg --no-default-keyring --keyring ./docker.gpg --import < docker.gpg
+  sudo mv docker.gpg /etc/apt/trusted.gpg.d/
+  sudo chmod 644 /etc/apt/trusted.gpg.d/docker.gpg
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
   sudo apt update
   apt-cache policy docker-ce
   sudo apt install -y docker-ce
 fi
+
 
 echo "docker version"
 sudo docker --version
@@ -38,7 +42,7 @@ then
   sudo git clone https://github.com/docker/buildx.git
   # Build buildx
   cd buildx
-  sudo make # Makefile 프로젝트 빌드
+  sudo apt install -y make # Makefile 프로젝트 빌드
   cd ..
   # Create directory for CLI plugins
   sudo mkdir -p ~/.docker/cli-plugins

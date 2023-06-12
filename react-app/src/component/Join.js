@@ -1,8 +1,8 @@
 import { Button, Container, Grid, Link, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { login } from "../service/ApiService";
+import { join } from "../service/ApiService";
 
-class Login extends React.Component {
+class Join extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -11,9 +11,10 @@ class Login extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
+        const username = data.get('username');
         const email = data.get("email");
         const password = data.get("password");
-        await login({ email: email, password: password });
+        await join({ username:username, email: email, password: password });
     }
 
     // 레퍼런스 https://www.daleseo.com/material-ui-text-fields/
@@ -23,11 +24,12 @@ class Login extends React.Component {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography component={"h1"} variant="h5">
-                            로그인
+                            계정 생성
                         </Typography>
                     </Grid>
                 </Grid>
                 <form noValidate onSubmit={this.handleSubmit}>
+                    {" "}
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -37,7 +39,7 @@ class Login extends React.Component {
                                 fullWidth
                                 id="email"
                                 name="email"
-                                autoComplete="email"
+                                autoComplete="fname"
                                 autoFocus
                             />
                         </Grid>
@@ -54,6 +56,17 @@ class Login extends React.Component {
                             />
                         </Grid>
                         <Grid item xs={12}>
+                            <TextField
+                                label="Username"
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="username"
+                                name="username"
+                                autoComplete="fname"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -66,8 +79,8 @@ class Login extends React.Component {
                 </form>
                 <Grid container style={{ marginTop: "4%" }} justifyContent="center">
                     <Grid item >
-                        <Link href='join' variant="body1">
-                            계정이 없으신가요 ? 여기서 가입하세요.
+                        <Link href='login' variant="body1">
+                            이미 계정이 있으신가요 ? 로그인 하세요.
                         </Link>
                     </Grid>
                 </Grid>
@@ -76,4 +89,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Join;
