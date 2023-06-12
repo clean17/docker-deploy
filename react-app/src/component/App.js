@@ -3,7 +3,7 @@ import React from 'react';
 import Todo from './Todo';
 import AddTodo from './AddTodo';
 import { Paper, List, Container, Toolbar, Typography, AppBar, Grid, Button } from '@material-ui/core';
-import './App.css';
+import '../App.css';
 import { call, logout } from '../service/ApiService';
 
 class App extends React.Component {
@@ -25,7 +25,6 @@ class App extends React.Component {
     await call("/todos", "POST", item).then((response) =>
       this.setState({ items: [...this.state.items, response.data] })
     );
-
   }
 
   delete = async (itemId) => {
@@ -36,8 +35,7 @@ class App extends React.Component {
   update = async (item) => {
     await call("/todos", "PUT", item).then((response) => {
       this.setState({ items: [...this.state.items].map((e) => e.id !== item.id ? e : response.data) });
-    }
-    );
+    });
   }
 
   render() {
@@ -79,7 +77,7 @@ class App extends React.Component {
       <div>
         {navigationBar}
         <Container maxWidth="md">
-          <AddTodo add={this.save} />
+          <AddTodo save={this.save} />
           <div className='TodoList'>{todoItems}</div>
         </Container>
       </div>

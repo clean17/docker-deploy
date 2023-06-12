@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';  // react v17 버전용
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import AppRouter from './AppRouter';
+import AppRouter from './component/AppRouter';
 
 // react v 18 버전 용
 // const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

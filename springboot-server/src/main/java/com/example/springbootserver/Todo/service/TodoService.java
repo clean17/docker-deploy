@@ -46,9 +46,7 @@ public class TodoService {
 
     @Transactional
     public Todo save(final TodoReq.TodoSave todoSave, MyUserDetails userDetails) {
-        if (todoSave.getUserId() != userDetails.getUser().getId()) {
-            throw new Exception403("권한 필요");
-        }
+        todoSave.setUserId(userDetails.getUser().getId());
         try {
             Todo todo = TodoSave.toEntity(todoSave);
             todoRepository.save(todo);
@@ -61,11 +59,14 @@ public class TodoService {
 
     @Transactional
     public Todo update(final TodoReq.TodoUpdate todoUpdate, MyUserDetails userDetails) {
-        if (todoUpdate.getUserId() != userDetails.getUser().getId()) {
+        Todo todo = todoRepository.findById(todoUpdate.getId())
+                .orElseThrow(() -> new Exception400(null, "조회 데이터가 없습니다."));
+        if (todo.getUserId() != userDetails.getUser().getId()) {
             throw new Exception403("권한 필요");
         }
+        todoUpdate.setUserId(userDetails.getUser().getId());
         try {
-            Todo todo = TodoReq.TodoUpdate.toEntity(todoUpdate);
+            todo = TodoReq.TodoUpdate.toEntity(todoUpdate);
             todoRepository.save(todo);
             log.info("Todo 수정 완료, Id : " + todo.getId());
             return todo;
