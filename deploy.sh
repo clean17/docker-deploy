@@ -13,19 +13,19 @@ then
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 fi
 
-#if ! docker buildx version > /dev/null
-#then
-#  echo "=============================== Docker Buildx does not exist ====================================="
-#  echo "Start installing Docker Buildx"
-#  # Docker Buildx 바이너리 다운로드
-#  BUILDX_VERSION="v0.6.3"
-#  # wget - Docker Buildx 바이너리 파일을 다운로드
-#  wget https://github.com/docker/buildx/releases/download/$BUILDX_VERSION/buildx-$BUILDX_VERSION.linux-amd64 -O docker-buildx
-#  chmod +x docker-buildx
-#  # Docker CLI 플러그인 디렉토리 생성
-#  mkdir -p ~/.docker/cli-plugins
-#  mv docker-buildx ~/.docker/cli-plugins/docker-buildx
-#fi
+if ! docker buildx version > /dev/null
+then
+  echo "=============================== Docker Buildx does not exist ====================================="
+  echo "Start installing Docker Buildx"
+  # Docker Buildx 바이너리 다운로드
+  BUILDX_VERSION="v0.6.3"
+  # wget - Docker Buildx 바이너리 파일을 다운로드
+  wget https://github.com/docker/buildx/releases/download/$BUILDX_VERSION/buildx-$BUILDX_VERSION.linux-amd64 -O docker-buildx
+  chmod +x docker-buildx
+  # Docker CLI 플러그인 디렉토리 생성
+  mkdir -p ~/.docker/cli-plugins
+  mv docker-buildx ~/.docker/cli-plugins/docker-buildx
+fi
 
 if ! type docker-compose > /dev/null
 then
@@ -36,6 +36,6 @@ then
 fi
 
 echo "============================== start docker-compose up: ubuntu ================================="
-#sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
-sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build # workflow test
+sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build -d
+#sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build # workflow test
 # .env 파일로 환경변수를 ec2에 전달하려면 실행하는 스크립트가 docker-compose와 같은 디렉토리에 있어야 한다.
