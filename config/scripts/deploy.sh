@@ -19,7 +19,6 @@ then
   sudo apt install -y docker-ce
 fi
 
-
 echo "docker version"
 sudo docker --version
 
@@ -39,6 +38,7 @@ then
   echo "Docker Buildx does not exist"
   echo "Start Clone Buildx repository"
   # Clone buildx repository
+  sudo rm -rf buildx
   sudo git clone https://github.com/docker/buildx.git
   # Build buildx
   cd buildx
