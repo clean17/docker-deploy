@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '../app-config';
+import { API_BASE_URL } from '../config/app-config';
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
 let errorMsg;

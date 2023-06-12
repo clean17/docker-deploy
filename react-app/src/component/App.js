@@ -4,20 +4,21 @@ import Todo from './Todo';
 import AddTodo from './AddTodo';
 import { Paper, List, Container, Toolbar, Typography, AppBar, Grid, Button } from '@material-ui/core';
 import './App.css';
-import { call, logout } from './service/ApiService';
+import { call, logout } from '../service/ApiService';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      loding: true
     };
   }
 
   // 컴포넌트가 렌더링되면 자동적으로 실행되는 함수
   async componentDidMount() {
     await call("/todos", "GET", null).then((response) =>
-      this.setState({ items: response.data }))
+      this.setState({ items: response.data, loding: false }))
   }
   // 리스트 추가
   save = async (item) => {
@@ -73,18 +74,23 @@ class App extends React.Component {
       </AppBar>
     )
 
-    // AddTodo 다음 Material Ui로 만든 Paper를 추가
-    // Material 디자인을 가져왔으므로 md 는 기본값 ( xs, sm, md, lg, xl )
-    // Container 는 리액트 컴포넌트
-    return (
-      <div className="App">
+    // Material 디자인 기본값 md ( xs, sm, md, lg, xl )
+    let todoListPage = (
+      <div>
         {navigationBar}
-        <Container maxWidth='md'>
-          <AddTodo save={this.save} />
+        <Container maxWidth="md">
+          <AddTodo add={this.save} />
           <div className='TodoList'>{todoItems}</div>
         </Container>
       </div>
-    );
+    )
+
+    let loadingPage = <h1> 로딩중 ... </h1>;
+    let content = loadingPage;
+    if( !this.state.loding) {
+      content = todoListPage;
+    }
+    return <div className='App'>{content}</div>
   }
 }
 
