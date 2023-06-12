@@ -101,5 +101,3 @@ R
 "react-app/src/config/app-config.js,5\b\5b4f77f40b9ff6d1d49f1e844d75432b1597f664
 S
 #react-app/src/service/ApiService.js,2\b\2b111ab4a31553f59e36bcb2bacc7a9d598c5278
-9
-	deploy.sh,b\e\be94fd40f0c4b440044c3f852e44fd2a75f7b3cc
