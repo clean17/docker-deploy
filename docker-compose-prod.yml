@@ -50,6 +50,5 @@ services:
       - MYSQL_PORT=3306
       - HS512_SECRET=${HS512_SECRET}
 
-
 volumes:
   mysql-volume:
