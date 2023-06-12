@@ -32,8 +32,9 @@ if ! type docker-compose > /dev/null
 then
   echo "============================ docker-compose does not exist ======================================"
   echo "Start installing docker-compose"
-  sudo curl -L "https://github.com/docker/compose/releases/download/2.17.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/lib/docker/cli-plugins # https://github.com/docker/compose#where-to-get-docker-compose 참고
-  sudo chmod +x /usr/local/lib/docker/cli-plugins
+  sudo curl -L "https://github.com/docker/compose/releases/download/2.17.3/docker-compose-$(uname -s)-$(uname -m)" -o docker-compose # https://github.com/docker/compose#where-to-get-docker-compose 참고
+  sudo mv docker-compose $HOME/.docker/cli-plugins/
+  sudo chmod +x $HOME/.docker/cli-plugins/
 fi
 
 echo "============================== start docker-compose up: ubuntu ================================="
