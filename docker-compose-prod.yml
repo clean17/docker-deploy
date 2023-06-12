@@ -20,6 +20,7 @@ services:
 
   react-app:
     build: ./react-app
+    restart: always
     volumes:
       - ./react-app:/home/node/app
       - /home/node/app/node_modules # node_modules를 호스트 디렉토리와 공유하지 않도록함( 사라지지 않도록 )

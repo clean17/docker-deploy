@@ -62,19 +62,19 @@ fi
 #fi
 
 # Docker Buildx 설치 확인
-if ! docker buildx version > /dev/null
-then
-  echo "=============================== Docker Buildx does not exist ====================================="
-  echo "Start installing Docker Buildx"
-  # Docker Buildx 바이너리 다운로드
-  BUILDX_VERSION="v0.6.3"
-  # wget - Docker Buildx 바이너리 파일을 다운로드
-  wget https://github.com/docker/buildx/releases/download/$BUILDX_VERSION/buildx-$BUILDX_VERSION.linux-amd64 -O docker-buildx
-  chmod +x docker-buildx
-  # Docker CLI 플러그인 디렉토리 생성
-  mkdir -p ~/.docker/cli-plugins
-  mv docker-buildx ~/.docker/cli-plugins/docker-buildx
-fi
+#if ! docker buildx version > /dev/null
+#then
+#  echo "=============================== Docker Buildx does not exist ====================================="
+#  echo "Start installing Docker Buildx"
+#  # Docker Buildx 바이너리 다운로드
+#  BUILDX_VERSION="v0.6.3"
+#  # wget - Docker Buildx 바이너리 파일을 다운로드
+#  wget https://github.com/docker/buildx/releases/download/$BUILDX_VERSION/buildx-$BUILDX_VERSION.linux-amd64 -O docker-buildx
+#  chmod +x docker-buildx
+#  # Docker CLI 플러그인 디렉토리 생성
+#  mkdir -p ~/.docker/cli-plugins
+#  mv docker-buildx ~/.docker/cli-plugins/docker-buildx
+#fi
 
 # Docker Buildx - docker-compse 사용 가능
 # Installing docker-compose if not exists
@@ -82,7 +82,7 @@ if ! type docker-compose > /dev/null
 then
   echo "============================ docker-compose does not exist ======================================"
   echo "Start installing docker-compose"
-  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/2.18.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
 fi
 
