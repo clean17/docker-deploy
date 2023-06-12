@@ -5,14 +5,14 @@ services:
     restart: always
     volumes:
       - mysql-volume:/var/lib/mysql
+    env_file:
+      - .env
     environment:
       # - MYSQL_HOST=${HS512_SECRET} # 로컬에선 적용안됨
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
       - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
-    env_file:
-      - .env
     expose:
       - 3306
     ports:

@@ -87,8 +87,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.KEY }}
           envs: HS512_SECRET
-          script: |
-            sudo sh /home/ubuntu/srv/ubuntu/config/scripts/deploy.sh
+          script: | 
+            sudo sh /home/ubuntu/srv/ubuntu/deploy.sh
 
 
 

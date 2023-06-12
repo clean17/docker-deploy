@@ -93,23 +93,11 @@ J
 database/my.cnf,1\d\1dde0920ced93f3f69c6e57d75bb72bd8b447774
 S
 #database/scripts/2_create_table.sql,7\3\7322477bdb2c26d3dbfb531b078105a5fd249af6
-F
-database/1_database.sh,a\d\ad26a2699c6802ee679181b65db6253683d41726
 L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
-J
-docker-compose-actions.yml,6\1\61e97ed97713c74afb86830014c0efdf0e904cec
-B
-docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 C
 database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
-D
-react-app/dockerfile,3\b\3b8b000f137ababfd072cfc359744fcbc8ea03c0
-L
-.github/workflows/deploy.yml,f\1\f130ad0d1d16d0d70ec30d355f736ae3784b05cf
 J
 react-app/src/AppRouter.js,a\e\aed17277b64c7f3ccc1f3622018373246510144e
-F
-react-app/package.json,7\3\733b94e9a4d66f23b4d3d5623eb9579651dfc7c8
 F
 react-app/src/Login.js,8\8\889beccc88c25407cc1f98e15b968b5c8cbe640c
