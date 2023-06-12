@@ -1,14 +1,28 @@
 #!/bin/bash
 
+# Docker 제거
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+# Docker Compose 제거
+sudo rm /usr/local/bin/docker-compose
 
 if ! type docker > /dev/null
 then
   echo "================================ docker does not exist ==============================="
   echo "Start installing docker"
   sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
-  sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common # gnupg-agent - 개인키를 캐싱해줌
+
+#  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+  # Docker의 공식 GPG 키 추가
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  # Docker 저장소 설정
+  echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
   sudo apt-get update
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 fi
