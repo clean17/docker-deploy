@@ -1,20 +1,23 @@
-version: '4'
+version: '3.9'
 services:
   database:
 #    image: mysql:5.7
 #    container_name: my-app-database-1
     # Dockerfile이 있는 위치 - 참고해서 도커이미지를 빌드함
     build: ./database
+    restart: always
     volumes:
       - mysql-volume:/var/lib/mysql
-    ports:
-      - "3306:3306"
     environment:
       # - MYSQL_HOST=${HS512_SECRET} # 로컬에선 적용안됨
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
       - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
+    expose:
+      - 3306
+    ports:
+      - "3306:3306"
 #    volumes:
 #      - ./database/scripts:/docker-entrypoint-initdb.d/
 #      - ./database/my.cnf:/etc/mysql/conf.d/my.cnf
@@ -25,14 +28,20 @@ services:
     # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
     volumes:
       - ./react-app:/home/node/app
+    expose:
+      - 3000
     ports:
       - "3000:3000"
 
   springboot-server:
+    depends_on:
+      - database
     build: ./springboot-server
     # 연결할 외부 디렉토리 : 컨테이너 내 디렉토리
     volumes:
-      - ./springboot-server:/build/app
+      - ./springboot-server:/build/app 
+    expose:
+      - 8080
     ports:
       - "8080:8080"
     # 환경변수 설정
@@ -40,7 +49,6 @@ services:
       - MYSQL_HOST=database
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
-      - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
       - MYSQL_PORT=3306
       - HS512_SECRET=${HS512_SECRET}

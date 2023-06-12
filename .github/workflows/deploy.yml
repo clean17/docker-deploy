@@ -9,48 +9,109 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # 최초 ubuntu를 설치
+    runs-on: ubuntu-latest # 최초 ubuntu를 설치 github이 제공화는 환경으로 도커가 이미 설치 되어 있음
     steps:
       - name: Checkout
         uses: actions/checkout@v3 # 버전 3에 맞는 프로그램 설치 가능
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+#      - name: Set up Docker Buildx # 도커가 설치 되어있어야 함
+#        uses: docker/setup-buildx-action@v2
 
-      - name: Build and run Docker Compose
-        run: docker-compose -f docker-compose.yml up --build -d
+      #          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+      #          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+      #          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+      #          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+      - name: create env file
+        run: |
+          touch .env
+          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
+        shell: bash
 
-      # - name: Run tests
-      #   run: |
-      #     # 여기에 테스트 명령을 추가합니다.
+# Actions 테스트용
+#      - name: Build and push
+#        run: DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build -d
+
 
       # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다.
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2 # 타임존 설정
-        id: current-time
+#      - name: Get current time
+#        uses: 1466587594/get-current-time@v2 # 타임존 설정
+#        id: current-time
+#        with:
+#          format: YYYY-MM-DDTHH-mm-ss
+#          utcOffset: "+09:00" # 시간 확인
+#
+#      - name: Show Current Time
+#        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
+
+      - name: Check current time
+        run: |
+          current_time=$(TZ=Asia/Seoul date +'%Z')
+          echo "Current time: $current_time"
+          if [[ "$current_time" != "KST" ]]; then
+            echo "Timezone is not Asia/Seoul. SSH into EC2 instance to update timezone and run apt update."
+            ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+            ssh -i ${{ secrets.KEY }} ubuntu@${{ secrets.HOST }} "sudo timedatectl set-timezone Asia/Seoul && sudo apt update"
+          else
+            echo "Timezone is already set to Asia/Seoul. Skipping SSH and apt update."
+          fi
+
+      - name: create remote directory
+        uses: appleboy/ssh-action@master
         with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00" # 시간 확인
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            sudo rm -rf /home/ubuntu/srv/ubuntu
+            sudo mkdir -p /home/ubuntu/srv/ubuntu
+            sudo chmod -R ugo+w /home/ubuntu/srv/ubuntu/
 
-      - name: Show Current Time
-        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
 
-      # # EB에 CD 하기 위해 추가 작성
-      # # -r 옵션은 디렉토리 내의 모든 하위 파일과 디렉토리를 복사하는 데 사용
-      # - name: Generate deployment package
-      #   run: |
-      #     mkdir -p deploy # 깃헙의 테스트서버로 이동 후 폴더 생성 이후 복사설정
-      #     cp build/libs/*.jar deploy/application.jar 
-      #     cp Procfile deploy/Procfile
-      #     cp -r .ebextensions deploy/.ebextensions           
-      #     cd deploy && zip -r deploy.zip .         
-      # # - name: Deploy to EB
-      # #   uses: einaregilsson/beanstalk-deploy@v21 # 엘라스틱 빈스톡 환경 사용
-      # #   with:
-      # #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # 중괄호 2개는 깃헙 환경변수 접근
-      # #     aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-      # #     application_name: aws-v5-beanstalk # 엘리스틱 빈스톡 애플리케이션 이름!
-      # #     environment_name: Awsv5beanstalk-env # 엘리스틱 빈스톡 환경 이름!
-      # #     version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
-      # #     region: ap-northeast-2 # 서울 서버로 압축파일을 전달해줌
-      # #     deployment_package: deploy/deploy.zip
+
+      - name: copy source via ssh key
+        uses: burnett01/rsync-deployments@4.1 # rsync 로컬 전체 복사
+        with:
+          switches: sudo -avzr --delete -a # --delete 원격 서버에 로컬에 없는거 지우기, -a 숨김파일 복사 ( .env )
+          remote_path: /home/ubuntu/srv/ubuntu/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ubuntu
+          remote_key: ${{ secrets.KEY }}
+
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        env:
+          DEPLOY_USERNAME: nobody
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            sudo sh /home/ubuntu/srv/ubuntu/config/scripts/deploy.sh
+
+
+
+
+ 
+ 
+
+
+
+       # EB에 CD 하기 위해 추가 작성
+       # -r 옵션은 디렉토리 내의 모든 하위 파일과 디렉토리를 복사하는 데 사용
+#      - name: Generate deployment package
+#        run: |
+#          mkdir -p deploy
+#          cp build/libs/*.jar deploy/application.jar
+#          cp Procfile deploy/Procfile
+#          cp -r .ebextensions deploy/.ebextensions
+#          cd deploy && zip -r deploy.zip .
+#      - name: Deploy to EB
+#        uses: einaregilsson/beanstalk-deploy@v21 # 엘라스틱 빈스톡 환경 사용
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # 중괄호 2개는 깃헙 환경변수 접근
+#          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+#          application_name: aws-v5-beanstalk # 엘리스틱 빈스톡 애플리케이션 이름!
+#          environment_name: Awsv5beanstalk-env # 엘리스틱 빈스톡 환경 이름!
+#          version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
+#          region: ap-northeast-2 # 서울 서버로 압축파일을 전달해줌
+#          deployment_package: deploy/deploy.zip

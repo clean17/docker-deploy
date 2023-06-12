@@ -6,12 +6,12 @@ WORKDIR /build
 # 도커 캐시 사용 - 새로운 Gradle만 다운로드
 COPY build.gradle settings.gradle /build/
 RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
-# COPY --chown=gradle:gradle . /build
 
 # 빌더 이미지에서 애플리케이션 빌드
 COPY . /build
-# RUN gradle clean build --no-daemon # daemon 은 메모리를 점유하지만 빌드가 빠르다 
-RUN gradle clean build --parallel
+# RUN gradle clean build --no-daemon # daemon 은 메모리를 점유하지만 빌드가 빠르다
+RUN gradle clean build --parallel 
+# -x test 는 테스트 없이 빌드 # RUN gradle build -x test --parallel
 
 # Java 11 JDK가 설치된 Docker 이미지를 기반으로 새 이미지를 만들겠다
 FROM openjdk:11.0-slim
@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=builder /build/build/libs/*.jar /app.jar 
 
 # 컨테이너가 8080 포트에서 수신 대기
-EXPOSE 8080
+# EXPOSE 8080
 
 #  java -jar /app.jar , root 권한 x nobody 권한으로 실행함
 USER nobody

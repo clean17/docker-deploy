@@ -1,0 +1,9 @@
+
+a
+java:S2184
+"FCast one of the operands of this multiplication operation to a "long".(Ñ¬ðÎùÿÿÿÿ
+q	java:S116
+"WRename this field "MAX_AGE_SECS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ¬ðÎùÿÿÿÿ
+<
+java:S1170
+"!Make this final field static too.(Ñ¬ðÎùÿÿÿÿ
