@@ -45,8 +45,6 @@ bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerAp
 Xspringboot-server/src/test/java/com/example/springbootserver/jpa/UserRepositoryTest.java,1\4\14aaac585f15a7cda4b218ce3fe2b1c1e1381bde
 Ç
 Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserRes.java,f\8\f8a5b1f2060a1053f6f3f8fe12456975b9143aa1
-è
-_springboot-server/src/test/java/com/example/springbootserver/controller/TodoControllerTest.java,f\a\fa61f979d8d2e418b82129071a948f52df76872f
 ã
 [springboot-server/src/main/java/com/example/springbootserver/todo/model/TodoRepository.java,8\5\85e4309334fc31f33cec04007e9d1d0f38e99de8
 ç

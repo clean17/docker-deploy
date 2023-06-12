@@ -49,8 +49,6 @@ Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserRes.j
 [springboot-server/src/main/java/com/example/springbootserver/todo/model/TodoRepository.java,8\5\85e4309334fc31f33cec04007e9d1d0f38e99de8
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/core/auth/jwt/MyJwtProvider.java,2\2\223bc3306d7c3edd4ff91325102c61f7a7a45a07
-è
-_springboot-server/src/test/java/com/example/springbootserver/controller/TodoControllerTest.java,f\a\fa61f979d8d2e418b82129071a948f52df76872f
 ê
 `springboot-server/src/main/java/com/example/springbootserver/todo/controller/TodoController.java,2\9\294e1d69d4de3b9f97612314a0de1749c83b4c17
 ä
