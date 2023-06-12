@@ -3,58 +3,25 @@ on:
   push:
     branches:
       - ci-cd-ec2
-# https://github.com/actions/setup-java
-# actions/setup-java@v2는 사용자 정의 배포를 지원하고 Zulu OpenJDK,
-# Eclipse Temurin 및 Adopt OpenJDK를 기본적으로 지원합니다. v1은 Zulu OpenJDK만 지원합니다.
 
 jobs:
   build:
-    runs-on: ubuntu-latest # 최초 ubuntu를 설치 github이 제공화는 환경으로 도커가 이미 설치 되어 있음
+    runs-on: ubuntu-latest # 작업이 실행될 환경을 지정 , 깃헙액션이 제공해주는 도커를 이용
     steps:
       - name: Checkout
-        uses: actions/checkout@v3 # 버전 3에 맞는 프로그램 설치 가능
+        uses: actions/checkout@v3
 
-#      - name: Set up Docker Buildx # 도커가 설치 되어있어야 함
-#        uses: docker/setup-buildx-action@v2
-
-      #          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
-      #          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
-      #          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-      #          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
       - name: create env file
         run: |
           touch .env
           echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
+#          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
         shell: bash
 
-      # Actions 테스트용
+      # workflow 테스트용
       - name: Build and push
         run: sudo sh deploy.sh
 
-
-      # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다.
-#      - name: Get current time
-#        uses: 1466587594/get-current-time@v2 # 타임존 설정
-#        id: current-time
-#        with:
-#          format: YYYY-MM-DDTHH-mm-ss
-#          utcOffset: "+09:00" # 시간 확인
-#
-#      - name: Show Current Time
-#        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # 시간 표시
-
-#      - name: Check current time
-#        run: |
-#          current_time=$(TZ=Asia/Seoul date +'%Z')
-#          echo "Current time: $current_time"
-#          if [[ "$current_time" != "KST" ]]; then
-#            echo "Timezone is not Asia/Seoul. SSH into EC2 instance to update timezone and run apt update."
-#            ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-#            ssh -i ${{ secrets.KEY }} ubuntu@${{ secrets.HOST }} "sudo timedatectl set-timezone Asia/Seoul && sudo apt update"
-#          else
-#            echo "Timezone is already set to Asia/Seoul. Skipping SSH and apt update."
-#          fi
-#
 #      - name: create remote directory
 #        uses: appleboy/ssh-action@master
 #        with:
@@ -89,11 +56,6 @@ jobs:
 #          script: |
 #            sudo sh /home/ubuntu/srv/ubuntu/deploy.sh
 
-
-
-
- 
- 
 
 
 
