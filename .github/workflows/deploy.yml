@@ -29,7 +29,7 @@ jobs:
 
       # Actions 테스트용
       - name: Build and push
-        shell: sudo sh deploy.sh
+        run: sudo sh deploy.sh
 
 
       # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다.
