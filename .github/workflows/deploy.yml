@@ -47,6 +47,31 @@ jobs: # 병렬
 #          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
 
 
+#      sudo yum update -y  # 시스템 패키지 최신으로 업데이트
+#      sudo yum install -y docker  # yum 패키지로 도커 설치
+#      sudo service docker start  # 도커 시작
+#      sudo systemctl enable docker  # 부팅 시 도커 자동 시작
+#      sudo usermod -a -G docker ec2-user  # 그룹에 사용자 추가
+
+      - name: Install Docker on EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
+            if ! yum list updates | grep -q "No packages needed"; then
+              sudo yum update -y
+            fi
+            if ! command -v docker &> /dev/null; then
+              sudo yum install -y docker
+              sudo service docker start
+              sudo systemctl enable docker
+              sudo usermod -a -G docker ec2-user
+            else
+              echo "Docker is already installed"
+            fi
+
 # https://github.com/appleboy/ssh-action#if-you-are-using-openssh 참고해서 ssh 설정
       - name: EC2 docker remove
         uses: appleboy/ssh-action@v0.1.6
@@ -54,9 +79,6 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          proxy_host: ${{ secrets.HOST }}
-          proxy_username: ubuntu
-          proxy_key: ${{ secrets.KEY }}
           script: | # 없는걸 삭제하면 에러
             if [ "$(sudo docker ps -aq)" ]; then
               sudo docker stop $(sudo docker ps -aq)
@@ -72,9 +94,6 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          proxy_host: ${{ secrets.HOST }}
-          proxy_username: ubuntu
-          proxy_key: ${{ secrets.KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
@@ -95,9 +114,6 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          proxy_host: ${{ secrets.HOST }}
-          proxy_username: ubuntu
-          proxy_key: ${{ secrets.KEY }}
           script: |
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
             sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
