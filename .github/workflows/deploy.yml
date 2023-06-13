@@ -134,6 +134,7 @@ jobs: # 병렬
 #          script: |
 #            sudo sh /home/ubuntu/srv/ubuntu/deploy.sh
 
+
        # -r 옵션은 디렉토리 내의 모든 하위 파일과 디렉토리를 복사하는 데 사용
 #      - name: Generate deployment package
 #        run: |
