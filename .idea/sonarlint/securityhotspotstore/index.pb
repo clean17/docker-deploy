@@ -79,12 +79,8 @@ L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
 J
 springboot-server/start.sh,4\9\498aa2c36f368d279b71ef8494aaf3dd9dbaa95e
-?
-database/my.cnf,1\d\1dde0920ced93f3f69c6e57d75bb72bd8b447774
 C
 database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
-G
-database/01-database.sh,1\e\1e2b56e66ba14d682a0906c4c11f9d086db9acf9
 T
 $database/scripts/02-create_table.sql,b\6\b61a70be73918ac78020b6dcfa5235ca2b599a3d
 S

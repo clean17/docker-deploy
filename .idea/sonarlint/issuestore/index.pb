@@ -77,14 +77,10 @@ Q
 Zspringboot-server/src/main/java/com/example/springbootserver/user/service/UserService.java,5\0\50a9c2b82a79475a4e675667fd1b5bf7162441a8
 J
 springboot-server/start.sh,4\9\498aa2c36f368d279b71ef8494aaf3dd9dbaa95e
-?
-database/my.cnf,1\d\1dde0920ced93f3f69c6e57d75bb72bd8b447774
 L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
 C
 database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
-G
-database/01-database.sh,1\e\1e2b56e66ba14d682a0906c4c11f9d086db9acf9
 S
 #database/scripts/03-insert_data.sql,5\7\57ce9901275e577eb0607a2bc65505cfa957f82f
 T
