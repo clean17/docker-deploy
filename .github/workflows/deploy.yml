@@ -52,10 +52,14 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          script: |
-            sudo docker stop my-app
-            sudo docker rm my-app
-            sudo docker rmi my-app-db my-app-server my-app-react
+          script: | # 없는걸 삭제하면 에러
+            if [ "$(sudo docker ps -aq)" ]; then
+              sudo docker stop $(sudo docker ps -aq)
+              sudo docker rm $(sudo docker ps -aq)
+            fi
+            if [ "$(sudo docker images -aq)" ]; then
+              sudo docker rmi $(sudo docker images -aq)
+            fi
 
       - name: EC2 docker pull
         uses: appleboy/ssh-action@v0.1.6
