@@ -22,7 +22,7 @@ jobs: # 병렬
 #      - name: Build and push
 #        run: sudo sh deploy.sh
 
-      - name: Login / Build / Push
+      - name: Login Build Push
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
         # -p 비밀번호 또는 엑세스 토큰
