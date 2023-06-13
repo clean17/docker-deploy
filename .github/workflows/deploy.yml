@@ -55,7 +55,7 @@ jobs: # 병렬
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
             
-            sudo docker-compose up -p my-app  \
+            sudo docker-compose -p my-app up   \
             -e HS512_SECRET=${{ secrets.HS512_SECRET }}
 
 #            sudo docker run -p 80:3000 \
