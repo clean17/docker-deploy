@@ -11,94 +11,95 @@ jobs: # 병렬
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-#      - name: create env file
-#        run: |
-#          touch .env
-#          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
-#        shell: bash
-#          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env # >> 는 추가 > 는 덮어씀
-
-      # workflow 테스트용
-#      - name: Build and push
-#        run: sudo sh deploy.sh
-
-        # -p 비밀번호 또는 엑세스 토큰
-        #  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker .
-
-      - name: DockerHub Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME}}
-          password: ${{ secrets.DOCKERHUB_PASSWORD}}
-
-#      - name: Image Build and Push
-#        run: |
-#          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
 #
-#          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:latest
-#          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:latest
-#          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:latest
+##      - name: create env file
+##        run: |
+##          touch .env
+##          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
+##        shell: bash
+##          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env # >> 는 추가 > 는 덮어씀
 #
-#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
-#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
-#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
-
-
-#      sudo yum update -y  # 시스템 패키지 최신으로 업데이트
-#      sudo yum install -y docker  # yum 패키지로 도커 설치
-#      sudo service docker start  # 도커 시작
-#      sudo systemctl enable docker  # 부팅 시 도커 자동 시작
-#      sudo usermod -a -G docker ec2-user  # 그룹에 사용자 추가
-# 우분투 환경이므로 yum x, apt 사용
-      - name: Install Docker on EC2
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: |
-            if ! apt list --upgradable 2>/dev/null | grep -q "upgradable"; then
-              sudo apt update -y
-            fi
-            if ! command -v docker &> /dev/null; then
-              sudo apt install -y docker.io
-              sudo systemctl start docker
-              sudo systemctl enable docker
-              sudo usermod -aG docker ubuntu
-            else
-              echo "Docker is already installed"
-            fi
-      
-
-      # https://github.com/appleboy/ssh-action#if-you-are-using-openssh 참고해서 ssh 설정
-      - name: EC2 docker remove
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: | # 없는걸 삭제하면 에러
-            if [ "$(sudo docker ps -aq)" ]; then
-              sudo docker stop $(sudo docker ps -aq)
-              sudo docker rm $(sudo docker ps -aq)
-            fi
-            if [ "$(sudo docker images -aq)" ]; then
-              sudo docker rmi $(sudo docker images -aq)
-            fi
-
-      - name: EC2 docker pull
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+#      # workflow 테스트용
+##      - name: Build and push
+##        run: sudo sh deploy.sh
+#
+#        # -p 비밀번호 또는 엑세스 토큰
+#        #  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker .
+#
+#      - name: DockerHub Login
+#        uses: docker/login-action@v2
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME}}
+#          password: ${{ secrets.DOCKERHUB_PASSWORD}}
+#
+##      - name: Image Build and Push
+##        run: |
+##          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
+##
+##          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:latest
+##          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:latest
+##          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:latest
+##
+##          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
+##          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
+##          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+#
+#
+##      sudo yum update -y  # 시스템 패키지 최신으로 업데이트
+##      sudo yum install -y docker  # yum 패키지로 도커 설치
+##      sudo service docker start  # 도커 시작
+##      sudo systemctl enable docker  # 부팅 시 도커 자동 시작
+##      sudo usermod -a -G docker ec2-user  # 그룹에 사용자 추가
+## 우분투 환경이므로 yum x, apt 사용
+#      - name: Install Docker on EC2
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: |
+#            if ! apt list --upgradable 2>/dev/null | grep -q "upgradable"; then
+#              sudo apt update -y
+#            fi
+#            if ! command -v docker &> /dev/null; then
+#              sudo apt install -y docker.io
+#              sudo systemctl start docker
+#              sudo systemctl enable docker
+#              sudo usermod -aG docker ubuntu
+#            else
+#              echo "Docker is already installed"
+#            fi
+#
+#
+#      # https://github.com/appleboy/ssh-action#if-you-are-using-openssh 참고해서 ssh 설정
+#      - name: EC2 docker remove
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: | # 없는걸 삭제하면 에러
+#            if [ "$(sudo docker ps -aq)" ]; then
+#              sudo docker stop $(sudo docker ps -aq)
+#              sudo docker rm $(sudo docker ps -aq)
+#            fi
+#            if [ "$(sudo docker images -aq)" ]; then
+#              sudo docker rmi $(sudo docker images -aq)
+#            fi
+#
+#      - name: EC2 docker pull
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: |
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+        # latest 덮어 씀
 
       - name: Copy file to EC2
         uses: appleboy/scp-action@master
@@ -106,17 +107,19 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          source: ../../docker-compose-prod.yml
-
-      - name: EC2 docker-compose
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
           script: |
-            echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
-            sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
+            ls -al ../../
+#          source: ../../docker-compose-prod.yml
+
+#      - name: EC2 docker-compose
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: |
+#            echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
+#            sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
             
 
 
