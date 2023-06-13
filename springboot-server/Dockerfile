@@ -39,8 +39,7 @@ USER nobody
 # ENTRYPOINT ["java","-jar","/app.jar"]
 
 # Shell 스크립트 복사 - 이 방법으로 환경변수 찾아서 해결함
-RUN chmod 755 start.sh
-COPY start.sh /start.sh
+COPY --chmod=755 start.sh /start.sh
 
 # Shell 스크립트를 실행 ( 첫번째 인수 - db 서비스 이름 )
 ENTRYPOINT ["/start.sh"]
