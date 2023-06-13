@@ -87,8 +87,6 @@ L
 springboot-server/Dockerfile,d\2\d29415e14719ac76a47471d90f72ef4c29ab6147
 G
 database/01-database.sh,1\e\1e2b56e66ba14d682a0906c4c11f9d086db9acf9
-C
-database/Dockerfile,d\e\dea8215925bcea1e4f27b30176e792ce880d3b29
 S
 #database/scripts/03-insert_data.sql,5\7\57ce9901275e577eb0607a2bc65505cfa957f82f
 T

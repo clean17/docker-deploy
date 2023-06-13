@@ -11,51 +11,89 @@ jobs: # 병렬
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: create env file
-        run: |
-          touch .env
-          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
-        shell: bash
+#      - name: create env file
+#        run: |
+#          touch .env
+#          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
+#        shell: bash
 #          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
 
       # workflow 테스트용
 #      - name: Build and push
 #        run: sudo sh deploy.sh
 
-      - name: create remote directory
-        uses: appleboy/ssh-action@master
+      - name: Login / Build / Push
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        # -p 비밀번호 또는 엑세스 토큰
+#          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker .
+          docker-compose -f docker-compose-prod.yml build
+               
+          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:latest
+          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:latest
+          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:latest
+               
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-            sudo mkdir -p /home/ubuntu/srv/ubuntu
-            sudo chown -R ubuntu:ubuntu /home/ubuntu/srv/ubuntu
-#            sudo rm -rf /home/ubuntu/srv/ubuntu
-          # sudo로 권한을 변경하면 소유자가 root가 되어버린다. ubuntu로 변경해줘야함
+            sudo docker stop $(docker ps -a -q) 
+            sudo docker rm $(docker ps -a -q) 
+            sudo docker rmi $(docker ps -a -q) 
+            
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+            
+            sudo docker-compose up -p my-app  \
+            -e HS512_SECRET=${{ secrets.HS512_SECRET }}
 
+#            sudo docker run -p 80:3000 \
+#            --name my-app-docker \
+#            -e HS512_SECRET=${{ secrets.HS512_SECRET }} \
+#            -d ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker # 실행할 도커 이미지 지정
+          # --name 만들 컨테이너명
 
-      - name: copy source via ssh key
-        uses: burnett01/rsync-deployments@4.1 # rsync 로컬 전체 복사
-        with:
-          switches: -avzr --delete -a --include=".*" # --delete 원격 서버에 로컬에 없는거 지우기, -a 숨김파일 복사 ( .env )
-          remote_path: /home/ubuntu/srv/ubuntu/
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ubuntu
-          remote_key: ${{ secrets.KEY }}
-
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        env:
-          DEPLOY_USERNAME: nobody
-          HS512_SECRET: ${{ secrets.HS512_SECRET }}
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          envs: HS512_SECRET
-          script: |
-            sudo sh /home/ubuntu/srv/ubuntu/deploy.sh
+#      - name: create remote directory
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: |
+#            sudo mkdir -p /home/ubuntu/srv/ubuntu
+#            sudo chown -R ubuntu:ubuntu /home/ubuntu/srv/ubuntu
+##            sudo rm -rf /home/ubuntu/srv/ubuntu
+#          # sudo로 권한을 변경하면 소유자가 root가 되어버린다. ubuntu로 변경해줘야함
+#
+#      - name: copy source via ssh key
+#        uses: burnett01/rsync-deployments@4.1 # rsync 로컬 전체 복사
+#        with:
+#          switches: -avzr --delete -a --include=".*" # --delete 원격 서버에 로컬에 없는거 지우기, -a 숨김파일 복사 ( .env )
+#          remote_path: /home/ubuntu/srv/ubuntu/
+#          remote_host: ${{ secrets.HOST }}
+#          remote_user: ubuntu
+#          remote_key: ${{ secrets.KEY }}
+#
+#      - name: executing remote ssh commands using password
+#        uses: appleboy/ssh-action@master
+#        env:
+#          DEPLOY_USERNAME: nobody
+#          HS512_SECRET: ${{ secrets.HS512_SECRET }}
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          envs: HS512_SECRET
+#          script: |
+#            sudo sh /home/ubuntu/srv/ubuntu/deploy.sh
 
 
 
