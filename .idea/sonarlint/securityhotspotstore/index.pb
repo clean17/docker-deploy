@@ -83,8 +83,6 @@ J
 database/my.cnf,1\d\1dde0920ced93f3f69c6e57d75bb72bd8b447774
 C
 database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
-L
-springboot-server/Dockerfile,d\2\d29415e14719ac76a47471d90f72ef4c29ab6147
 G
 database/01-database.sh,1\e\1e2b56e66ba14d682a0906c4c11f9d086db9acf9
 T

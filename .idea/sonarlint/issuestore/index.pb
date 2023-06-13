@@ -83,8 +83,6 @@ L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
 C
 database/dockerfile,c\b\cb85a707d4ab0a363cc912b6747490645fb46b86
-L
-springboot-server/Dockerfile,d\2\d29415e14719ac76a47471d90f72ef4c29ab6147
 G
 database/01-database.sh,1\e\1e2b56e66ba14d682a0906c4c11f9d086db9acf9
 S
