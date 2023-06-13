@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Docker 제거
 #sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get purge docker-ce docker-ce-cli containerd.io
@@ -53,5 +54,5 @@ fi
 echo "============================== start docker-compose up: ubuntu ================================="
 sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f /home/ubuntu/srv/ubuntu/docker-compose-prod.yml up --build
 # COMPOSE_DOCKER_CLI_BUILD=1 이거 있어야 /usr/local/bin/docker-compose를 찾을 수 있음
-#sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build # workflow test
+# sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose-actions.yml up --build # workflow test
 # .env 파일로 환경변수를 ec2에 전달하려면 실행하는 스크립트가 docker-compose와 같은 디렉토리에 있어야 한다.

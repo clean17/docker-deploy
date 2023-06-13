@@ -34,17 +34,17 @@ jobs: # 병렬
           username: ${{ secrets.DOCKERHUB_USERNAME}}
           password: ${{ secrets.DOCKERHUB_PASSWORD}}
 
-      - name: Image Build and Push
-        run: |
-          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
-
-          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:latest
-          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:latest
-          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:latest
-
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+#      - name: Image Build and Push
+#        run: |
+#          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
+#
+#          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:latest
+#          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:latest
+#          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:latest
+#
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
 
       - name: EC2 docker remove
         uses: appleboy/ssh-action@v0.1.6
