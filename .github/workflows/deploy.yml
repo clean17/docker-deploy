@@ -89,16 +89,16 @@ jobs: # 병렬
               sudo docker rmi $(sudo docker images -aq)
             fi
 
-      - name: EC2 docker pull
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
+#      - name: EC2 docker pull
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: |
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
         # latest 덮어 씀
 
       - name: Copy file to EC2
