@@ -27,9 +27,15 @@ jobs: # 병렬
 
         # -p 비밀번호 또는 엑세스 토큰
         #  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker .
-      - name: Login Build Push
+
+      - name: DockerHub Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME}}
+          password: ${{ secrets.DOCKERHUB_PASSWORD}}
+
+      - name: Image Build and Push
         run: |
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
                
           docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:latest
@@ -40,7 +46,7 @@ jobs: # 병렬
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
 
-      - name: Deploy
+      - name: EC2 docker remove
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
@@ -50,13 +56,37 @@ jobs: # 병렬
             sudo docker stop $(docker ps -a -q) 
             sudo docker rm $(docker ps -a -q) 
             sudo docker rmi $(docker ps -a -q) 
-            
+
+      - name: EC2 docker pull
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
-            
+
+      - name: Copy yml via ssh key
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr --delete
+          source: ../../docker-compose-prod.yml
+          destination: /var/lib/docker/docker-compose-prod.yml
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ubuntu
+          remote_key: ${{ secrets.KEY }}
+
+      - name: EC2 docker-compose
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          script: |
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
-            sudo docker-compose -p my-app up   
+            sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
             
 
 # 환경변수를 넣을때 -e -env 명령어는 docker run에서 유효함 docker-compose에서는 파일을 넣어야 한다.
@@ -82,7 +112,7 @@ jobs: # 병렬
 #        uses: burnett01/rsync-deployments@4.1 # rsync 로컬 전체 복사
 #        with:
 #          switches: -avzr --delete -a --include=".*" # --delete 원격 서버에 로컬에 없는거 지우기, -a 숨김파일 복사 ( .env )
-#          remote_path: /home/ubuntu/srv/ubuntu/
+#          remote_path: /home/ubuntu/srv/ubuntu/  /var/lib/docker
 #          remote_host: ${{ secrets.HOST }}
 #          remote_user: ubuntu
 #          remote_key: ${{ secrets.KEY }}
