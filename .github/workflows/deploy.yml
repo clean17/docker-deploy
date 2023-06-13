@@ -42,9 +42,9 @@ jobs: # 병렬
         run: |
           DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
 
-          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:1.0.0
-          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:1.0.0
-          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:1.0.0
+          docker tag my-app-db:1.0.0 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:1.0.0
+          docker tag my-app-server:1.0.0 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:1.0.0
+          docker tag my-app-react:1.0.0 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:1.0.0
 
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:1.0.0
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:1.0.0
