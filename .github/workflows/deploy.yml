@@ -46,12 +46,17 @@ jobs: # 병렬
 #          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
 #          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
 
+
+# https://github.com/appleboy/ssh-action#if-you-are-using-openssh 참고해서 ssh 설정
       - name: EC2 docker remove
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
+          proxy_host: ${{ secrets.HOST }}
+          proxy_username: ubuntu
+          proxy_key: ${{ secrets.KEY }}
           script: | # 없는걸 삭제하면 에러
             if [ "$(sudo docker ps -aq)" ]; then
               sudo docker stop $(sudo docker ps -aq)
@@ -67,6 +72,9 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
+          proxy_host: ${{ secrets.HOST }}
+          proxy_username: ubuntu
+          proxy_key: ${{ secrets.KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
@@ -87,6 +95,9 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
+          proxy_host: ${{ secrets.HOST }}
+          proxy_username: ubuntu
+          proxy_key: ${{ secrets.KEY }}
           script: |
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
             sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
