@@ -72,15 +72,14 @@ jobs: # 병렬
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
 
-      - name: Copy yml via ssh key
-        uses: burnett01/rsync-deployments@4.1
+      - name: Copy file to EC2
+        uses: appleboy/scp-action@master
         with:
-          switches: -avzr --delete
-          source: docker-compose-prod.yml #  GitHub Actions 러너의 작업 디렉토리 기준 - 루트 디렉토리
-          destination: /var/lib/docker/docker-compose-prod.yml
-          remote_host: ${{ secrets.HOST }}
-          remote_user: ubuntu
-          remote_key: ${{ secrets.KEY }}
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.KEY }}
+          source: ../../docker-compose-prod.yml
+          target: /var/lib/docker/
 
       - name: EC2 docker-compose
         uses: appleboy/ssh-action@v0.1.6
@@ -92,6 +91,7 @@ jobs: # 병렬
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
             sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
             
+
 
 # 환경변수를 넣을때 -e -env 명령어는 docker run에서 유효함 docker-compose에서는 파일을 넣어야 한다.
 #            sudo docker run -p 80:3000 \
