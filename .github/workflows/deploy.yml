@@ -19,7 +19,7 @@ jobs: # 병렬
 #          touch .env
 #          echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" >> .env
 #        shell: bash
-#          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+#          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env # >> 는 추가 > 는 덮어씀
 
       # workflow 테스트용
 #      - name: Build and push
@@ -55,9 +55,11 @@ jobs: # 병렬
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
             
-            sudo docker-compose -p my-app up   \
-            --env HS512_SECRET=${{ secrets.HS512_SECRET }}
+            echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
+            sudo docker-compose -p my-app up   
+            
 
+# 환경변수를 넣을때 -e -env 명령어는 docker run에서 유효함 docker-compose에서는 파일을 넣어야 한다.
 #            sudo docker run -p 80:3000 \
 #            --name my-app-docker \
 #            -e HS512_SECRET=${{ secrets.HS512_SECRET }} \
@@ -98,10 +100,6 @@ jobs: # 병렬
 #          script: |
 #            sudo sh /home/ubuntu/srv/ubuntu/deploy.sh
 
-
-
-
-       # EB에 CD 하기 위해 추가 작성
        # -r 옵션은 디렉토리 내의 모든 하위 파일과 디렉토리를 복사하는 데 사용
 #      - name: Generate deployment package
 #        run: |
