@@ -52,7 +52,7 @@ jobs: # 병렬
 #      sudo service docker start  # 도커 시작
 #      sudo systemctl enable docker  # 부팅 시 도커 자동 시작
 #      sudo usermod -a -G docker ec2-user  # 그룹에 사용자 추가
-
+# 우분투 환경이므로 yum x, apt 사용
       - name: Install Docker on EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -107,7 +107,6 @@ jobs: # 병렬
           username: ubuntu
           key: ${{ secrets.KEY }}
           source: ../../docker-compose-prod.yml
-          target: /var/lib/docker/
 
       - name: EC2 docker-compose
         uses: appleboy/ssh-action@v0.1.6
