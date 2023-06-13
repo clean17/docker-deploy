@@ -110,7 +110,7 @@ jobs: # 병렬
         # latest 덮어 씀 , 동일한 로컬 이미지 재사용
 
       - name: Copy file to EC2
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@master # 기존 파일을 덮어씀
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
@@ -124,6 +124,7 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
+          timeout: 900 # 15분
           script: |
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
             sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
