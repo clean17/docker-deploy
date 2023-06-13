@@ -99,7 +99,7 @@ jobs: # 병렬
 #            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db
 #            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server
 #            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react
-        # latest 덮어 씀
+        # latest 덮어 씀 , 동일한 로컬 이미지 재사용
 
       - name: Copy file to EC2
         uses: appleboy/scp-action@master
@@ -109,6 +109,8 @@ jobs: # 병렬
           key: ${{ secrets.KEY }}
           source: ../../docker-compose-prod.yml
           target: /home/ubuntu/
+        run: |
+          echo "Source Directory: ${{ github.workspace }}"
 
       - name: EC2 docker-compose
         uses: appleboy/ssh-action@v0.1.6
