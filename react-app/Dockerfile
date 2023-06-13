@@ -12,6 +12,8 @@ COPY package*.json ./
 #    rm -rf node_modules && \
 #    rm -rf package-lock.json && \
 #    npm install
+RUN npm cache clean --force
+
 RUN npm install
 
 # 앱 소스를 Docker 이미지에 복사

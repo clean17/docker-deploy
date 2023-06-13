@@ -2,17 +2,18 @@ version: '3.9'
 services:
   database:
     build: ./database
+    image: my-app-db:latest
     restart: always
     volumes:
       - mysql-volume:/var/lib/mysql
+#    env_file:
+#      - .env
     environment:
       # - MYSQL_HOST=${HS512_SECRET} # 로컬에선 적용안됨
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
       - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
-    env_file:
-      - .env
     expose:
       - 3306
     ports:
@@ -20,6 +21,8 @@ services:
 
   react-app:
     build: ./react-app
+    image: my-app-react:latest
+    restart: always
     volumes:
       - ./react-app:/home/node/app
       - /home/node/app/node_modules # node_modules를 호스트 디렉토리와 공유하지 않도록함( 사라지지 않도록 )
@@ -32,6 +35,7 @@ services:
     depends_on:
       - database
     build: ./springboot-server
+    image: my-app-server:latest
     restart: always
     volumes:
       - ./springboot-server:/build/app
@@ -39,8 +43,8 @@ services:
       - 8080
     ports:
       - "8080:8080"
-    env_file:
-      - .env
+#    env_file:
+#      - .env
     environment:
       - MYSQL_HOST=database
       - MYSQL_USER=${HS512_SECRET}
@@ -48,7 +52,6 @@ services:
       - MYSQL_DATABASE=${HS512_SECRET}
       - MYSQL_PORT=3306
       - HS512_SECRET=${HS512_SECRET}
-
 
 volumes:
   mysql-volume:
