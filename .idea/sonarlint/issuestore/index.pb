@@ -19,8 +19,6 @@ Jspringboot-server/src/test/java/com/example/springbootserver/util/Env.java,2\0
 Qspringboot-server/src/test/java/com/example/springbootserver/core/MyRestDocs.java,a\1\a13f32505a2c9f49cdee3548cf40e6d8f78dbe99
 …
 Uspringboot-server/src/test/java/com/example/springbootserver/core/MyWithMockUser.java,3\0\30955037da0bd71395dbafe8e2138cceafc59c91
-ˆ
-Xspringboot-server/src/test/java/com/example/springbootserver/jpa/TodoRepositoryTest.java,e\f\ef0580ad37025c7fe9b76440057f43338d6220a9
 ‚
 Rspringboot-server/src/main/java/com/example/springbootserver/todo/dto/TodoReq.java,9\3\93baa828f9eded01eef6095f42a61ac74cf9c1e6
 ‚
@@ -41,8 +39,6 @@ Uspringboot-server/src/main/java/com/example/springbootserver/config/WebMvcConfi
 Sspringboot-server/src/test/java/com/example/springbootserver/mock/TodoMockTest.java,a\e\ae7c3f7bcda0c299b9026503309f8149fd213929
 ’
 bspringboot-server/src/test/java/com/example/springbootserver/SpringbootServerApplicationTests.java,a\1\a1fadad3a7099cac99f4503617f50c098e082525
-ˆ
-Xspringboot-server/src/test/java/com/example/springbootserver/jpa/UserRepositoryTest.java,1\4\14aaac585f15a7cda4b218ce3fe2b1c1e1381bde
 ‚
 Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserRes.java,f\8\f8a5b1f2060a1053f6f3f8fe12456975b9143aa1
 ‹
@@ -75,8 +71,6 @@ Q
 !.ebextensions/00-makefiles.config,8\6\86ef5e50cb77147a94e4b9b0dfa9b432444ca38d
 Š
 Zspringboot-server/src/main/java/com/example/springbootserver/user/service/UserService.java,5\0\50a9c2b82a79475a4e675667fd1b5bf7162441a8
-J
-springboot-server/start.sh,4\9\498aa2c36f368d279b71ef8494aaf3dd9dbaa95e
 L
 springboot-server/dockerfile,4\3\439fb4158e43d9a867dae024e8960ebd01edcd98
 C
