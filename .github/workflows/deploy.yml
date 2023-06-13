@@ -62,6 +62,7 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
+          timeout: 1200s # 20분
           script: |
             if ! apt list --upgradable 2>/dev/null | grep -q "upgradable"; then
               sudo apt update -y
