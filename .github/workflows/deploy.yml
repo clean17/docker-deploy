@@ -75,6 +75,10 @@ jobs: # 병렬
             else
               echo "Docker is already installed"
             fi
+            if ! command -v docker-compose &> /dev/null; then
+              sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
       
 
       # https://github.com/appleboy/ssh-action#if-you-are-using-openssh 참고해서 ssh 설정
@@ -122,7 +126,7 @@ jobs: # 병렬
           key: ${{ secrets.KEY }}
           script: |
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
-            sudo DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
+            sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-prod.yml up
             
 
 
