@@ -53,9 +53,9 @@ jobs: # 병렬
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-            sudo docker stop $(docker ps -a -q) 
-            sudo docker rm $(docker ps -a -q) 
-            sudo docker rmi $(docker ps -a -q) 
+            sudo docker stop $(sudo docker ps -a -q) 
+            sudo docker rm $(sudo docker ps -a -q) 
+            sudo docker rmi $(sudo docker ps -a -q) 
 
       - name: EC2 docker pull
         uses: appleboy/ssh-action@v0.1.6
