@@ -255,5 +255,5 @@ jobs: # 병렬
           key: ${{ secrets.KEY }}
           timeout: 900s # 10분
           script: |
-            sudo docker run --name my-app-react-1 -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1 &
+            sudo nohup docker run --name my-app-react-1 -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1 > /dev/null 2>&1 &
           #  -e HS512_SECRET=${{ secrets.HS512_SECRET }} \
