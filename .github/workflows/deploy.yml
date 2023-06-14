@@ -38,17 +38,17 @@ jobs: # 병렬
           username: ${{ secrets.DOCKERHUB_USERNAME}}
           password: ${{ secrets.DOCKERHUB_TOKEN}}
 
-      - name: Image Build and Push
-        run: |
-          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
-
-          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
-          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
-          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
-
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
+#      - name: Image Build and Push
+#        run: |
+#          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
+#
+#          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
+#          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
+#          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
+#
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
 
 #      sudo yum update -y  # 시스템 패키지 최신으로 업데이트
 #      sudo yum install -y docker  # yum 패키지로 도커 설치
@@ -79,29 +79,23 @@ jobs: # 병렬
               sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
               sudo chmod +x /usr/local/bin/docker-compose
             fi
-            if ! command -v node &> /dev/null; then
-              curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-              sudo apt-get install -y nodejs
-            else
-              echo "Node.js is already installed"
-            fi
       
 
       # https://github.com/appleboy/ssh-action#if-you-are-using-openssh 참고해서 ssh 설정
-      - name: EC2 docker remove
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: | # 없는걸 삭제하면 에러
-            if [ "$(sudo docker ps -aq)" ]; then
-              sudo docker stop $(sudo docker ps -aq)
-              sudo docker rm $(sudo docker ps -aq)
-            fi
-            if [ "$(sudo docker images -aq)" ]; then
-              sudo docker rmi $(sudo docker images -aq)
-            fi
+#      - name: EC2 docker remove
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: | # 없는걸 삭제하면 에러
+#            if [ "$(sudo docker ps -aq)" ]; then
+#              sudo docker stop $(sudo docker ps -aq)
+#              sudo docker rm $(sudo docker ps -aq)
+#            fi
+#            if [ "$(sudo docker images -aq)" ]; then
+#              sudo docker rmi $(sudo docker images -aq)
+#            fi
 
       - name: EC2 docker pull
         uses: appleboy/ssh-action@v0.1.6
