@@ -6,7 +6,7 @@ const hostname = window && window.location && window.location.hostname;
 if ( hostname === "localhost") {
     backendHost = "http://localhost:8080";
 } else {
-    backendHost = "ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com";
+    backendHost = "http://ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com:8080";
 }
 
 export const API_BASE_URL = backendHost;
