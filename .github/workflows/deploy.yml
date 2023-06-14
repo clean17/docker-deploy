@@ -103,9 +103,9 @@ jobs: # 병렬
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
 #            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
 #            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
         # latest 덮어 씀 , 동일한 로컬 이미지 재사용
 
 #      - name: Copy file to EC2
