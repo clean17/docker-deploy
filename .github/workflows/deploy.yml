@@ -15,8 +15,8 @@ jobs: # 병렬
 #        run: |
 #          echo "Source Directory: ${{ github.workspace }}"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
 
 #      - name: create env file
 #        run: |
@@ -56,13 +56,12 @@ jobs: # 병렬
 #      sudo systemctl enable docker  # 부팅 시 도커 자동 시작
 #      sudo usermod -a -G docker ec2-user  # 그룹에 사용자 추가
 # 우분투 환경이므로 yum x, apt 사용
-      - name: Install Docker and Node.js on EC2
+      - name: Install Docker on EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          timeout: 1200s # 20분
           script: |
             if ! apt list --upgradable 2>/dev/null | grep -q "upgradable"; then
               sudo apt update -y
@@ -104,32 +103,47 @@ jobs: # 병렬
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
+#            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
         # latest 덮어 씀 , 동일한 로컬 이미지 재사용
 
-      - name: Copy file to EC2
-        uses: appleboy/scp-action@master # 기존 파일을 덮어씀
-        with:
-          host: ${{ secrets.HOST }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          source: ./docker-compose-ec2.yml # 프로젝트 루트
-          target: /home/ubuntu/
+#      - name: Copy file to EC2
+#        uses: appleboy/scp-action@master # 기존 파일을 덮어씀
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          source: ./docker-compose-ec2.yml # 프로젝트 루트
+#          target: /home/ubuntu/
 
-      - name: EC2 docker-compose
+#      - name: EC2 docker-compose
+#        uses: appleboy/ssh-action@v0.1.6
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.KEY }}
+#          script: |
+#            echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
+#            echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME}}" >> .env
+#            echo "TAG_VERSION=0.0.1" >> .env
+#            sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-ec2.yml up
+
+      - name: EC2 docker run React
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          timeout: 600s # 10분
+          timeout: 900s # 10분
           script: |
-            echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
-            echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME}}" >> .env
-            echo "TAG_VERSION=0.0.1" >> .env
-            sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-ec2.yml up
+            sudo docker run -p 80:3000 \
+            --name my-app-react-1 \
+            ${DOCKERHUB_USERNAME}/my-app-react:${TAG_VERSION}
+      
+            
+            
+
 
 # 환경변수를 더 추가할 때는 >> 로 추가한다.
 

@@ -17,18 +17,6 @@ services:
     ports:
       - "3306:3306"
 
-  react-app:
-    build: ./react-app
-    image: ${DOCKERHUB_USERNAME}/my-app-react:${TAG_VERSION}
-    restart: always
-    volumes:
-      - ./react-app:/home/node/app
-      - /home/node/app/node_modules # node_modules를 호스트 디렉토리와 공유하지 않도록함( 사라지지 않도록 )
-    expose:
-      - 3000
-    ports:
-      - "80:3000"
-
   springboot-server:
     depends_on:
       - database
