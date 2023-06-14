@@ -7,11 +7,6 @@ WORKDIR /home/node/app
 # 프로젝트의 package.json 및 package-lock.json을 Docker 이미지에 복사
 COPY package*.json ./
 
-# 앱의 의존성 설치
-#RUN npm cache clean --force && \
-#    rm -rf node_modules && \
-#    rm -rf package-lock.json && \
-#    npm install
 RUN npm cache clean --force
 
 RUN npm install
