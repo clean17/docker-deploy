@@ -33,8 +33,6 @@ N
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/session/MyUserDetailsService.java,0\8\083ec3beef4d47618caa17494aa5374515b72c3c
 Å
 Qspringboot-server/src/main/java/com/example/springbootserver/todo/model/Todo.java,e\3\e3b0b977ec084a27127cc09c603eb9cd6a819bd4
-Ö
-Uspringboot-server/src/main/java/com/example/springbootserver/config/WebMvcConfig.java,f\7\f70ee9129eccaa982f34578e70d1e7066acd9b93
 É
 Sspringboot-server/src/test/java/com/example/springbootserver/mock/TodoMockTest.java,a\e\ae7c3f7bcda0c299b9026503309f8149fd213929
 í
@@ -81,10 +79,6 @@ S
 #database/scripts/03-insert_data.sql,5\7\57ce9901275e577eb0607a2bc65505cfa957f82f
 F
 react-app/package.json,7\3\733b94e9a4d66f23b4d3d5623eb9579651dfc7c8
-R
-"react-app/src/config/app-config.js,5\b\5b4f77f40b9ff6d1d49f1e844d75432b1597f664
-S
-#react-app/src/service/ApiService.js,2\b\2b111ab4a31553f59e36bcb2bacc7a9d598c5278
 L
 springboot-server/Dockerfile,d\2\d29415e14719ac76a47471d90f72ef4c29ab6147
 ?
