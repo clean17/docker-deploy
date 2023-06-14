@@ -27,8 +27,6 @@ Rspringboot-server/src/main/java/com/example/springbootserver/todo/dto/TodoReq.j
 _springboot-server/src/main/java/com/example/springbootserver/core/advice/MyExceptionAdvice.java,d\5\d5e219fcdebe7d7fd3ebbc82c710234dd2379515
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/core/exception/Exception500.java,8\d\8dd6238463e7ad57bb14409d6e39c4c981d906a1
-N
-springboot-server/build.gradle,c\8\c856674778b908767b2e951b28a8d58b7930942e
 ò
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/session/MyUserDetailsService.java,0\8\083ec3beef4d47618caa17494aa5374515b72c3c
 Å

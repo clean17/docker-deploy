@@ -144,7 +144,7 @@ jobs: # 병렬
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME}}" >> .env
             echo "TAG_VERSION=0.0.1" >> .env
-            sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-ec2.yml up
+            sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-ec2.yml up -d
           # 환경변수를 더 추가할 때는 >> 로 추가한다.
             
             
@@ -255,5 +255,5 @@ jobs: # 병렬
           key: ${{ secrets.KEY }}
           timeout: 900s # 10분
           script: |
-            sudo nohup docker run --name my-app-react-1 -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1 &
+            sudo docker run --name my-app-react-1 -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1 &
           #  -e HS512_SECRET=${{ secrets.HS512_SECRET }} \
