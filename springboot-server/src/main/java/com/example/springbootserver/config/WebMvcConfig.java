@@ -14,7 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
         // .allowedOriginPatterns("http://localhost:3000","*") // Post Man으로 테스트
-        .allowedOriginPatterns("http://localhost:3000", "ec2-13-124-79-248.ap-northeast-2.compute.amazonaws.com:3000","13.124.79.248:3000") // 프론트에서만 허용 / 빈스톡 주소로 변경
+        .allowedOriginPatterns("http://localhost:3000", "http://ec2-13-124-79-248.ap-northeast-2.compute.amazonaws.com") // 프론트에서만 허용 / 빈스톡 주소로 변경
         .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS")
         .allowedHeaders("*")
         .exposedHeaders("Authorization")

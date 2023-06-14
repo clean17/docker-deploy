@@ -28,7 +28,7 @@ class App extends React.Component {
   }
 
   delete = async (itemId) => {
-    await call("/todos/" + itemId, "DELETE", null).then((response) =>
+    await call("/todos" + itemId, "DELETE", null).then((response) =>
       this.setState({ items: this.state.items.filter(item => item.id !== itemId) }))
   }
 

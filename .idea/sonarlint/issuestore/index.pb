@@ -95,8 +95,6 @@ C
 database/Dockerfile,d\e\dea8215925bcea1e4f27b30176e792ce880d3b29
 J
 docker-compose-actions.yml,6\1\61e97ed97713c74afb86830014c0efdf0e904cec
-B
-docker-compose.yml,3\5\35b8c13cf2eb2a194eada000eb310d65aed53b2a
 D
 react-app/.gitignore,d\5\d51406ea4a57315d8862f50d5465af35e89767f8
 G

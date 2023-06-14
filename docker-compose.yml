@@ -16,14 +16,14 @@ services:
     ports:
       - "3306:3306"
 
-  react-app:
-    build: ./react-app
-    volumes:
-      - ./react-app:/home/node/app
-    expose:
-      - 3000
-    ports:
-      - "3000:3000"
+#  react-app:
+#    build: ./react-app
+#    volumes:
+#      - ./react-app:/home/node/app
+#    expose:
+#      - 3000
+#    ports:
+#      - "3000:3000"
 
   springboot-server:
     depends_on:
