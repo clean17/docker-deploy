@@ -1,7 +1,6 @@
 import { API_BASE_URL } from '../config/app-config';
 
 const ACCESS_TOKEN = "ACCESS_TOKEN";
-let errorMsg;
 
 function createOptions(api, method, request) {
     let headers = new Headers({
@@ -29,25 +28,22 @@ export async function call(api, method, request) {
     let options = createOptions(api, method, request);
     try {
         return await fetch(options.url, options)
-            .then((response) => response.json()
-                .then((json) => {
-                    if (!response.ok || !response.status === 201) {
-                        errorMsg = json.msg
-                        json.data = ""; // componentDidMount 가 접근하므로 공백을 넣어둠
-                        return Promise.reject(json); // catch에 Promise 를 넘긴다.
-                    }
-                    return json;
-                })
-            )
+            .then((response) => response.json())
+            .then((json) => {
+                if (!json.ok || !json.status === 201) {
+                    return Promise.reject(json); // catch에 Promise 를 넘긴다.
+                }
+                return json;
+            })
             .catch((error) => {
-                console.log(error.status);
                 if (error.status === 401) {
                     window.location.href = '/login';
                 }
                 return Promise.reject(error);
             });
     } catch (error) {
-        console(errorMsg);
+        console.error('Error:', error);
+        // throw new Error(error);
     }
 }
 
@@ -60,7 +56,6 @@ export async function join(userDTO) {
                 response.json()
                     .then((json) => {
                         if (!response.ok || !response.status === 201) {
-                            errorMsg = json.msg
                             return Promise.reject(json);
                         } else {
                             window.location.href = "/login";
@@ -68,7 +63,7 @@ export async function join(userDTO) {
                     })
             });
     } catch (error) {
-        alert(errorMsg);
+        alert(error.msg);
     }
 }
 
@@ -82,7 +77,6 @@ export async function login(userDTO) {
                 response.json()
                     .then((json) => {
                         if (!response.ok || !response.status === 201) {
-                            errorMsg = json.msg
                             return Promise.reject(json);
                         } else {
                             // console.log("headers: ", [...response.headers]);
@@ -94,7 +88,7 @@ export async function login(userDTO) {
             }
             );
     } catch (error) {
-        alert(errorMsg);
+        alert(error.msg);
     }
 }
 

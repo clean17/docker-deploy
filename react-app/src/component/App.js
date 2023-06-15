@@ -16,10 +16,14 @@ class App extends React.Component {
   }
 
   // 컴포넌트가 렌더링되면 자동적으로 실행되는 함수
-  async componentDidMount() {
-    await call("/todos", "GET", null).then((response) =>
-      this.setState({ items: response.data, loding: false })
-    )
+  componentDidMount() {
+    call("/todos", "GET", null).then((response) => {
+        // const result = (response?.data !== undefined) ? response.data : [];
+        // this.setState({ items: result, loding: false }); // 여기서의 문제는 401 -> login 이동 잠깐사이에 렌더링이 되버림
+        
+         // Optional Chaining( ? ) -> undefined - 아예 setState를 막음
+      if (response?.data) this.setState({ items: response.data, loading: false });
+    })
   }
   // 리스트 추가
   save = async (item) => {
