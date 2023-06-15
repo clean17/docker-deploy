@@ -1,9 +1,9 @@
-package com.example.springbootserver.todo.dto;
+package com.example.springbootserver.todos.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.example.springbootserver.todo.model.Todo;
+import com.example.springbootserver.todos.model.Todo;
 
 import lombok.*;
 

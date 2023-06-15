@@ -28,13 +28,14 @@ export async function call(api, method, request) {
     let options = createOptions(api, method, request);
     try {
         return await fetch(options.url, options)
-            .then((response) => response.json())
-            .then((json) => {
-                if (!json.ok || !json.status === 201) {
-                    return Promise.reject(json); // catch에 Promise 를 넘긴다.
-                }
-                return json;
-            })
+            .then((response) => response.json()
+                .then((json) => {
+                    if (!response.ok || !response.status === 201) {
+                        return Promise.reject(json); // catch에 Promise 를 넘긴다.
+                    }
+                    return json;
+                })
+            )
             .catch((error) => {
                 if (error.status === 401) {
                     window.location.href = '/login';
@@ -42,8 +43,7 @@ export async function call(api, method, request) {
                 return Promise.reject(error);
             });
     } catch (error) {
-        console.error('Error:', error);
-        // throw new Error(error);
+        console.log(error.msg);
     }
 }
 

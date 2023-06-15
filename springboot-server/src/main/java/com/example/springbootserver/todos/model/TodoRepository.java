@@ -1,4 +1,4 @@
-package com.example.springbootserver.todo.model;
+package com.example.springbootserver.todos.model;
 
 import java.util.List;
 import java.util.Optional;

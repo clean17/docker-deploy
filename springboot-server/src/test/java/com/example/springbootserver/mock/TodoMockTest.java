@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import java.util.List;
 
 import com.example.springbootserver.core.MyWithMockUser;
-import com.example.springbootserver.todo.dto.TodoReq;
+import com.example.springbootserver.todos.dto.TodoReq;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +26,9 @@ import com.example.springbootserver.config.WebSecurityConfig;
 import com.example.springbootserver.core.advice.MyValidAdvice;
 import com.example.springbootserver.core.auth.session.MyUserDetails;
 import com.example.springbootserver.core.exception.Exception403;
-import com.example.springbootserver.todo.controller.TodoController;
-import com.example.springbootserver.todo.model.Todo;
-import com.example.springbootserver.todo.service.TodoService;
+import com.example.springbootserver.todos.controller.TodoController;
+import com.example.springbootserver.todos.model.Todo;
+import com.example.springbootserver.todos.service.TodoService;
 
 // @AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 //@SpringBootTest

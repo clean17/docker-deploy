@@ -2,8 +2,8 @@ package com.example.springbootserver.controller;
 
 import com.example.springbootserver.core.MyRestDocs;
 import com.example.springbootserver.core.MyWithMockUser;
-import com.example.springbootserver.todo.dto.TodoReq;
-import com.example.springbootserver.todo.model.Todo;
+import com.example.springbootserver.todos.dto.TodoReq;
+import com.example.springbootserver.todos.model.Todo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

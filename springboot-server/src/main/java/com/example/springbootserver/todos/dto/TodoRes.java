@@ -1,6 +1,6 @@
-package com.example.springbootserver.todo.dto;
+package com.example.springbootserver.todos.dto;
 
-import com.example.springbootserver.todo.model.Todo;
+import com.example.springbootserver.todos.model.Todo;
 
 import lombok.Getter;
 

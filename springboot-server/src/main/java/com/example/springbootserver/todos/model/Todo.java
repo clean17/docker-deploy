@@ -1,4 +1,4 @@
-package com.example.springbootserver.todo.model;
+package com.example.springbootserver.todos.model;
 
 import javax.persistence.*;
 

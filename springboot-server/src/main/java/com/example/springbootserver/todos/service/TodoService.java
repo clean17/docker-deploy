@@ -1,18 +1,18 @@
-package com.example.springbootserver.todo.service;
+package com.example.springbootserver.todos.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.springbootserver.todo.model.Todo;
-import com.example.springbootserver.todo.model.TodoRepository;
+import com.example.springbootserver.todos.model.Todo;
+import com.example.springbootserver.todos.model.TodoRepository;
 import com.example.springbootserver.core.auth.session.MyUserDetails;
 import com.example.springbootserver.core.exception.Exception400;
 import com.example.springbootserver.core.exception.Exception403;
 import com.example.springbootserver.core.exception.Exception500;
-import com.example.springbootserver.todo.dto.TodoReq;
-import com.example.springbootserver.todo.dto.TodoReq.TodoSave;
+import com.example.springbootserver.todos.dto.TodoReq;
+import com.example.springbootserver.todos.dto.TodoReq.TodoSave;
 
 import lombok.extern.slf4j.Slf4j;
 

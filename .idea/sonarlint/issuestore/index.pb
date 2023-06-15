@@ -95,8 +95,6 @@ N
 	deploy.sh,b\e\be94fd40f0c4b440044c3f852e44fd2a75f7b3cc
 F
 .github/old-deploy.yml,1\2\122e91b92f4e0d9a707bacf39fd6bfd7ff355289
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 R
 "react-app/src/config/app-config.js,5\b\5b4f77f40b9ff6d1d49f1e844d75432b1597f664
 L

@@ -1,7 +1,7 @@
 package com.example.springbootserver.jpa;
 
-import com.example.springbootserver.todo.model.Todo;
-import com.example.springbootserver.todo.model.TodoRepository;
+import com.example.springbootserver.todos.model.Todo;
+import com.example.springbootserver.todos.model.TodoRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

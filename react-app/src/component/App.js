@@ -11,35 +11,34 @@ class App extends React.Component {
     super(props);
     this.state = {
       items: [],
-      loding: true
+      loading: true
     };
   }
 
   // 컴포넌트가 렌더링되면 자동적으로 실행되는 함수
   componentDidMount() {
     call("/todos", "GET", null).then((response) => {
-        // const result = (response?.data !== undefined) ? response.data : [];
-        // this.setState({ items: result, loding: false }); // 여기서의 문제는 401 -> login 이동 잠깐사이에 렌더링이 되버림
-        
-         // Optional Chaining( ? ) -> undefined - 아예 setState를 막음
-      if (response?.data) this.setState({ items: response.data, loading: false });
+      // const result = (response?.data !== undefined) ? response.data : [];
+      // this.setState({ items: result, loading: false }); // 여기서의 문제는 401 -> login 이동 잠깐사이에 렌더링이 되버림
+
+      if (response?.data) this.setState({ items: response.data, loading: false }); // Optional Chaining( ? ) -> undefined
     })
   }
   // 리스트 추가
-  save = async (item) => {
-    await call("/todos", "POST", item).then((response) =>
+  save = (item) => {
+    call("/todos", "POST", item).then((response) =>
       this.setState({ items: [...this.state.items, response.data] })
     );
   }
 
-  delete = async (itemId) => {
-    await call("/todos" + itemId, "DELETE", null).then((response) =>
+  delete = (itemId) => {
+    call("/todos/" + itemId, "DELETE", null).then((response) =>
       this.setState({ items: this.state.items.filter(item => item.id !== itemId) })
     )
   }
 
-  update = async (item) => {
-    await call("/todos", "PUT", item).then((response) => {
+  update = (item) => {
+    call("/todos", "PUT", item).then((response) => {
       this.setState({ items: [...this.state.items].map((e) => e.id !== item.id ? e : response.data) });
     });
   }
@@ -91,7 +90,7 @@ class App extends React.Component {
 
     let loadingPage = <h1> 로딩중 ... </h1>;
     let content = loadingPage;
-    if (!this.state.loding) {
+    if (!this.state.loading) {
       content = todoListPage;
     }
     return <div className='App'>{content}</div>
