@@ -8,7 +8,7 @@ function createOptions(api, method, request) {
         "content-type": "application/json; charset=utf-8",
     })
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
-    if(accessToken && accessToken !== null && accessToken !== "null") {
+    if (accessToken && accessToken !== null && accessToken !== "null") {
         headers.append("Authorization", accessToken);
     }
 
@@ -27,14 +27,14 @@ function createOptions(api, method, request) {
 
 export async function call(api, method, request) {
     let options = createOptions(api, method, request);
-    // 통신 에러 말고 자바스크립트 에러 처리 필요
     try {
         return await fetch(options.url, options)
             .then((response) => response.json()
                 .then((json) => {
                     if (!response.ok || !response.status === 201) {
                         errorMsg = json.msg
-                        return Promise.reject(json);
+                        json.data = ""; // componentDidMount 가 접근하므로 공백을 넣어둠
+                        return Promise.reject(json); // catch에 Promise 를 넘긴다.
                     }
                     return json;
                 })
@@ -47,7 +47,7 @@ export async function call(api, method, request) {
                 return Promise.reject(error);
             });
     } catch (error) {
-        alert(errorMsg);
+        console(errorMsg);
     }
 }
 
@@ -56,15 +56,16 @@ export async function join(userDTO) {
 
     try {
         return await fetch(options.url, options)
-            .then((response) => { response.json()
-                .then((json) => {
-                    if (!response.ok || !response.status === 201) {
-                        errorMsg = json.msg
-                        return Promise.reject(json);
-                    } else {
-                        window.location.href = "/login";
-                    }
-                })
+            .then((response) => {
+                response.json()
+                    .then((json) => {
+                        if (!response.ok || !response.status === 201) {
+                            errorMsg = json.msg
+                            return Promise.reject(json);
+                        } else {
+                            window.location.href = "/login";
+                        }
+                    })
             });
     } catch (error) {
         alert(errorMsg);
@@ -79,17 +80,17 @@ export async function login(userDTO) {
             .then((response) => {
                 const head = response.headers.get('Authorization');
                 response.json()
-                .then((json) => {
-                    if (!response.ok || !response.status === 201) {
-                        errorMsg = json.msg
-                        return Promise.reject(json);
-                    } else {
-                        // console.log("headers: ", [...response.headers]);
-                        // alert("로그인 완료 : " + head);
-                        localStorage.setItem(ACCESS_TOKEN, head); // 브라우저를 재시작해도 로그인 유지
-                        window.location.href = "/";
-                    }
-                })
+                    .then((json) => {
+                        if (!response.ok || !response.status === 201) {
+                            errorMsg = json.msg
+                            return Promise.reject(json);
+                        } else {
+                            // console.log("headers: ", [...response.headers]);
+                            // alert("로그인 완료 : " + head);
+                            localStorage.setItem(ACCESS_TOKEN, head); // 브라우저를 재시작해도 로그인 유지
+                            window.location.href = "/";
+                        }
+                    })
             }
             );
     } catch (error) {

@@ -18,7 +18,8 @@ class App extends React.Component {
   // 컴포넌트가 렌더링되면 자동적으로 실행되는 함수
   async componentDidMount() {
     await call("/todos", "GET", null).then((response) =>
-      this.setState({ items: response.data, loding: false }))
+      this.setState({ items: response.data, loding: false })
+    )
   }
   // 리스트 추가
   save = async (item) => {
@@ -29,7 +30,8 @@ class App extends React.Component {
 
   delete = async (itemId) => {
     await call("/todos" + itemId, "DELETE", null).then((response) =>
-      this.setState({ items: this.state.items.filter(item => item.id !== itemId) }))
+      this.setState({ items: this.state.items.filter(item => item.id !== itemId) })
+    )
   }
 
   update = async (item) => {
@@ -56,14 +58,14 @@ class App extends React.Component {
 
     // 그리드컴포넌트를 container로 지정
     let navigationBar = (
-      <AppBar position = "static">
+      <AppBar position="static">
         <Toolbar>
-          <Grid justifyContent="space-between" container> 
+          <Grid justifyContent="space-between" container>
             <Grid item>
               <Typography variant='h6'> 오늘의 할일 </Typography>
             </Grid>
             <Grid>
-              <Button color ="inherit" onClick={logout}>
+              <Button color="inherit" onClick={logout}>
                 로그아웃
               </Button>
             </Grid>
@@ -85,7 +87,7 @@ class App extends React.Component {
 
     let loadingPage = <h1> 로딩중 ... </h1>;
     let content = loadingPage;
-    if( !this.state.loding) {
+    if (!this.state.loding) {
       content = todoListPage;
     }
     return <div className='App'>{content}</div>

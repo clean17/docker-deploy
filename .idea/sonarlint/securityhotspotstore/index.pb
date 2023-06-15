@@ -1,8 +1,6 @@
 
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/SpringbootServerApplication.java,8\f\8fe97d4784c636a2452afe2939414b956464acf3
-ã
-[springboot-server/src/main/java/com/example/springbootserver/core/advice/MyValidAdvice.java,0\c\0c871613ad22821ca8698d868744b9cdeabdefe4
 \
 ,springboot-server/src/docs/asciidoc/api.adoc,1\2\128edc892732c18f89dca730d430c2e80f77465a
 I
@@ -23,10 +21,6 @@ Uspringboot-server/src/test/java/com/example/springbootserver/core/MyWithMockUse
 Rspringboot-server/src/main/java/com/example/springbootserver/todo/dto/TodoRes.java,d\e\de4d5deeda8acd65933f5f4efdfec69a9b377688
 Ç
 Rspringboot-server/src/main/java/com/example/springbootserver/todo/dto/TodoReq.java,9\3\93baa828f9eded01eef6095f42a61ac74cf9c1e6
-è
-_springboot-server/src/main/java/com/example/springbootserver/core/advice/MyExceptionAdvice.java,d\5\d5e219fcdebe7d7fd3ebbc82c710234dd2379515
-ç
-]springboot-server/src/main/java/com/example/springbootserver/core/exception/Exception500.java,8\d\8dd6238463e7ad57bb14409d6e39c4c981d906a1
 ò
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/session/MyUserDetailsService.java,0\8\083ec3beef4d47618caa17494aa5374515b72c3c
 Å
@@ -41,26 +35,16 @@ Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserRes.j
 [springboot-server/src/main/java/com/example/springbootserver/todo/model/TodoRepository.java,8\5\85e4309334fc31f33cec04007e9d1d0f38e99de8
 ç
 ]springboot-server/src/main/java/com/example/springbootserver/core/auth/jwt/MyJwtProvider.java,2\2\223bc3306d7c3edd4ff91325102c61f7a7a45a07
-Å
-Qspringboot-server/src/main/java/com/example/springbootserver/user/model/User.java,c\e\ced24f677984a6958ad20a42a08617f453a0a434
 ê
 `springboot-server/src/main/java/com/example/springbootserver/todo/controller/TodoController.java,2\9\294e1d69d4de3b9f97612314a0de1749c83b4c17
 ë
 aspringboot-server/src/main/java/com/example/springbootserver/core/auth/session/MyUserDetails.java,c\e\ce44b60c1afbdef825e52ccd0f1cf527307d7807
 ä
 Zspringboot-server/src/main/java/com/example/springbootserver/testModel/TestController.java,9\1\91bd9330ab81c0d9e0bfdb586ac34136ca4ff9ed
-ä
-Zspringboot-server/src/main/java/com/example/springbootserver/todo/service/TodoService.java,2\c\2c54273ac893937b8cc76b9d57a5efebc6d8e0d6
 ò
 hspringboot-server/src/main/java/com/example/springbootserver/core/auth/jwt/MyJwtAuthorizationFilter.java,9\7\973bdabf3c171b0e0166693a034fe1d317b3cfd2
-Ç
-Rspringboot-server/src/main/java/com/example/springbootserver/user/dto/UserReq.java,a\6\a61329616fb69ef66e196d8085ff4a0f781ee21a
 É
 Sspringboot-server/src/test/java/com/example/springbootserver/mock/UserMockTest.java,2\5\25c7187cc29605fc44977673059d017ddd13cf61
-ä
-Zspringboot-server/src/main/java/com/example/springbootserver/user/service/UserService.java,5\0\50a9c2b82a79475a4e675667fd1b5bf7162441a8
-Ü
-Vspringboot-server/src/main/java/com/example/springbootserver/core/dto/ResponseDTO.java,9\4\9444daf048d367dcb0a0a0f24e17643690717085
 ê
 `springboot-server/src/main/java/com/example/springbootserver/user/controller/UserController.java,1\f\1f1a07bfd2cdbac55c25d3ed1d13aaeebd7b2a71
 ã
@@ -93,11 +77,27 @@ Xspringboot-server/src/test/java/com/example/springbootserver/jpa/TodoRepository
 Xspringboot-server/src/test/java/com/example/springbootserver/jpa/UserRepositoryTest.java,1\4\14aaac585f15a7cda4b218ce3fe2b1c1e1381bde
 C
 database/Dockerfile,d\e\dea8215925bcea1e4f27b30176e792ce880d3b29
-J
-docker-compose-actions.yml,6\1\61e97ed97713c74afb86830014c0efdf0e904cec
 D
 react-app/.gitignore,d\5\d51406ea4a57315d8862f50d5465af35e89767f8
 L
 springboot-server/.gitignore,f\6\f688ccc6824ad2cca570dee3aea947336c954bff
 G
 react-app/.dockerignore,b\7\b7da20f99ee4c0bad859fcace139d08309789a01
+G
+docker-compose-prod.yml,2\4\2476ad3ad41441b5f97e5c08b0e980731761bbff
+D
+react-app/Dockerfile,8\d\8d4bcca88cfad73d71a85c8754c074f4bd095ea9
+F
+docker-compose-ec2.yml,3\b\3b60c8828fb829524cd527623f1cde2e16163ad9
+F
+.github/old-deploy.yml,1\2\122e91b92f4e0d9a707bacf39fd6bfd7ff355289
+N
+springboot-server/build.gradle,c\8\c856674778b908767b2e951b28a8d58b7930942e
+9
+	deploy.sh,b\e\be94fd40f0c4b440044c3f852e44fd2a75f7b3cc
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+R
+"react-app/src/config/app-config.js,5\b\5b4f77f40b9ff6d1d49f1e844d75432b1597f664
+L
+.github/workflows/deploy.yml,f\1\f130ad0d1d16d0d70ec30d355f736ae3784b05cf

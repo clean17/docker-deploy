@@ -17,13 +17,13 @@ public class MyExceptionAdvice {
 
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<?> badRequest(Exception400 e) {
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(400, e.getMessage(), null);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(400, e.getMessage(), null); // @Valid message
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception401.class)
     public ResponseEntity<?> unAuthorized(Exception401 e) {
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(401, e.getMessage(), null);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(401, "인증이 되지 않았습니다.", null);
         return new ResponseEntity<>(responseDTO, HttpStatus.UNAUTHORIZED);
     }
 
@@ -35,13 +35,13 @@ public class MyExceptionAdvice {
 
     @ExceptionHandler(Exception404.class)
     public ResponseEntity<?> notFound(Exception404 e) {
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(404, "리소스가 없습니다.", null);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(404, "페이지를 찾을 수 없습니다.", null);
         return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception500.class)
     public ResponseEntity<?> serverError(Exception500 e) {
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(500, e.getMessage(), null);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>().fail(500, "서버에 일시적인 오류가 발생했습니다.", null);
         return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

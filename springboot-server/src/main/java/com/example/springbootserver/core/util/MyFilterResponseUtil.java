@@ -11,7 +11,7 @@ public class MyFilterResponseUtil {
     public static void unAuthorized(HttpServletResponse resp, Exception e) throws IOException {
         resp.setStatus(401);
         resp.setContentType("application/json; charset=utf-8");
-        ResponseDTO<?> responseDTO = new ResponseDTO<>(401, "unAuthorized", e.getMessage());
+        ResponseDTO<?> responseDTO = new ResponseDTO<>(401, e.getMessage(), null); // 필터체인에서 걸리면 어드바이스까지 못간다.
         ObjectMapper om = new ObjectMapper();
         String responseBody = om.writeValueAsString(responseDTO);
         resp.getWriter().println(responseBody);
@@ -20,7 +20,7 @@ public class MyFilterResponseUtil {
     public static void forbidden(HttpServletResponse resp, Exception e) throws IOException {
         resp.setStatus(403);
         resp.setContentType("application/json; charset=utf-8");
-        ResponseDTO<?> responseDTO = new ResponseDTO<>(403, "forbidden", e.getMessage());
+        ResponseDTO<?> responseDTO = new ResponseDTO<>(403, e.getMessage(), null);
         ObjectMapper om = new ObjectMapper();
         String responseBody = om.writeValueAsString(responseDTO);
         resp.getWriter().println(responseBody);

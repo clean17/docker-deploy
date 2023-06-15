@@ -18,10 +18,10 @@ public class ResponseDTO<T> {
         this.msg = "요청 성공";
     }
 
-    // public ResponseDTO<?> data(T data){
-    //     this.data = data;
-    //     return this;
-    // }
+     public ResponseDTO<?> data(T data){
+         this.data = data;
+         return this;
+     }
 
     public ResponseDTO<?> fail(Integer status, String msg, T data){
         this.status = status;

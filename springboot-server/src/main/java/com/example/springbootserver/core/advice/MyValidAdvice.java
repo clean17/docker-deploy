@@ -30,8 +30,8 @@ public class MyValidAdvice {
 
                 if (errors.hasErrors()) {
                     throw new Exception400(
-                            errors.getFieldErrors().get(0).getField(),
-                            errors.getFieldErrors().get(0).getDefaultMessage()
+                            errors.getFieldErrors().get(0).getField(), // 오류 발생 필드
+                            errors.getFieldErrors().get(0).getDefaultMessage() // 오류 메세지 ( message = ) e.getMessage() 에 사용
                     );
                 }
             }
