@@ -42,4 +42,9 @@ public class TestController {
         return new ResponseEntity<>(new ResponseDTO<>(200, "조회 성공", entityList), HttpStatus.OK);
         // return ResponseEntity.ok().body(response);
     }
+    
+    @GetMapping("/")
+    public String healthCheck() {
+        return "엘라스틱 빈스톡 정상 + 서버 실행중 ..";
+    }
 }
