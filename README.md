@@ -12,20 +12,26 @@
 
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/2a7ff880-6e9c-496a-b1e9-b6dc2c43de4e)
 
-### RestDods - /api.html
+### RestDogs 문서 - /api.html
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/860d2b5c-e27b-4b86-baf3-c27e0a060228)
 
 ### 테스트 코드
 
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/619e36e2-6ece-4c64-8faa-d5f5fb6ac08a)
 
-### 도커 이미지로 실행
+### 도커 이미지로 실행 ( 개발 환경 )
 
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/e2efb49b-34d1-4ee4-8765-611ecdb98bf5)
 
+### 도커허브
+
+![image](https://github.com/clean17/docker-deploy/assets/118657689/38805195-22d5-445a-aa78-9b951719d923)
+
 ### CI/CD
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/38cae805-5ce7-474f-aabc-353d93fea861)
-![img.png](img.png)
+![image](https://github.com/clean17/docker-deploy/assets/118657689/80ffb238-f7bd-4ec1-852f-1b7867a36677)
+![image](https://github.com/clean17/docker-deploy/assets/118657689/de131e3c-56fc-4cbe-a265-a4c451f7dbde)
+![image](https://github.com/clean17/docker-deploy/assets/118657689/111a6442-0c8a-4852-ae07-4dfbe9469fb3)
 
 
 <br>
@@ -34,19 +40,19 @@
 > ## 정리
 
 - 리액트로 로그인, 회원가입, 할일 목록 화면
-- 스프링부트로 TO CRUD 추가
+- 스프링부트로 TODO CRUD 추가
 - 스프링시큐리티로 JWT 토큰 인증/인가, CORS 변경
 - JPA로 DB에 질의
 - JUnit으로 JPA테스트, MOCK테스트, 통합테스트 완료
-- 통합테스트 성공시 Rest Dosc 생성 -> Asciidoctor 문서 <br>
- `http://ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com:8080/api.html:8080/api.html` 확인
+- 통합테스트 성공시 Rest Dosc 생성 -> Asciidoctor 문서 생성 <br>
+ `http://ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com:8080/api.html` 확인
 - 데이터 검증은 `spring-boot-starter-validation` 이용 ( `@Valid` )
 - 유효하지 않은 접근시 익셉션 -> 어드바이스로 핸들링
 - DB는 도커로 생성, 추후 RDS 변경 예정
-- 도커 환경에서 리액트 + 서버 + DB 테스트
+- 도커 환경에서 리액트, 서버, DB 테스트 
 - `docker-compose` 로 한번에 이미지 빌드하고 실행
 - Github Actions + DockerHub 로 CI/CD 파이프라인 구축 ( 푸쉬하면 새 이미지 빌드 -> 도커허브 푸쉬 -> AWS에서 이미지 다운 받아 배포 )
-- EC2 배포 후, EB에 변경할 예정
+- EC2 배포 후, EB로 변경할 예정
 - 도메인 구매후 ssh 인증서 추가할 예정
 
 <br>
@@ -54,7 +60,7 @@
 > ## 이슈
 
 - Gradle 에서 implementation, compileOnly, runtimeOnly, testImplementation를 제외한 종속성을 사용한다면 configurations 에 추가해서 설정해야 한다. <br>
- ![img_1.png](img_1.png)
+ ![image](https://github.com/clean17/docker-deploy/assets/118657689/e0bd4516-9d9d-4461-9268-defbf317d94a)
 - clean build시 RestDocs 문서가 이전 빌드를 보는 이유는 복사 위치를 /build 가 아닌 /src 에 했기 때문이다.
 - 도커로 DB를 볼륨으로 만들었을 경우 이미지를 다시 만들어도 변경사항이 적용되지 않는다. <br>
 컨테이너에 종속되지 않는 볼륨은 새로 만들던지 `docker-compose down -v`, 터미널에서 직접 스키마를 수정한다.
@@ -73,4 +79,3 @@ Github Actions의 워크플로우에서 이미지를 빌드한 후 도커허브�
 - 워크플로우에서 이미지의 태그를 변경했지만 EC2에서 `docker-compose` 로 실행할때는 yml에 변경된 태그로 이미지가 매칭되어야 한다.
 - EC2에서 다운받은 이미지를 도커 데몬이 관리하기 때문에 이미지 경로를 찾을 필요가 없다.
 - `docker-compose` 에 환경변수를 넣을때는 `> .env / >> .env` 를 이용한다. ( 두번째는 추가 )
-- 리액트에서 익셉션 핸들링해야 한다.
