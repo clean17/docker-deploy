@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springbootserver.core.dto.ResponseDTO;
 
 
+
 @RestController
 public class TestController {
 
@@ -20,6 +21,8 @@ public class TestController {
     }
  
     // @Value("${secret.key}") // prod
+//    @Value("${meta.host}")
+//    private String host;   
 //    @Value("${meta.port}")
 //    private String port;
 //    @Value("${meta.db}")
@@ -28,11 +31,10 @@ public class TestController {
 //    private String user;
 //    @Value("${meta.pass}")
 //    private String pass;
-//
+
 //    @GetMapping("/test")
 //    public String tt(){
-//
-//        return "port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
+//        return "host : " + host +"\n"+ " port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
 //    }
 
     @GetMapping("/ts")

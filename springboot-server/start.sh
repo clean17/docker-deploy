@@ -1,6 +1,6 @@
 #!/bin/sh
 
-java -Dspring.profiles.active=dev -Dfile.encoding=UTF-8 \
+java -Dspring.profiles.active=prod -Dfile.encoding=UTF-8 \
      -Djava.security.egd=file:/dev/./urandom -Dsun.net.inetaddr.ttl=0 \
      -DHS512_SECRET=${HS512_SECRET} \
      -DMYSQL_USER=${MYSQL_USER} \

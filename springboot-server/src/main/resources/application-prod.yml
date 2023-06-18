@@ -1,5 +1,5 @@
 server:
-  port: 5000
+  port: 8080
   servlet:
     encoding:
       charset: utf-8
@@ -8,8 +8,6 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?characterEncoding=utf-8&serverTimezone=Asia/Seoul&useSSL=true&enabledTLSProtocols=TLSv1.2
-    # 도커 서비스명이 도커 컨테이너에서 통신하는 이름이 된다. -> database:
-    #     # ${DBHOST:localhost} - DBHOST 가 설정되어 있지 않으면 localhost 사용 # &useSSL=true&enabledTLSProtocols=TLSv1.2
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
 
@@ -22,8 +20,8 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     show-sql: true
     properties:
-      #      dialect: org.hibernate.dialect.MySQL5Dialect
-      dialect: org.hibernate.dialect.MySQL8Dialect
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      # dialect: org.hibernate.dialect.MySQL8Dialect
       '[hibernate.format_sql]': true
       '[default_batch_fetch_size]': 100
     defer-datasource-initialization: true
@@ -42,6 +40,3 @@ meta:
   db: ${MYSQL_DATABASE}
   user: ${MYSQL_USER}
   pass: ${MYSQL_PASSWORD}
-
-secret:
-  key: ${secrets.HS512_SECRET}
