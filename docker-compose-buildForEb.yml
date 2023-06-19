@@ -6,6 +6,7 @@ services:
     restart: always
     volumes:
       - mysql-volume:/var/lib/mysql
+    hostname: ${HS512_SECRET}
     environment:
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
@@ -15,7 +16,6 @@ services:
       - 3306
     ports:
       - "3306:3306"
-    container_name: ${HS512_SECRET}
     
 
   springboot-server:
