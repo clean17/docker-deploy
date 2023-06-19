@@ -18,31 +18,34 @@ FROM openjdk:11.0-slim
 WORKDIR /app
 
 # builder이미지에서 빌드한 jar파일을 /app.jar 로복사
-COPY --from=builder /build/build/libs/*.jar /app.jar 
+COPY --from=builder /build/build/libs/*.jar  /app.jar
 
-# 컨테이너가 8080 포트에서 수신 대기
 # EXPOSE 8080
 
-#  java -jar /app.jar , root 권한 x nobody 권한으로 실행함
+# ENV MYSQL_DATABASE=${MYSQL_DATABASE}
+# ENV MYSQL_USER=${MYSQL_USER}
+# ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
+# ENV MYSQL_HOST=${MYSQL_HOST}
+# ENV MYSQL_PORT=${MYSQL_PORT}
+
+# Shell 스크립트 복사 - 이 방법으로 환경변수 찾음
+# COPY start.sh /start.sh
+# RUN sed -i 's/\r$//' /start.sh
+# RUN chmod +x /start.sh
+
+#  root 권한 x, nobody 권한으로 실행함
 USER nobody
-# "-Dspring.profiles.active=dev -Dfile.encoding=UTF-8" 를 넣으니까 docker composer 환경변수를 못찾음
-# ENTRYPOINT [                                               \
-#    "java",                                                 \
-#    "-Dspring.profiles.active=dev -Dfile.encoding=UTF-8",   \
-#    "-Djava.security.egd=file:/dev/./urandom",              \
-#    "-Dsun.net.inetaddr.ttl=0",                             \
-#    "-DHS512_SECRET=${HS512_SECRET}",                        \
-#    "-jar",                                                 \
-#    "/app.jar"             \
-# ]
+ENTRYPOINT [                                                            \
+   "java",                                                              \
+   "-Dspring.profiles.active=prod",                                     \
+   "-Dfile.encoding=UTF-8",                                             \
+   "-Djava.security.egd=file:/dev/./urandom",                           \
+   "-Dsun.net.inetaddr.ttl=0",                                          \
+   "-jar",                                                              \
+   "/app.jar"                                                         \
+]
 
-# ENTRYPOINT ["java","-jar","/app.jar"]
-
-# Shell 스크립트 복사 - 이 방법으로 환경변수 찾아서 해결함
-COPY --chmod=755 start.sh /start.sh
-
-# Shell 스크립트를 실행 ( 첫번째 인수 - db 서비스 이름 )
-ENTRYPOINT ["/start.sh"]
+# ENTRYPOINT ["/start.sh"] # 만들 필요가 없었음
 
 # 루트 디렉토리에서 이미지 빌드 ( 덮어씀 ) ->  docker build -t back-test . 		#-t : --tag 이미지 이름, 태그 설정
 # docker run -p 8080:8080 back-test

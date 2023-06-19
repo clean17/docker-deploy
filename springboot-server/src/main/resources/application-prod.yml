@@ -33,10 +33,4 @@ spring:
 logging:
   level:
     '[org.springframework.boot.web]': DEBUG
-
-meta:
-  host: ${MYSQL_HOST}
-  port: ${MYSQL_PORT}
-  db: ${MYSQL_DATABASE}
-  user: ${MYSQL_USER}
-  pass: ${MYSQL_PASSWORD}
+    '[com.example]': DEBUG

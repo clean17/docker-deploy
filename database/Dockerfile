@@ -2,9 +2,12 @@ FROM mysql:5.7
 
 # 도커환경에서 컨테이너 생성시 스크립트 참조
 
+
 COPY ./scripts/ /docker-entrypoint-initdb.d/
 
+
 COPY ./01-database.sh /docker-entrypoint-initdb.d/
+RUN sed -i 's/\r$//' /docker-entrypoint-initdb.d/01-database.sh
 
 # 래퍼런스 - https://zionlee.tistory.com/54
 COPY ./my.cnf /etc/mysql/conf.d/my.cnf
@@ -19,6 +22,7 @@ RUN chmod 644 /etc/mysql/conf.d/my.cnf
 
 # 또는 스크립트에서 DOCKER_BUILDKIT 을 사용하지 않는 방법
 RUN chmod 755 /docker-entrypoint-initdb.d/01-database.sh
+
 
 
 

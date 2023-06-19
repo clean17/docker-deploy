@@ -20,7 +20,6 @@ public class TestController {
         this.repository = repository;
     }
  
-    // @Value("${secret.key}") // prod
 //    @Value("${meta.host}")
 //    private String host;   
 //    @Value("${meta.port}")
@@ -32,10 +31,14 @@ public class TestController {
 //    @Value("${meta.pass}")
 //    private String pass;
 
-//    @GetMapping("/test")
-//    public String tt(){
-//        return "host : " + host +"\n"+ " port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
-//    }
+   @GetMapping("/test")
+   public String tt(){
+    //    return "host : " + host +"\n"+ " port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
+    return  
+        "host : " + System.getenv("MYSQL_HOST") + "\n" +
+        "database : " + System.getenv("MYSQL_DATABASE") + "\n" +
+        "USER : " + System.getenv("MYSQL_USER") + "\n";
+   }
 
     @GetMapping("/ts")
     public ResponseEntity<?> findAll() {

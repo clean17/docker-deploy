@@ -30,7 +30,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      MYSQL_HOST: ${HS512_SECRET}
+      MYSQL_HOST: ${HS512_SECRET} 
       MYSQL_USER: ${HS512_SECRET}
       MYSQL_PASSWORD: ${HS512_SECRET}
       MYSQL_DATABASE: ${HS512_SECRET}
