@@ -7,17 +7,17 @@ WORKDIR /build
 COPY build.gradle settings.gradle /build/
 RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
 
-# 빌더 이미지에서 애플리케이션 빌드
+# 스프링 프로젝트 복사
 COPY . /build
 # RUN gradle clean build --no-daemon # daemon 은 메모리를 점유하지만 빌드가 빠르다
 RUN gradle clean build --parallel 
 # -x test 는 테스트 없이 빌드 # RUN gradle build -x test --parallel
 
-# Java 11 JDK가 설치된 Docker 이미지를 기반으로 새 이미지를 만들겠다
+# Java 11 JDK 가 설치된 Docker 이미지를 기반으로 새 이미지 생성
 FROM openjdk:11.0-slim
 WORKDIR /app
 
-# builder이미지에서 빌드한 jar파일을 /app.jar 로복사
+# 빌드한 jar파일을 /app.jar 로복사
 COPY --from=builder /build/build/libs/*.jar  /app.jar
 
 # EXPOSE 8080
