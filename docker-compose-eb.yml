@@ -1,8 +1,9 @@
-version: '3.9'
+version: "3.8"
 services:
   database:
     image: ${DOCKERHUB_USERNAME}/my-app-db:${TAG_VERSION}
-    restart: always
+    restart_policy:
+      condition: on-failure
     volumes:
       - mysql-volume:/var/lib/mysql
     hostname: database
@@ -18,8 +19,11 @@ services:
 
 
   springboot-server:
+    depends_on:
+      - database
     image: ${DOCKERHUB_USERNAME}/my-app-server:${TAG_VERSION}
-    restart: always
+    restart_policy:
+      condition: on-failure
     volumes:
       - ./springboot-server:/build/app
     expose:
