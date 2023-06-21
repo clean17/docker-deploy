@@ -20,7 +20,7 @@ WORKDIR /app
 # 빌드한 jar파일을 /app.jar 로복사
 COPY --from=builder /build/build/libs/*.jar  /app.jar
 
-# EXPOSE 8080
+EXPOSE 8080
 
 # ENV MYSQL_DATABASE=${MYSQL_DATABASE}
 # ENV MYSQL_USER=${MYSQL_USER}

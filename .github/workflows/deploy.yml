@@ -261,9 +261,8 @@ jobs: # 병렬
           # /\$ 는 문자열을 찾고 /$ 는 환경변수 값을 찾는다
       - name: Generate deployment package
         run: |
-          mkdir -p deploy          
-          cp Dockerfile deploy/Dockerfile
-          cp docker-compose-eb.yml deploy/docker-compose-eb.yml
+          mkdir -p deploy       
+          cp docker-compose-eb.yml deploy/docker-compose.yml
           cp -r .ebextensions deploy/.ebextensions
           cd deploy && zip -r deploy.zip .
       - name: Deploy to EB
@@ -277,21 +276,23 @@ jobs: # 병렬
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
 
-          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
-          #      s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
-          #      s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g" Dockerfile > deploy/Dockerfile
+
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g; \
+          #      s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME }}/g; \
+          #      s/\${TAG_VERSION}/${{ secrets.TAG_VERSION }}/g" \
           #      docker-compose-eb.yml > deploy/docker-compose.yml
 
           # cp Dockerrun.aws.json deploy/Dockerrun.aws.json
 
           # cp docker-compose-eb.yml deploy/docker-compose-eb.yml
 
-          #  sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
-          #     s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
-          #     s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
+          #  sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g; \
+          #     s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME }}/g; \
+          #     s/\${TAG_VERSION}/${{ secrets.TAG_VERSION }}/g" \
           #     Dockerfile > deploy/Dockerfile
 
-          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
-          #    s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
-          #    s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g; \
+          #    s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME }}/g; \
+          #    s/\${TAG_VERSION}/${{ secrets.TAG_VERSION }}/g" \
           #    Dockerrun.aws.json > deploy/Dockerrun.aws.json
