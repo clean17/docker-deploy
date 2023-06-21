@@ -1,5 +1,22 @@
 version: "3.8"
 services:
+  database:
+    image: ${DOCKERHUB_USERNAME}/my-app-db:${TAG_VERSION}
+    restart: always
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    hostname: database
+    environment:
+      - MYSQL_USER=${HS512_SECRET}
+      - MYSQL_PASSWORD=${HS512_SECRET}
+      - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
+      - MYSQL_DATABASE=${HS512_SECRET}
+    expose:
+      - 3306
+    ports:
+      - "3306:3306"
+
+
   springboot-server:
     depends_on:
       - database
@@ -17,4 +34,7 @@ services:
       - MYSQL_PASSWORD=${HS512_SECRET}
       - MYSQL_DATABASE=${HS512_SECRET}
       - MYSQL_PORT=3306
-      - HS512_SECRET=${HS512_SECRET}  
+      - HS512_SECRET=${HS512_SECRET}
+
+volumes:
+  mysql-volume:

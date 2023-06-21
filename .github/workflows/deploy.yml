@@ -262,10 +262,7 @@ jobs: # 병렬
       - name: Generate deployment package
         run: |
           mkdir -p deploy          
-          sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
-               s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
-               s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
-               Dockerrun.aws.json > deploy/Dockerrun.aws.json
+          cp Dockerfile deploy/Dockerfile
           cp docker-compose-eb.yml deploy/docker-compose-eb.yml
           cp -r .ebextensions deploy/.ebextensions
           cd deploy && zip -r deploy.zip .
@@ -293,3 +290,8 @@ jobs: # 병렬
           #     s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
           #     s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
           #     Dockerfile > deploy/Dockerfile
+
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
+          #    s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
+          #    s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
+          #    Dockerrun.aws.json > deploy/Dockerrun.aws.json
