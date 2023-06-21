@@ -1,14 +1,13 @@
 # https://docs.docker.com/compose/compose-file/compose-file-v3/#deploy 공식문서
-version: '3.9'
+version: '3.8'
 services:
   database:
     build: ./database
-    restart_policy:
-      condition: on-failure
+    restart: always
     volumes:
       - mysql-volume:/var/lib/mysql
+    hostname: database
     environment:
-      # - MYSQL_HOST=${HS512_SECRET} # 로컬에선 적용안됨
       - MYSQL_USER=${HS512_SECRET}
       - MYSQL_PASSWORD=${HS512_SECRET}
       - MYSQL_ROOT_PASSWORD=${HS512_SECRET}
@@ -31,8 +30,7 @@ services:
     depends_on:
       - database
     build: ./springboot-server
-    restart_policy:
-      condition: on-failure
+    restart: always
     volumes:
       - ./springboot-server:/build/app
     expose:
