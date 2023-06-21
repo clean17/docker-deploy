@@ -1,3 +1,3 @@
-FROM piw1994/piw1994/my-app-db:0.0.1
+FROM piw1994/my-app-db:0.0.1
 
 EXPOSE 8081
