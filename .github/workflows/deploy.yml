@@ -255,17 +255,14 @@ jobs: # 병렬
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"   # 버전 레이블 다르게
 
-      # -r 하위 전부
+          # -r 디렉토리 전부 복사
           # cp Dockerrun.aws.json deploy/Dockerrun.aws.json
           # sed 치환에서 작은 따옴표는 문자로, 큰 따옴표는 변수로 인식함
           # /\$ 는 문자열을 찾고 /$ 는 환경변수 값을 찾는다
       - name: Generate deployment package
         run: |
           mkdir -p deploy
-          sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
-               s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
-               s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
-               docker-compose-eb.yml > deploy/docker-compose.yml
+          cp docker-compose-eb.yml deploy/docker-compose-eb.yml
           cp -r .ebextensions deploy/.ebextensions
           cd deploy && zip -r deploy.zip .
       - name: Deploy to EB
@@ -278,3 +275,8 @@ jobs: # 병렬
           version_label: todo-server-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
+
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
+          #      s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
+          #      s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
+          #      docker-compose-eb.yml > deploy/docker-compose.yml

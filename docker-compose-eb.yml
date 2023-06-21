@@ -18,8 +18,6 @@ services:
 
 
   springboot-server:
-    depends_on:
-      - database
     image: ${DOCKERHUB_USERNAME}/my-app-server:${TAG_VERSION}
     restart: always
     volumes:
