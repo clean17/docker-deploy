@@ -1,94 +1,38 @@
 {
-    "AWSEBDockerrunVersion": 3,
-    "containerDefinitions": [
-      {
-        "name": "database",
-        "image": "${DOCKERHUB_USERNAME}/my-app-db:${TAG_VERSION}",
-        "essential": true,
-        "memory": 128,
-        "portMappings": [
-          {
-            "hostPort": 3306,
-            "containerPort": 3306
-          }
-        ],
-        "environment": [
-          {
-            "name": "MYSQL_USER",
-            "value": "${HS512_SECRET}"
-          },
-          {
-            "name": "MYSQL_PASSWORD",
-            "value": "${HS512_SECRET}"
-          },
-          {
-            "name": "MYSQL_ROOT_PASSWORD",
-            "value": "${HS512_SECRET}"
-          },
-          {
-            "name": "MYSQL_DATABASE",
-            "value": "${HS512_SECRET}"
-          }
-        ],
-        "mountPoints": [
-          {
-            "sourceVolume": "mysql-volume",
-            "containerPath": "/var/lib/mysql"
-          }
-        ]
-      },
-      {
-        "name": "springboot-server",
-        "image": "${DOCKERHUB_USERNAME}/my-app-server:${TAG_VERSION}",
-        "essential": true,
-        "memory": 128,
-        "portMappings": [
-          {
-            "hostPort": 8080,
-            "containerPort": 8080
-          }
-        ],
-        "environment": [
-          {
-            "name": "MYSQL_HOST",
-            "value": "database"
-          },
-          {
-            "name": "MYSQL_USER",
-            "value": "${HS512_SECRET}"
-          },
-          {
-            "name": "MYSQL_PASSWORD",
-            "value": "${HS512_SECRET}"
-          },
-          {
-            "name": "MYSQL_DATABASE",
-            "value": "${HS512_SECRET}"
-          },
-          {
-            "name": "MYSQL_PORT",
-            "value": "3306"
-          },
-          {
-            "name": "HS512_SECRET",
-            "value": "${HS512_SECRET}"
-          }
-        ],
-        "mountPoints": [
-          {
-            "sourceVolume": "springboot-server",
-            "containerPath": "/build/app"
-          }
-        ]
-      }
-    ],
-    "volumes": [
-      {
-        "name": "mysql-volume"
-      },
-      {
-        "name": "springboot-server"
-      }
-    ]
-  }
-  
+  "AWSEBDockerrunVersion": "1",
+  "name": "database",
+  "Image": {
+    "Name": "${DOCKERHUB_USERNAME}/my-app-db:${TAG_VERSION}",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "3306"
+    }
+  ],
+  "Volumes": [
+    {
+      "HostDirectory": "/var/app/mydb",
+      "ContainerDirectory": "/var/lib/mysql"
+    }
+  ],
+  "Logging": "/var/log/nginx",
+  "Environment": [
+    {
+      "Name": "MYSQL_USER",
+      "Value": "${HS512_SECRET}"
+    },
+    {
+      "Name": "MYSQL_PASSWORD",
+      "Value": "${HS512_SECRET}"
+    },
+    {
+      "Name": "MYSQL_ROOT_PASSWORD",
+      "Value": "${HS512_SECRET}"
+    },
+    {
+      "Name": "MYSQL_DATABASE",
+      "Value": "${HS512_SECRET}"
+    }
+  ]
+}
