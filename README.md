@@ -3,7 +3,8 @@
 > ## 개요
  화면을 리액트로 만들고 스프링 서버를 연결시킨 뒤 깃헙액션 + 도커허브 CI/CD 파이프라인을 통해 EB에 배포한다.
  
- 임시 배포 링크 : ec2-13-124-79-248.ap-northeast-2.compute.amazonaws.com
+<a href="http://ec2-13-124-79-248.ap-northeast-2.compute.amazonaws.com">  배포 링크  </a>
+
 <br>
 
 ### 화면
@@ -45,7 +46,7 @@
 - JPA로 DB에 질의
 - JUnit으로 JPA테스트, MOCK테스트, 통합테스트 완료
 - 통합테스트 성공시 Rest Dosc 생성 -> Asciidoctor 문서 생성 <br>
- `http://ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com:8080/api.html` 확인
+  <a href="http://ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com:8080/api.html"> 문서링크 -> /api.html </a> 확인
 - 데이터 검증은 `spring-boot-starter-validation` 이용 ( `@Valid` )
 - 유효하지 않은 접근시 익셉션 -> 어드바이스로 핸들링
 - DB는 도커로 생성, 추후 RDS 변경 예정

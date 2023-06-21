@@ -21,12 +21,8 @@ jobs: # 병렬
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      # workflow 테스트용
-#      - name: Build and push
-#        run: sudo sh deploy.sh
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
 
       # -p 비밀번호 또는 엑세스 토큰
       - name: DockerHub Login
@@ -37,17 +33,25 @@ jobs: # 병렬
 
       - name: Image Build and Push
         run: |
-          DOCKER_BUILDKIT=1 docker-compose -f docker-compose-prod.yml build
+          docker-compose -f docker-compose-prod.yml build
 
-          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
-          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
-          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
+          docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:${{ secrets.TAG_VERSION }}
+          docker tag my-app-db ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:${{ secrets.TAG_VERSION }}
+          docker tag my-app-server ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:${{ secrets.TAG_VERSION }}
 
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
-        #  docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:${{ secrets.TAG_VERSION }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:${{ secrets.TAG_VERSION }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:${{ secrets.TAG_VERSION }}
 
+          
+
+# docker tag my-app-react ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:${{ secrets.TAG_VERSION }}
+# docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:${{ secrets.TAG_VERSION }}
+# docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-app-docker . # 이미지 따로 만들 경우
+
+
+
+  
 
 
 
@@ -114,17 +118,6 @@ jobs: # 병렬
               sudo docker rmi $(sudo docker images -aq)
             fi
 
-      - name: EC2 docker pull
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.HOST2 }}
-          username: ubuntu
-          key: ${{ secrets.KEY }}
-          script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-db:0.0.1
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-server:0.0.1
-          # latest 덮어 씀 , 동일한 로컬 이미지 재사용
-
       - name: Copy file to EC2
         uses: appleboy/scp-action@master # 기존 파일을 덮어씀
         with:
@@ -140,38 +133,25 @@ jobs: # 병렬
           host: ${{ secrets.HOST2 }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          script: |
+          script: |            
             echo "HS512_SECRET=${{ secrets.HS512_SECRET }}" > .env
-            echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME}}" >> .env
-            echo "TAG_VERSION=0.0.1" >> .env
-            sudo COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -p my-app -f docker-compose-ec2.yml up -d
+            echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
+            echo "TAG_VERSION=${{ secrets.TAG_VERSION }}" >> .env
+            echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+            echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+            echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+            echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+            echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
+            echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
+            docker-compose -f docker-compose-ec2.yml -p my-app up -d
+
           # 환경변수를 더 추가할 때는 >> 로 추가한다.
-            
-            
+          # ec2 의 .env 폴더에 환경변수 저장
 
 
 
 
 
-
-      # -r 옵션은 디렉토리 내의 모든 하위 파일과 디렉토리를 복사하는 데 사용
-  #      - name: Generate deployment package
-  #        run: |
-  #          mkdir -p deploy
-  #          cp build/libs/*.jar deploy/application.jar
-  #          cp Procfile deploy/Procfile
-  #          cp -r .ebextensions deploy/.ebextensions
-  #          cd deploy && zip -r deploy.zip .
-  #      - name: Deploy to EB
-  #        uses: einaregilsson/beanstalk-deploy@v21 # 엘라스틱 빈스톡 환경 사용
-  #        with:
-  #          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # 중괄호 2개는 깃헙 환경변수 접근
-  #          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-  #          application_name: aws-v5-beanstalk # 엘리스틱 빈스톡 애플리케이션 이름!
-  #          environment_name: Awsv5beanstalk-env # 엘리스틱 빈스톡 환경 이름!
-  #          version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
-  #          region: ap-northeast-2 # 서울 서버로 압축파일을 전달해줌
-  #          deployment_package: deploy/deploy.zip
 
 
 
@@ -193,12 +173,6 @@ jobs: # 병렬
           username: ${{ secrets.DOCKERHUB_USERNAME}}
           password: ${{ secrets.DOCKERHUB_TOKEN}}
 
-      #      sudo yum update -y  # 시스템 패키지 최신으로 업데이트
-      #      sudo yum install -y docker  # yum 패키지로 도커 설치
-      #      sudo service docker start  # 도커 시작
-      #      sudo systemctl enable docker  # 부팅 시 도커 자동 시작
-      #      sudo usermod -a -G docker ec2-user  # 그룹에 사용자 추가
-      #      우분투 환경이므로 yum x, apt 사용
       - name: Install Docker on EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -245,7 +219,7 @@ jobs: # 병렬
           username: ubuntu
           key: ${{ secrets.KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:${{ secrets.TAG_VERSION }}
 
       - name: EC2 docker run React
         uses: appleboy/ssh-action@v0.1.6
@@ -253,7 +227,75 @@ jobs: # 병렬
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.KEY }}
-          timeout: 900s # 10분
           script: |
-            sudo nohup docker run --name my-app-react-1 -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:0.0.1 > /dev/null 2>&1 &
+            sudo nohup docker run --name my-app-react-1 -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/my-app-react:${{ secrets.TAG_VERSION }} > /dev/null 2>&1 &
+
           #  -e HS512_SECRET=${{ secrets.HS512_SECRET }} \
+
+
+
+
+
+
+
+
+
+
+  # deploy-to-EB:
+  #   needs: image-build
+  #   runs-on: ubuntu-latest # 작업이 실행될 환경을 지정 , 깃헙액션이 제공해주는 도커를 이용
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+
+  #     - name: Get current time
+  #       uses: 1466587594/get-current-time@v2
+  #       id: current-time
+  #       with:
+  #         format: YYYY-MM-DDTHH-mm-ss
+  #         utcOffset: "+09:00"
+
+  #     - name: Show Current Time
+  #       run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"   # 버전 레이블 다르게
+
+  #         # -r 디렉토리 전부 복사
+  #         # cp Dockerrun.aws.json deploy/Dockerrun.aws.json
+  #         # sed 치환에서 작은 따옴표는 문자로, 큰 따옴표는 변수로 인식함
+  #         # /\$ 는 문자열을 찾고 /$ 는 환경변수 값을 찾는다
+  #     - name: Generate deployment package
+  #       run: |
+  #         mkdir -p deploy       
+  #         cp docker-compose-ec2.yml deploy/docker-compose.yml
+  #         cp -r .ebextensions deploy/.ebextensions
+  #         cd deploy && zip -r deploy.zip .
+  #     - name: Deploy to EB
+  #       uses: einaregilsson/beanstalk-deploy@v21
+  #       with:
+  #         aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+  #         aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+  #         application_name: Prod-todo-server-env # 엘리스틱 빈스톡 애플리케이션 이름!
+  #         environment_name: Prod-todo-server-env-env # 엘리스틱 빈스톡 환경 이름!
+  #         version_label: todo-server-${{steps.current-time.outputs.formattedTime}}
+  #         region: ap-northeast-2
+  #         deployment_package: deploy/deploy.zip
+
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g" Dockerfile > deploy/Dockerfile
+
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g; \
+          #      s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME }}/g; \
+          #      s/\${TAG_VERSION}/${{ secrets.TAG_VERSION }}/g" \
+          #      docker-compose-eb.yml > deploy/docker-compose.yml
+
+          # cp Dockerrun.aws.json deploy/Dockerrun.aws.json
+
+          # cp docker-compose-eb.yml deploy/docker-compose-eb.yml
+
+          #  sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g; \
+          #     s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME }}/g; \
+          #     s/\${TAG_VERSION}/${{ secrets.TAG_VERSION }}/g" \
+          #     Dockerfile > deploy/Dockerfile
+
+          # sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET }}/g; \
+          #    s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME }}/g; \
+          #    s/\${TAG_VERSION}/${{ secrets.TAG_VERSION }}/g" \
+          #    Dockerrun.aws.json > deploy/Dockerrun.aws.json

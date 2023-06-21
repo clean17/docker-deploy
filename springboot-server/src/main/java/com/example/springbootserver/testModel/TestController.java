@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springbootserver.core.dto.ResponseDTO;
 
 
+
 @RestController
 public class TestController {
 
@@ -19,7 +20,8 @@ public class TestController {
         this.repository = repository;
     }
  
-    // @Value("${secret.key}") // prod
+//    @Value("${meta.host}")
+//    private String host;   
 //    @Value("${meta.port}")
 //    private String port;
 //    @Value("${meta.db}")
@@ -28,12 +30,15 @@ public class TestController {
 //    private String user;
 //    @Value("${meta.pass}")
 //    private String pass;
-//
-//    @GetMapping("/test")
-//    public String tt(){
-//
-//        return "port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
-//    }
+
+   @GetMapping("/test")
+   public String tt(){
+    //    return "host : " + host +"\n"+ " port : " + port + "\n" + "db : " + db + "\n" + "user : " + user + "\n" + "pass : " + pass ;
+    return  
+        "host : " + System.getenv("MYSQL_HOST") + "\n" +
+        "database : " + System.getenv("MYSQL_DATABASE") + "\n" +
+        "USER : " + System.getenv("MYSQL_USER") + "\n";
+   }
 
     @GetMapping("/ts")
     public ResponseEntity<?> findAll() {
@@ -41,5 +46,10 @@ public class TestController {
 
         return new ResponseEntity<>(new ResponseDTO<>(200, "조회 성공", entityList), HttpStatus.OK);
         // return ResponseEntity.ok().body(response);
+    }
+    
+    @GetMapping("/")
+    public String healthCheck() {
+        return "엘라스틱 빈스톡 정상 + 서버 실행중 ..";
     }
 }
