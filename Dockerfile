@@ -1,3 +1,3 @@
-FROM piw1994/my-app-db:0.0.1
+FROM alpine:3.14
 
 EXPOSE 8081
