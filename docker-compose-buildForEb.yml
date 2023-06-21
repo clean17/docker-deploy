@@ -3,7 +3,8 @@ services:
   database:
     build: ./database
     image: my-app-db
-    restart: always
+    restart_policy:
+      condition: on-failure
     volumes:
       - mysql-volume:/var/lib/mysql
     hostname: ${HS512_SECRET}
@@ -23,7 +24,8 @@ services:
       - database
     build: ./springboot-server
     image: my-app-server
-    restart: always
+    restart_policy:
+      condition: on-failure
     volumes:
       - ./springboot-server:/build/app
     expose:

@@ -3,7 +3,8 @@ services:
   database:
     build: ./database
     image: my-app-db
-    restart: always
+    restart_policy:
+      condition: on-failure
     volumes:
       - mysql-volume:/var/lib/mysql
     hostname: ${HS512_SECRET}
@@ -21,7 +22,8 @@ services:
   react-app:
     build: ./react-app
     image: my-app-react
-    restart: always
+    restart_policy:
+      condition: on-failure
     volumes:
       - ./react-app:/home/node/app
       - /home/node/app/node_modules # node_modules를 호스트 디렉토리와 공유하지 않도록함( 사라지지 않도록 )
