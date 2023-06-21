@@ -1,7 +1,6 @@
-version: '3.8'
+version: "3.8"
 services:
   database:
-    build: ./database
     image: ${DOCKERHUB_USERNAME}/my-app-db:${TAG_VERSION}
     restart: always
     volumes:
@@ -21,7 +20,6 @@ services:
   springboot-server:
     depends_on:
       - database
-    build: ./springboot-server
     image: ${DOCKERHUB_USERNAME}/my-app-server:${TAG_VERSION}
     restart: always
     volumes:
