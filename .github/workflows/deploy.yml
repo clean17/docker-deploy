@@ -261,8 +261,11 @@ jobs: # 병렬
           # /\$ 는 문자열을 찾고 /$ 는 환경변수 값을 찾는다
       - name: Generate deployment package
         run: |
-          mkdir -p deploy
-          cp Dockerrun.aws.json deploy/Dockerrun.aws.json
+          mkdir -p deploy          
+          sed "s/\${HS512_SECRET}/${{ secrets.HS512_SECRET}}/g; \
+               s/\${DOCKERHUB_USERNAME}/${{ secrets.DOCKERHUB_USERNAME}}/g; \
+               s/\${TAG_VERSION}/${{ secrets.TAG_VERSION}}/g" \
+               Dockerrun.aws.json > deploy/Dockerrun.aws.json
           cp docker-compose-eb.yml deploy/docker-compose-eb.yml
           cp -r .ebextensions deploy/.ebextensions
           cd deploy && zip -r deploy.zip .
