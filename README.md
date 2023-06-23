@@ -34,6 +34,13 @@
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/de131e3c-56fc-4cbe-a265-a4c451f7dbde)
 ![image](https://github.com/clean17/docker-deploy/assets/118657689/111a6442-0c8a-4852-ae07-4dfbe9469fb3)
 
+### Exception + 핸들러
+![image](https://github.com/clean17/docker-deploy/assets/118657689/50694ee8-4a6e-46c8-88ee-bd830af30203)
+![image](https://github.com/clean17/docker-deploy/assets/118657689/380d96ee-19be-4a48-8051-9a496aaee0f8)
+
+### Cors + 시큐리티 + JWT 인증
+![image](https://github.com/clean17/docker-deploy/assets/118657689/de643c83-b826-491b-a426-89a6e8eb0a66)
+![image](https://github.com/clean17/docker-deploy/assets/118657689/0f45dff1-ecc6-4a0d-95a3-9ec64f6885a6)
 
 <br>
 
@@ -48,13 +55,10 @@
 - 통합테스트 성공시 Rest Dosc 생성 -> Asciidoctor 문서 생성 <br>
   <a href="http://ec2-43-201-97-14.ap-northeast-2.compute.amazonaws.com:8080/api.html"> 문서링크 -> /api.html </a> 확인
 - 데이터 검증은 `spring-boot-starter-validation` 이용 ( `@Valid` )
-- 유효하지 않은 접근시 익셉션 -> 어드바이스로 핸들링
-- DB는 도커로 생성, 추후 RDS 변경 예정
+- 유효하지 않은 접근시 익셉션(400, 401, 403, 404, 500) -> 어드바이스로 핸들링
 - 도커 환경에서 리액트, 서버, DB 테스트 
-- `docker-compose` 로 한번에 이미지 빌드하고 실행
+- `docker-compose`, `Dockerfile` 이미지 빌드하고 실행
 - Github Actions + DockerHub 로 CI/CD 파이프라인 구축 ( 푸쉬하면 새 이미지 빌드 -> 도커허브 푸쉬 -> AWS에서 이미지 다운 받아 배포 )
-- EC2 배포 후, EB로 변경할 예정
-- 도메인 구매후 ssh 인증서 추가할 예정
 
 <br>
 
