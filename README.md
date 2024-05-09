@@ -1,5 +1,56 @@
 # Todo 프로젝트
 
+> ## docker 실행 방법
+
+Docker Desktop을 설치한다.
+
+설치한 리눅스 터미널을 wsl로 설정한다.
+```
+docker run -it node (--name [컨테이너 이름지정])
+```
+위 커맨드는 node 이미지를 다운받고 도커 컨테이너로 실행한다.
+
+
+```
+docker pull [이미지]  // 이미지 다운로드
+
+docker images  // 다운받은 이미지 확인
+
+docker rmi [이미지]  // 이미지 삭제 
+
+docker build -t {이미지명}  // 이미지 생성
+```
+```
+docker ps  // 컨테이너 확인 `-a`를 옵션은 실행중이지 않은 모든 컨테이너 조회
+
+docker stop [컨테이너]  // 컨테이너 정지 시작
+
+docker start [컨테이너] / restart
+
+docker rm [컨테이너]  // 컨테이너 삭제
+
+docker stop $(docker ps -aq) 사용중이지 않은 모든 컨테이너 제거
+docker system prune -a
+ 
+docker attach [컨테이너]  컨테이너 콘솔 세션에 연결
+```
+로그 확인
+```
+docker logs -f [컨테이너명]
+```
+docker-compose.yml 실행
+```
+docker-compose up
+```
+도커 네트워크 확인
+```
+docker network ls
+```
+도커 볼륨 목록
+```
+docker volume ls
+```
+
 > ## 개요
  화면을 리액트로 만들고 스프링 서버를 연결시킨 뒤 깃헙액션 + 도커허브 CI/CD 파이프라인을 통해 EB에 배포한다.
  
