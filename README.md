@@ -34,6 +34,12 @@ docker system prune -a
  
 docker attach [컨테이너]  컨테이너 콘솔 세션에 연결
 ```
+
+현재 작업 커밋한 이미지 생성
+```
+docker commit [컨테이너명] [생성할 이미지명]
+```
+
 로그 확인
 ```
 docker logs -f [컨테이너명]
