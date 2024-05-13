@@ -6,7 +6,7 @@ Docker Desktop을 설치한다.
 
 설치한 리눅스 터미널을 wsl로 설정한다.
 ```
-docker run -it node (--name [컨테이너 이름지정])
+docker run -it node (--name [컨테이너 이름지정]) [이미지명]
 ```
 위 커맨드는 node 이미지를 다운받고 도커 컨테이너로 실행한다.
 
