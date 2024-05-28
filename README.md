@@ -56,6 +56,19 @@ docker network ls
 ```
 docker volume ls
 ```
+도커 허브 push (tag는 버전 명시)
+```
+docker login
+docker tag [image]:latest username/repository:latest
+```
+docker images 로 확인하면 태그로 명시한 이미지가 생성됨
+```
+docker push username/repository:latest
+```
+도커 pull
+```
+docker pull username/repository:latest
+```
 
 > ## 개요
  화면을 리액트로 만들고 스프링 서버를 연결시킨 뒤 깃헙액션 + 도커허브 CI/CD 파이프라인을 통해 EB에 배포한다.
