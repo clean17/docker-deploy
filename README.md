@@ -38,6 +38,7 @@ docker attach [컨테이너]  컨테이너 콘솔 세션에 연결
 현재 작업 커밋한 이미지 생성
 ```
 docker commit [컨테이너명] [생성할 이미지명]
+docker commit 8f1e54f0fb29 [계정명]/rockylinux:latest
 ```
 
 로그 확인
@@ -64,6 +65,7 @@ docker tag [image]:latest username/repository:latest
 docker images 로 확인하면 태그로 명시한 이미지가 생성됨
 ```
 docker push username/repository:latest
+docker push [계정명]/[생성한이미지명]:latest
 ```
 도커 pull
 ```
