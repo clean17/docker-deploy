@@ -35,6 +35,11 @@ docker system prune -a
 docker attach [컨테이너]  컨테이너 콘솔 세션에 연결
 ```
 
+생성한 컨테이너를 bash쉘로 실행
+```
+docker exec -it centos7 /bin/bash
+```
+
 현재 작업 커밋한 이미지 생성
 ```
 docker commit [컨테이너명] [생성할 이미지명]
