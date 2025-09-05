@@ -76,6 +76,10 @@ docker push [계정명]/[생성한이미지명]:latest
 ```
 docker pull username/repository:latest
 ```
+윈도우 파일을 도커 컨테이너로 복사
+```
+docker cp "C:\Users\user\Desktop\delete.sh" rockylinux_:/usr/local/
+```
 
 > ## 개요
  화면을 리액트로 만들고 스프링 서버를 연결시킨 뒤 깃헙액션 + 도커허브 CI/CD 파이프라인을 통해 EB에 배포한다.
