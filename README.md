@@ -9,6 +9,7 @@ Docker Desktop을 설치한다.
 docker run -it node (--name [컨테이너 이름지정]) [이미지명]
 
 docker run -d -p 9090:8080 --name mycontainer myimage
+[-e JAVA_TOOL_OPTIONS="-Dtomcat.util.scan.StandardJarScanFilter.jarsToSkip=bcprov-*.jar,bcpkix-*.jar,bcutil-*.jar -Xss2m"] // 환경변수 추가
 ```
 위 커맨드는 node 이미지를 다운받고 도커 컨테이너로 실행한다.
 
