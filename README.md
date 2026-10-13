@@ -12,7 +12,7 @@ docker run -d -p 9090:8080 --name mycontainer myimage
 [-e JAVA_TOOL_OPTIONS="-Dtomcat.util.scan.StandardJarScanFilter.jarsToSkip=bcprov-*.jar,bcpkix-*.jar,bcutil-*.jar -Xss2m"] // 환경변수 추가
 
 # centos 리눅스 실행
-docker run -dit --name stunserver centos:7
+docker run -dit --name stunserver centos:7 /bin/bash
 ```
 위 커맨드는 node 이미지를 다운받고 도커 컨테이너로 실행한다.
 
