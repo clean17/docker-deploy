@@ -13,6 +13,8 @@ docker run -d -p 9090:8080 --name mycontainer myimage
 
 # centos 리눅스 실행
 docker run -dit --name stunserver centos:7 /bin/bash
+# 포트포워딩
+docker run -dit -p 8086:8085 --name stunserver centos:7 /bin/bash
 ```
 위 커맨드는 node 이미지를 다운받고 도커 컨테이너로 실행한다.
 
